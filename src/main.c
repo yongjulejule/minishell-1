@@ -12,8 +12,17 @@
 
 #include "../include/minishell.h"
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
-    readline("");
-    return (EXIT_SUCCESS);
+	char	*line_read;
+
+	if (argc > 1 || argv[1])
+		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
+	while (1)
+	{
+		line_read = readline("🐘 esh > ");
+		if (line_read == 0)
+			printf("1\n");
+	}
+	return (EXIT_SUCCESS);
 }
