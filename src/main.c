@@ -10,4 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minishell.h"
 
+int main(int argc, char *argv[], char *envp[])
+{
+    readline("");
+    return (EXIT_SUCCESS);
+}
