@@ -29,6 +29,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include "../lib/libft/libft.h"
 
 /* SECTION - structs */
