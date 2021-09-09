@@ -44,7 +44,7 @@ int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isprint(int c);
 int				is_charset(char c, char *charset);
-void			is_error(char *str1, char *str2, int exit_status);
+void			is_error(char *str_1, char *str_2, char *err_msg, int exit_status);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 void			*ft_calloc(size_t count, size_t size);
