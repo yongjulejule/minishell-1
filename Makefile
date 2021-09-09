@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/09 15:47:22 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/09 17:43:25 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME		= minishell
 SRCS_DIR	= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
 
-LFLAGS		= -lreadline
+LFLAGS		= -l readline
 LIB_DIR		= lib/
 
 LIBFT_DIR	= $(LIB_DIR)libft/

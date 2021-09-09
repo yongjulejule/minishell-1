@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/09 12:08:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/09 17:45:38 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* SECTION - include .h files */
 
+# define READLINE_LIBRARY 1
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
