@@ -1,9 +1,7 @@
 # minishell
-42 minishell project by yongjule &amp; ghan
+42 [minishell](https://cdn.intra.42.fr/pdf/pdf/26270/en.subject.pdf) project by yongjule &amp; ghan
 
 ---
-
-
 
 ## To-do List
 
