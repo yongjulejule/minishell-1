@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/09 15:11:38 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/09 15:47:22 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ endif
 
 NAME = minishell 
 
-SRCS_DIR = ./srcs/mandatory/
-SRCS_DIR_BONUS = ./srcs/bonus/
+SRCS_DIR = ./src/
+#SRCS_DIR_BONUS = ./srcs/bonus/
 
 LIB_DIR = lib/
 
@@ -29,8 +29,8 @@ LIBFT_DIR = $(LIB_DIR)libft/
 LIBFT_FLAGS = -L./$(LIBFT_DIR) -lft
 LIBFT_FILE = $(LIBFT_DIR)libft.a
 
-INC_DIR_MAN = ./incs/mandatory/
-INC_DIR_BONUS = ./incs/bonus/
+INC_DIR_MAN = ./include/
+#INC_DIR_BONUS = ./incs/bonus/
 
 SRCS_MAN = $(addprefix $(SRCS_DIR), \
 	   )
