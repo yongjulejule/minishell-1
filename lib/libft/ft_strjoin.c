@@ -23,7 +23,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	idx_1 = 0;
 	str = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!str)
-		is_error("can't allocate memory", NULL, NULL, EXIT_FAILURE);
+		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	while (*(s1 + idx_1))
 	{
 		*(str + idx_1) = *(s1 + idx_1);
@@ -36,6 +36,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		idx_1++;
 		idx_2++;
 	}
-	*(str + idx_1) = '\0';
 	return (str);
 }

@@ -44,12 +44,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (idx > len)
 	{
 		str = ft_strdup("");
+		if (!str)
+			is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 		return (str);
 	}
-	str = (char *)malloc(len - idx + 2);
+	str = (char *)ft_calloc(len - idx + 2, sizeof(char));
 	if (!str)
-		return (NULL);
+		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	ft_memcpy(str, s1 + idx, len - idx + 1);
-	*(str + len - idx + 1) = '\0';
 	return (str);
 }
