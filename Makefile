@@ -37,6 +37,7 @@ INC_DIR_MAN	= ./include/
 
 SRCS_MAN	= $(addprefix $(SRCS_DIR), \
 			main.c\
+			parse.c\
 	   )
 
 SRCS_BONUS	= $(addprefix $(SRCS_DIR_BONUS), \

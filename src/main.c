@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	signal_handler(int signal)
+static void	signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -28,12 +28,15 @@ void	signal_handler(int signal)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line_read;
+	char	*one_line;
+	char	**cmds;
 
 	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
+	one_line = ft_strdup("");
 	while (1)
 	{
 		line_read = readline("🐘 esh > ");
@@ -43,6 +46,8 @@ int	main(int argc, char *argv[], char *envp[])
 			exit(EXIT_SUCCESS);
 		}
 		add_history(rl_line_buffer);
+		complete_a_line(&one_line, line_read);
+		cmds = split_cmds(&one_line);
 		free(line_read);
 	}
 	return (EXIT_SUCCESS);
