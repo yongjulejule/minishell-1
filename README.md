@@ -32,7 +32,9 @@
     - /includes
       - 세부 디렉토리
     - /src
-      - 세부 디렉토리
+      - parse
+      - binary
+      - builtin
 
 - [ ] 섹션 구분, 분업
 
