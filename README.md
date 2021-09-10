@@ -32,7 +32,9 @@
     - /includes
       - 세부 디렉토리
     - /src
-      - 세부 디렉토리
+      - parse
+      - binary
+      - builtin
 
 - [ ] 섹션 구분, 분업
 
@@ -46,7 +48,7 @@
 
 
 
-[FlowChart](https://viewer.diagrams.net/?tags={}&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Untitled%20Diagram.drawio#R1Vpbc5s4FP41mn1KByGuj4Y4TTub6e5kd3azbxgrQIMRBTm2%2B%2BtXEuKuJHaLY5pkJtLR%2Fft0jo6OAMjf7D8WQR7fkTVOga6t9wBdA13Xkaazf1xyqCRQh24liYpkLWWt4D75jqVQk9JtssZlJZMiSkhKk7zstQ5JluGQ9mRBUZBdv9ojSfuj5kGER4L7MEjH0n%2BSNY0rKUKa1hbc4iSK5dCG5cgmqyB8igqyzeSAQEfQ579V8SaoO5M9lXGwJruOCC0B8gtCaJXa7H2ccnRr3Kp2Ny%2BUNhMvcEaPabApPi%2FM6L8%2Fg8%2Ffbmn28GX19e%2FoSvbyHKRbCQhY%2BsBxgevwhHsNHIOVC6EHFgZYXgPX4hV4wgQLB%2BhWysb3VgVfIz1IYK1vW74w75Fk9KoUtC9YBWjnbO94bTlLRfz%2FFUsEm5ylokqsiREMPv6SjQzBwu9I2LwWwHPqqSE%2BU54wgAfPNCM%2BiwVwTJHQgOcKgCzgsemwuWjA0cR0POAigVRT6nM0F9U6XC5BN3J9js%2F%2FKnD5xDUVDC%2BPqyRG96Xc9UTnbBSdt5KILoEjqGX4Va0ci3fLO7cExqyhDVxNdrIQ6%2BLCJViYE0ErFaJprws1wnyjaqx4FycU3%2BdByEt3zPAwWUw3KctBOYo0JNBueusqQr2rcUHxviOSivERkw2mxYFV2ddaLZVUmjHDlfldaxOs2mTFHXOg21IYSDsUNX23qsgSUhtP0Ex9rJkSfL7%2BY%2BDXDQa%2FAntJYS24S7LkPhYzqkrYdFfD2kxWDTsFgRMQhsw%2BYVBBmG0pCIPoXIRBR8HYACZ%2BXnAwHpM09UlKCiFGcBVAzFbrlbQgT7hTomnWcnEjue3IH8UPb%2FGEaRhLYAmDPKEcElM7CefmfA1W9VS1V%2FGHrjEgANljBhxHwYCtn40B620GTrQtDCb6pUEVakPEozQoS7nrK%2FJqL6LPB1Tz8fpGelsbavCPhR6eC3pD4UeMj7ef42J6%2BGo3dmhM0BhPqCvwtM4Fp6l2y5hr4Qtnw%2Ba%2BDzuymb9TG74Z4tqcmBLXxqm%2BGK5jA4H3OHzGs4Wwgad2TJxLQwjHeozX7Eols6SgMYlIFqTLVur13YO2zu%2BE5BLSr5jSg8Q02FLSB5zhWhz%2B5e0%2FmHX2QXYnMtf7Xu4gc0Oi8D6hnW5Y7qEegaXbTnim7uNEckuyLUL8tq2kQRHh1zqUm5Wj%2B%2BpWKXAa0OS5f6GdnvexQ7raJuyins1WeQxtdsqDLqE8v7IS1NtuLlqgdnSqSAg%2Foh0ROfH4Xdnz6%2Bu7LdwgVWCAH%2BD1fV0RYPGq8AtnYrZaZs3viDLnoGVTa0ytCW%2BrjHEpldmauyzzbf3m8PjX7ae8fIb598bmdVTGj5N0zUR%2FFCTE7P40ydZWXGqPBP%2FlA8Tpb%2B0r%2FcitbZxta7tj%2B%2FPOQYb%2BNRf1rrnGmcMO9uBGATXr2Kvv2aIOdce%2FetTBfYGkGUcd0Ni05AXZ5O92WB6P2Qsuqa6Imr3vYYnGHk24WU9kk8%2BAoIkG7sbFgzVoHK0pk4i5DrPFsNl188FwHJkp6ZrdLdtHyPblSb5BTPCaNVN%2BhnscvSc%2FaidufMgFZZgkfKxiInP7Qw6ce5K5fdfIrhrI8Yv7XcBjKDNwhk%2FD8vLOMFK8uI1eHT5UPwr7YfsKYeeBtBWaipq%2FKep1H1sHZYLFq1LQqGg4tSE6%2BUEVDiPNuqbg19YU%2FDZh%2FemVRcGvDzyLfwXS%2B%2BZCGPTmEwlu2cUZwCq4XnuE8AiMpT5Lxl9dVOP4bZdVmEdGd1xF%2FGYwheH4Pt%2BEp%2FF8lC6%2Fwas5eKh1FS%2FluorWHzCBLNt%2BzyTKOp%2BNoeX%2F)
+[FlowChart](https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=MiniShell#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D15pffYmkiKE5KO0HpZuSJLfFW-IhJ4zwm%26export%3Ddownload)
 
 
 
