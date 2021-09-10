@@ -23,9 +23,11 @@ NAME		= minishell
 SRCS_DIR	= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
 
-LFLAGS		= -l readline
-LIB_DIR		= lib/
+# NOTE - referring to M1 rosetta arch -86_64 brew readline lib
+RDLN_LFLAGS	= -l readline -L /usr/local/opt/readline/lib
+RDLN_INC	= -I /usr/local/opt/readline/include/readline
 
+LIB_DIR		= lib/
 LIBFT_DIR	= $(LIB_DIR)libft/
 LIBFT_FLAGS	= -L./$(LIBFT_DIR) -lft
 LIBFT_FILE	= $(LIBFT_DIR)libft.a
@@ -61,7 +63,7 @@ endif
 all				: $(LIBFT_FILE) $(OBJ_FILES) $(NAME)
 
 $(NAME)			: $(LIBFT_FILE) $(OBJ_FILES)
-				$(CC) $(CFLAGS) $(OBJ_FILES) $(LFLAGS) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
+				$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
 
 .PHONY			: bonus
 bonus			:
