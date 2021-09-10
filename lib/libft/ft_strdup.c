@@ -20,14 +20,13 @@ char	*ft_strdup(const char *s1)
 
 	idx = 0;
 	len = ft_strlen(s1);
-	tmp = (char *)malloc(len + 1);
+	tmp = (char *)ft_calloc(len + 1, sizeof(char));
 	if (tmp == 0)
-		return (0);
+		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	while (idx < len)
 	{
 		*(tmp + idx) = *(s1 + idx);
 		idx++;
 	}
-	*(tmp + len) = '\0';
 	return (tmp);
 }
