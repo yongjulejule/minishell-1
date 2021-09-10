@@ -46,8 +46,7 @@ int	main(int argc, char *argv[], char *envp[])
 			exit(EXIT_SUCCESS);
 		}
 		add_history(rl_line_buffer);
-		complete_a_line(&one_line, line_read);
-		cmds = split_cmds(&one_line);
+		cmds = complete_a_line(&one_line, line_read);
 		free(line_read);
 	}
 	return (EXIT_SUCCESS);

@@ -12,27 +12,35 @@
 
 #include "../include/minishell.h"
 
+static void	is_qmbt(char *one_ln, char **qmbt)
+{
+	*qmbt = ft_strchr(one_ln, '`');
+	if (!(*qmbt) || (ft_strchr(one_ln, '\'')
+			&& *qmbt > ft_strchr(one_ln, '\'')))
+		*qmbt = ft_strchr(one_ln, '\'');
+	if (!(*qmbt) || (ft_strchr(one_ln, '"')
+			&& *qmbt > ft_strchr(one_ln, '"')))
+		*qmbt = ft_strchr(one_ln, '"');
+}
+
 static int	check_line_end(char **one_ln, char *ln)
 {
-	char	*is_qmbt;
+	char	*qmbt;
+	char	*to_free;
 	size_t	i;
 	int		cnt;
 
+	to_free = *one_ln;
 	*one_ln = ft_strjoin(*one_ln, ln);
-	is_qmbt = ft_strchr(*one_ln, '`');
-	if (!is_qmbt || (ft_strchr(*one_ln, '\'')
-			&& is_qmbt > ft_strchr(*one_ln, '\'')))
-		is_qmbt = ft_strchr(*one_ln, '\'');
-	if (!is_qmbt || (ft_strchr(*one_ln, '"')
-			&& is_qmbt > ft_strchr(*one_ln, '"')))
-		is_qmbt = ft_strchr(*one_ln, '"');
-	if (is_qmbt)
+	free(to_free);
+	is_qmbt(*one_ln, &qmbt);
+	if (qmbt)
 	{
 		cnt = 0;
 		i = -1;
 		while (++i < ft_strlen(*one_ln))
 		{
-			if (*(*one_ln + i) == *is_qmbt)
+			if (*(*one_ln + i) == *qmbt)
 				cnt++;
 		}
 		if (cnt % 2)
@@ -41,28 +49,33 @@ static int	check_line_end(char **one_ln, char *ln)
 	return (1);
 }
 
-void	complete_a_line(char **one_ln, char *ln_read)
+/* TODO
+- \\n ignore
+- improve split by ;|
+- error message when EOF has been given as the input to the unclosed line
+*/
+
+char	**complete_a_line(char **one_ln, char *ln_read)
 {
+	char	**cmds;
+
 	while (!check_line_end(one_ln, ln_read))
 	{
 		ln_read = readline("> ");
 		if (!ln_read)
 		{
 			write(STDERR_FILENO,
-				"🤣 esh: unexpected EOF while looking for matching `\"'", 56);
+				"🤣 esh: unexpected EOF while looking for matching `\"'\n", 56);
 			free(*one_ln);
 			*one_ln = ft_strdup("");
 			break ;
 		}
 		add_history(rl_line_buffer);
 	}
-}
-
-/* TODO - split a line of commands to each command */
-char	**split_cmds(char **one_ln)
-{
-	// printf("%s\n", *one_ln);
+	cmds = split_by_pipe_sc(*one_ln, ";|");
+	if (!cmds)
+		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	free(*one_ln);
 	*one_ln = ft_strdup("");
-	return (NULL);
+	return (cmds);
 }

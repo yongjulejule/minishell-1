@@ -44,7 +44,7 @@
 /* SECTION - structs */
 
 /* SECTION - function declarations */
-void	complete_a_line(char **one_ln, char *ln_read);
-char	**split_cmds(char **one_ln);
+char	**complete_a_line(char **one_ln, char *ln_read);
+char	**split_by_pipe_sc(char const *s, char *charset);
 
 #endif
