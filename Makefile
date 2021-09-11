@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/09 17:43:25 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/11 09:17:12 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,15 @@ SRCS_DIR	= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
-RDLN_LFLAGS	= -l readline -L /usr/local/opt/readline/lib
-RDLN_INC	= -I /usr/local/opt/readline/include/readline
+ARCH := $(shell arch)
+ifeq ($(ARCH), i386)
+	RDLN_LFLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
+	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
+endif
+ifeq ($(ARCH), arm64)
+	RDLN_LFLAGS	= -l readline -L /usr/local/opt/readline/lib
+	RDLN_INC	= -I /usr/local/opt/readline/include/readline
+endif
 
 LIB_DIR		= lib/
 LIBFT_DIR	= $(LIB_DIR)libft/
@@ -72,7 +79,7 @@ bonus			:
 				@make WITH_BONUS=1 $(NAME)
 
 %.o				: %.c
-				$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+				$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
 
 $(LIBFT_FILE)	:
 				@make -C $(LIBFT_DIR) bonus

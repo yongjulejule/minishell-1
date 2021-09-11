@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/09 17:45:38 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/11 09:18:49 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,18 @@
 # include <sys/ioctl.h>
 # include "../lib/libft/libft.h"
 
-/* NOTE - system default readline .h files
+/* NOTE - system default readline .h files */
 # include <readline/readline.h>
 # include <readline/history.h>
-*/
 
 /* NOTE - M1 Rosetta brew readline .h files */
-# include "/usr/local/opt/readline/include/readline/readline.h"
-# include "/usr/local/opt/readline/include/readline/history.h"
+//# include "/usr/local/opt/readline/include/readline/readline.h"
+//# include "/usr/local/opt/readline/include/readline/history.h"
 
 /* SECTION - structs */
 
 /* SECTION - function declarations */
 char	**complete_a_line(char **one_ln, char *ln_read);
 char	**split_by_pipe_sc(char const *s, char *charset);
-
+int		exec_cmd_main(char **cmds);
 #endif
