@@ -12,6 +12,16 @@
 
 #include "../include/minishell.h"
 
+static void	free_cmds(char **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+		free(cmds[i++]);
+	free(cmds);
+}
+
 static void	signal_handler(int signal)
 {
 	if (signal == SIGINT)
@@ -49,6 +59,7 @@ int	main(int argc, char *argv[], char *envp[])
 		cmds = complete_a_line(&one_line, line_read);
 		/* NOTE : Do we need error_code here? */
 		exec_cmd_main(cmds, envp);
+		free_cmds(cmds);
 		free(line_read);
 	}
 	return (EXIT_SUCCESS);

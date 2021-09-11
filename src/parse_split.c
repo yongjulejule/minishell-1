@@ -12,42 +12,44 @@
 
 #include "../include/minishell.h"
 
-static int	check_chr(char c, char *charset)
+static char	*skip_qmbt(char *str)
 {
-	if (c == '\0')
-		return (0);
-	while (c != *charset && *charset != '\0')
-		charset++;
-	if (*charset != '\0')
-		return (1);
-	return (0);
-}
-
-static int	get_size(char *str, char *charset)
-{
-	int		size;
 	char	qmbt;
 
-	size = 0;
+	qmbt = *str;
+	if (is_charset(qmbt, "\"'`"))
+	{
+		str++;
+		while (*str && *str != qmbt)
+			str++;
+	}
+	return (str);
+}
+
+static int	get_size(char *str, char *charset, int size)
+{
 	if (!str)
-		return (size);
+		return (0);
 	while (*str)
 	{
-		if (!check_chr(*str, charset))
+		while (*str && !is_charset(*str, "\"'`") && !is_charset(*str, charset))
+			str++;
+		str = skip_qmbt(str);
+		if (is_charset(*str, charset))
 		{
-			while (*str && !check_chr(*str, charset))
+			size += 2;
+			str++;
+			while (*str && is_charset(*str, charset))
 			{
-				qmbt = *str;
-				while (is_charset(qmbt, "\"'`") && *str && *str != qmbt)
-					str++;
 				str++;
+				size++;
 			}
 		}
-		size++;
 		if (*str != '\0')
 			str++;
 	}
-	size++;
+	if (!is_charset(*(str - 1), charset))
+		size++;
 	return (size);
 }
 
@@ -66,7 +68,7 @@ static char	**alloc_mem(char **tmp, char *start_addr, int len, int idx)
 	return (tmp);
 }
 
-static	char	**get_strs(char *s, char *charset, char **tmp, int idx)
+static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 {
 	int		i;
 	int		start;
@@ -75,10 +77,10 @@ static	char	**get_strs(char *s, char *charset, char **tmp, int idx)
 	i = 0;
 	while (*(s + i))
 	{
-		if (!check_chr(*(s + i), charset))
+		if (!is_charset(*(s + i), charset))
 		{
 			start = i;
-			while (*(s + i) && !check_chr(*(s + i), charset))
+			while (*(s + i) && !is_charset(*(s + i), charset))
 			{
 				qmbt = *(s + i);
 				while (is_charset(qmbt, "\"'`")
@@ -96,10 +98,15 @@ static	char	**get_strs(char *s, char *charset, char **tmp, int idx)
 char	**split_by_pipe_sc(char const *s, char *charset)
 {
 	char	**tmp;
+	int		size;
 
 	if (!s)
 		return (NULL);
-	tmp = (char **)ft_calloc(get_size((char *)s, charset), sizeof(char *));
+	size = 1;
+	if (*s == '\0' || is_charset(*s, charset))
+		size = 0;
+	tmp = (char **)ft_calloc(get_size((char *)s, charset, size),
+			sizeof(char *));
 	if (!tmp)
 		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	return (get_strs((char *)s, charset, tmp, 0));
