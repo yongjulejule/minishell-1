@@ -50,7 +50,6 @@ static int	get_size(char *str, char *charset, int size)
 	}
 	if (!is_charset(*(str - 1), charset))
 		size++;
-	printf("%d\n", size);
 	return (size);
 }
 

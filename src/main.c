@@ -58,8 +58,8 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(rl_line_buffer);
 		cmds = complete_a_line(&one_line, line_read);
 		/* NOTE : Do we need error_code here? */
-		free_cmds(cmds);
 		exec_cmd_main(cmds, envp);
+		free_cmds(cmds);
 		free(line_read);
 	}
 	return (EXIT_SUCCESS);
