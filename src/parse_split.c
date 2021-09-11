@@ -62,7 +62,7 @@ static char	**alloc_mem(char **tmp, char *start_addr, int len, int idx)
 		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	ft_strlcpy(tmp[idx], start_addr, len);
 	to_free = tmp[idx];
-	tmp[idx] = ft_strtrim(tmp[idx], " ");
+	tmp[idx] = ft_strtrim(tmp[idx], " \t\r\v\f");
 	free(to_free);
 	to_free = NULL;
 	return (tmp);
