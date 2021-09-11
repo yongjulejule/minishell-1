@@ -25,27 +25,29 @@ static void	is_qmbt(char *one_ln, char **qmbt)
 
 static int	check_line_end(char **one_ln, char *ln)
 {
-	char	*qmbt;
 	char	*to_free;
-	size_t	i;
+	char	*qmbt;
 	int		cnt;
+	size_t	i;
 
 	to_free = *one_ln;
 	*one_ln = ft_strjoin(*one_ln, ln);
 	free(to_free);
 	is_qmbt(*one_ln, &qmbt);
-	if (qmbt)
+	cnt = 0;
+	i = -1;
+	while (qmbt && ++i < ft_strlen(*one_ln))
 	{
-		cnt = 0;
-		i = -1;
-		while (++i < ft_strlen(*one_ln))
+		if (*(*one_ln + i) == *qmbt)
+			cnt++;
+		if (cnt % 2 == 0 && is_charset(*(*one_ln + i), ";|"))
 		{
-			if (*(*one_ln + i) == *qmbt)
-				cnt++;
+			cnt = 0;
+			is_qmbt(*one_ln + i, &qmbt);
 		}
-		if (cnt % 2)
-			return (0);
 	}
+	if (cnt % 2)
+		return (0);
 	return (1);
 }
 
