@@ -30,8 +30,8 @@ ifeq ($(ARCH), i386)
 	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
 endif
 ifeq ($(ARCH), arm64)
-	RDLN_LFLAGS	= -l readline -L /usr/local/opt/readline/lib
-	RDLN_INC	= -I /usr/local/opt/readline/include/readline
+	RDLN_LFLAGS	= -l readline -L /opt/homebrew/opt/readline/lib
+	RDLN_INC	= -I /opt/homebrew/opt/readline/include
 endif
 
 LIB_DIR		= lib/
