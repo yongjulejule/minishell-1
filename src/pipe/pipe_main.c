@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/11 10:46:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 15:48:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_cmd_main(char **cmds, char **envp)
 			args = (t_args *)ft_calloc(1, sizeof(t_args));
 			args->cnt = cmd_cnt;
 			build_structure(&cmds[cmd_start], envp, args);
-			breed_process(args);
+//			breed_process(args);
 			cmd_start = cmd_end + 1;
 //			free_structure();
 			cmd_cnt = 0;
