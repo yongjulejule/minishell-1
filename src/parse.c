@@ -46,7 +46,7 @@ static int	check_line_end(char **one_ln, char *ln)
 			is_qmbt(*one_ln + i, &qmbt);
 		}
 	}
-	if (cnt % 2)
+	if (cnt % 2 || *(*one_ln + ft_strlen(*one_ln) - 1) == '|')
 		return (0);
 	return (1);
 }
