@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:40:14 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:52:33 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 09:48:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ typedef struct s_cmd
 {
 	int				is_heredoc;
 	int				is_append;
+	int				rdr_to;
+	int				rdr_from;
 	pid_t			pid;
 	char			*limiter;
 	char			*file[2];
 	char			**params;
 	int				*pipe_fd;
-	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_args
@@ -70,7 +71,7 @@ void	destroy_pipe(int *pipe_fd);
 
 /*Preprocessing*/
 
-void	build_structure(int argc, char **argv, char **envp, t_args *cmds);
+void	build_structure(char **cmds, char **envp, t_args *args);
 void	get_params(char **argv, t_args *args);
 void	breed_process(t_args *args);
 

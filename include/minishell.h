@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/11 09:18:49 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 10:04:45 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@
 /* SECTION - function declarations */
 char	**complete_a_line(char **one_ln, char *ln_read);
 char	**split_by_pipe_sc(char const *s, char *charset);
-int		exec_cmd_main(char **cmds);
+int		exec_cmd_main(char **cmds, char **envp);
 #endif
