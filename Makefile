@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/11 10:06:43 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/11 15:30:32 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ NAME		= minishell
 
 SRCS_DIR	= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
+SRCS_PIPE_DIR = ./src/pipe/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
 ARCH := $(shell arch)
@@ -42,13 +43,29 @@ LIBFT_FILE	= $(LIBFT_DIR)libft.a
 INC_DIR_MAN	= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
 
+SRCS_PIPE	= $(addprefix $(SRCS_PIPE_DIR), \
+			breed_process.c\
+			check_validity.c\
+			file_redirection.c\
+			get_next_line.c\
+			get_next_line_utils.c\
+			get_params.c\
+			get_rdr_info.c\
+			handle_error.c\
+			parse_commend.c\
+			pipe_main.c\
+			string_utils.c\
+			wait_info.c\
+			waiting.c\
+			  )
+
 SRCS_MAN	= $(addprefix $(SRCS_DIR), \
 			main.c\
 			parse.c\
 			parse_split.c\
-			pipe/pipe_main.c\
-	   )
+			)
 
+SRCS_MAN	+= $(SRCS_PIPE)
 SRCS_BONUS	= $(addprefix $(SRCS_DIR_BONUS), \
 	   )
 

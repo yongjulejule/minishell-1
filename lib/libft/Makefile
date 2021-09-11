@@ -39,7 +39,8 @@ SRCS = ft_memset.c\
 	   ft_putendl_fd.c\
 	   ft_putnbr_fd.c\
 	   ft_strlcat.c\
-	   ft_strsetlen.c
+	   ft_strsetlen.c\
+	   ft_strrnstr.c
 
 OBJS = ${SRCS:.c=.o}
 

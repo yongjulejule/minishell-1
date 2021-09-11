@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 15:03:11 by yongjule          #+#    #+#             */
-/*   Updated: 2021/07/12 13:46:14 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 12:27:56 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	idx = 0;
 	substring = (char *)ft_calloc(min_len(len,
 				ft_strlen(s) - start) + 1, sizeof(char));
-	if (!substring)
-		exit(EXIT_FAILURE);
 	while (idx < len && (*(s + start + idx) != 0))
 	{
 		*(substring + idx) = *(s + start + idx);
