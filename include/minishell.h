@@ -31,14 +31,8 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 # include "../lib/libft/libft.h"
-
-/* NOTE - system default readline .h files */
 # include <readline/readline.h>
 # include <readline/history.h>
-
-/* NOTE - M1 Rosetta brew readline .h files */
-// # include "/opt/homebrew/opt/readline/include/readline/readline.h"
-// # include "/opt/homebrew/opt/readline/include/readline/history.h"
 
 /* SECTION - structs */
 
