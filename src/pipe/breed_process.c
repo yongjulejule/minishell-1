@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 18:42:55 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 19:10:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@ static void	execute_pipe_cmd(t_args *args, int cmd)
 		rdr_stdout_to_file(args->cmd[cmd].file[1], &args->cmd[cmd]);
 	else if (args->cnt > cmd + 1)
 		connect_pipe_fd(args->cmd[cmd].pipe_fd, STDOUT_FILENO);
-//	else
-//		destroy_pipe(args->cmd[cmd].pipe_fd);
 	if (args->cmd[cmd].rdr_from)
 		rdr_file_to_stdin(args->cmd[cmd].file[0], &args->cmd[cmd]);
-	else if (cmd != 0)
+	else if (cmd > 0)
 		connect_pipe_fd(args->cmd[cmd - 1].pipe_fd, STDIN_FILENO);
-//	else
-//		destroy_pipe(args->cmd[cmd - 1].pipe_fd);
 	execve(args->cmd[cmd].params[0], args->cmd[cmd].params, args->envp);
 	if (errno == E_ACCESS || args->cmd[cmd].params[0] == NULL)
 		is_error(NULL, "permission denied: ", args->cmd[cmd].params[0], X_ERR);
@@ -51,9 +47,9 @@ static void	execute_processes(t_args *args, int cmd)
 		execute_pipe_cmd(args, cmd);
 	else if (pid > 0)
 	{
-		if (!cmd)
+		if (cmd > 0 && args->cnt > 1)
 			destroy_pipe(args->cmd[cmd - 1].pipe_fd);
-		if (args->cnt == cmd)
+		if (args->cnt - 1 == cmd)
 			wait_process(args);
 		execute_processes(args, ++cmd);
 	}

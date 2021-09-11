@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/11 18:26:42 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 19:09:49 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	wait_process(t_args *args)
 	execed_pid = 0;
 	while (execed_pid != -1)
 	{
-		cmd = 1;
+		cmd = 0;
 		while (cmd < args->cnt)
 		{
 			execed_pid = wait(&status);
