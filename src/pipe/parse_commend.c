@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 13:36:00 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:36:06 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 10:15:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	allocate_pipe_memory(t_args *args)
 	}
 }
 
-static void	init_structure(int argc, char **argv, t_args *args)
+static void	init_pipe_structure(t_args *args)
 {
 	if (!ft_memcmp(argv[1], "here_doc", ft_strlen("here_doc") + 1))
 	{
@@ -49,24 +49,6 @@ static void	init_structure(int argc, char **argv, t_args *args)
 	args->pid = (pid_t *)ft_calloc(argc - 3, sizeof(pid_t));
 }
 
-static	void	get_path(char **envp, t_args *args)
-{
-	int	env_str_idx;
-
-	env_str_idx = 0;
-	while (envp[env_str_idx])
-	{
-		if (!ft_strncmp("PATH=", envp[env_str_idx], 5))
-			break ;
-		env_str_idx++;
-	}
-	if (envp[env_str_idx] == NULL)
-		is_error("pipex: ", "path envp not found", EXIT_FAILURE);
-	args->env_path = ft_split(&envp[env_str_idx][5], ':');
-	if (args->env_path == NULL)
-		is_error("pipex: ", "error while split", EXIT_FAILURE);
-}
-
 void	make_cmds(t_args *args)
 {
 	int	cmd_idx;
@@ -79,13 +61,21 @@ void	make_cmds(t_args *args)
 	}
 }
 
-void	build_structure(int argc, char **argv, char **envp, t_args *args)
+static void	init_structure(char **cmds, t_args *args)
 {
-	int	cmd_idx;
+	int	cnt;
+}
 
-	cmd_idx = 2;
-	init_structure(argc, argv, args);
-	get_path(envp, args);
+void	build_structure(char **cmds, char **envp, t_args *args)
+{
+	extern int	errno;
+
+	init_structure(cmds, args);
+	init_pipe_structure(args);
+	args->env_path = getenv("PATH");
+	args->envp = envp;
+	if (!args->env_path)
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	get_params(argv, args);
 	make_cmds(args);
 	if (args->is_heredoc)
