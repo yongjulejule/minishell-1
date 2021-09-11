@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 14:04:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 17:07:15 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	get_rdr_to_append_info(t_cmd *cmd)
 {
 	char	*tmp;
 
-	tmp = ft_strrnstr(cmd->params[0], ">>", ft_strlen(cmd->params[0]));
+	tmp = ft_strrnstr(cmd->params[0], ">>", ft_strlen(cmd->params[0]) - 1);
 	if (!tmp)
 		return ;
 	cmd->is_append = 1;

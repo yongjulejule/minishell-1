@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:20:24 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 18:26:42 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	wait_process(t_args *args)
 	while (execed_pid != -1)
 	{
 		cmd = 1;
-		while (cmd < args->argc - 3)
+		while (cmd < args->cnt)
 		{
 			execed_pid = wait(&status);
-			if (execed_pid == args->pid[args->argc - 4])
+			if (execed_pid == args->cmd[args->cnt - 1].pid)
 				exit_code = get_exit_status(status);
 			cmd++;
 		}

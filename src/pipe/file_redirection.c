@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/08 09:37:24 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/10 16:20:24 by jun              ###   ########.fr       */
+/*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
+/*   Updated: 2021/09/11 18:24:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,26 @@ void	connect_pipe_fd(int *pipe_fd, int pipe_status)
 	extern int	errno;
 
 	if (dup2(pipe_fd[pipe_status], pipe_status) == -1)
-		is_error("pipex: ", strerror(errno), EXIT_FAILURE);
+		is_error(NULL, "pipe: ", strerror(errno), EXIT_FAILURE);
 	destroy_pipe(pipe_fd);
 }
 
-static void	make_tmp_heredoc(char *file, t_args *args)
+static void	make_tmp_heredoc(char *file, t_cmd *cmd)
 {
 	int			fd;
 	int			size;
 	char		*line;
 	extern int	errno;
 
-	size = ft_strlen(args->limiter);
+	size = ft_strlen(cmd->limiter);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
-		is_error("pipex: ", strerror(errno), EXIT_FAILURE);
+		is_error(NULL, "pipe: ", strerror(errno), EXIT_FAILURE);
 	while (1)
 	{
-		ft_putstr_fd("heredoc>", 1);
+		ft_putstr_fd(">", 1);
 		get_next_line(0, &line);
-		if (!ft_memcmp(args->limiter, line, size))
+		if (!ft_memcmp(cmd->limiter, line, size))
 		{
 			free(line);
 			line = NULL;
@@ -55,43 +55,37 @@ static void	make_tmp_heredoc(char *file, t_args *args)
 	}
 }
 
-void	rdr_file_to_stdin(char *file, t_args *args)
+void	rdr_file_to_stdin(char *file, t_cmd *cmd)
 {
 	int			fd;
 	extern int	errno;
 
-	if (args->is_heredoc == 1)
-		make_tmp_heredoc(file, args);
+	if (cmd->is_heredoc == 1)
+		make_tmp_heredoc(file, cmd);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_putstr_fd("zsh: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(file, 2);
-		exit(EXIT_FAILURE);
-	}
+		is_error(strerror(errno), ": ", file, EXIT_FAILURE);
 	if (dup2(fd, STDIN_FILENO) == -1)
-		is_error("pipex: ", strerror(errno), EXIT_FAILURE);
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
-	if (args->is_heredoc == 1)
+	if (cmd->is_heredoc == 1)
 		unlink(file);
 	return ;
 }
 
-void	rdr_stdout_to_file(char *file, t_args *args)
+void	rdr_stdout_to_file(char *file, t_cmd *cmd)
 {
 	int			fd;
 	extern int	errno;
 
-	if (args->is_heredoc != 1)
+	if (cmd->is_heredoc != 1)
 		fd = open(file, O_RDWR | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		is_error("pipex: ", strerror(errno), EXIT_FAILURE);
+		is_error(strerror(errno), ": ", file, EXIT_FAILURE);
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		is_error("pipex: ", strerror(errno), EXIT_FAILURE);
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
 	return ;
 }

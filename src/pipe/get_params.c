@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_params.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/11 16:14:23 by jun               #+#    #+#             */
-/*   Updated: 2021/09/11 15:19:06 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
+/*   Updated: 2021/09/11 17:26:07 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	get_params(t_args *args)
 	int	idx;
 
 	idx = 0;
-	while (&args->cmd[idx])
+	while (args->cmd[idx].params)
 	{
 		get_each_params(args->cmd[idx].params[0], &args->cmd[idx]);
 		idx++;
