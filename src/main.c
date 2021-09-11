@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/11 15:53:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 16:11:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(rl_line_buffer);
 		cmds = complete_a_line(&one_line, line_read);
 		/* NOTE : Do we need error_code here? */
-//		exec_cmd_main(cmds, envp);
 		free_cmds(cmds);
+		exec_cmd_main(cmds, envp);
 		free(line_read);
 	}
 	return (EXIT_SUCCESS);
