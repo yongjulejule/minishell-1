@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlastnstr.c                                   :+:      :+:    :+:   */
+/*   ft_strrnstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 11:40:24 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 11:49:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 18:11:54 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	*ft_strrnstr(const char *haystack, const char *needle, size_t len)
 		return (NULL);
 	if (!needle || (*needle == '\0'))
 		return ((char *)haystack);
-	if (len == 0)
-		return (NULL);
 	idx = 0;
 	size = ft_strlen(needle);
-	while (0 <= len - size)
+	if (len == 0 || size > len)
+		return (NULL);
+	while (0 < len - size)
 	{
 		if (!ft_strncmp((char *)(haystack + len - size),
 					(char *)(needle), size))
