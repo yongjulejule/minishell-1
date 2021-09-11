@@ -12,15 +12,32 @@
 
 #include "../include/minishell.h"
 
+char	*strchr_skip_bslash(const char *s, int c)
+{
+	unsigned char	*str;
+
+	str = (unsigned char *)s;
+	while (*str != (unsigned char)c && (*str != '\0'))
+	{
+		if (*str == '\\')
+			str++;
+		if (*str != '\0')
+			str++;
+	}
+	if (*str != (unsigned char)c)
+		return (NULL);
+	return ((char *)str);
+}
+
 static void	is_qmbt(char *one_ln, char **qmbt)
 {
-	*qmbt = ft_strchr(one_ln, '`');
-	if (!(*qmbt) || (ft_strchr(one_ln, '\'')
-			&& *qmbt > ft_strchr(one_ln, '\'')))
-		*qmbt = ft_strchr(one_ln, '\'');
-	if (!(*qmbt) || (ft_strchr(one_ln, '"')
-			&& *qmbt > ft_strchr(one_ln, '"')))
-		*qmbt = ft_strchr(one_ln, '"');
+	*qmbt = strchr_skip_bslash(one_ln, '`');
+	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '\'')
+			&& *qmbt > strchr_skip_bslash(one_ln, '\'')))
+		*qmbt = strchr_skip_bslash(one_ln, '\'');
+	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '"')
+			&& *qmbt > strchr_skip_bslash(one_ln, '"')))
+		*qmbt = strchr_skip_bslash(one_ln, '"');
 }
 
 static void	cnt_skip_qmbt(int *cnt, char *one_ln, char *qmbt)
@@ -28,7 +45,7 @@ static void	cnt_skip_qmbt(int *cnt, char *one_ln, char *qmbt)
 	size_t	i;
 
 	i = 0;
-	while (qmbt && i < ft_strlen(one_ln))
+	while (qmbt && *(one_ln + i))
 	{
 		if (*(one_ln + i) == *qmbt)
 			(*cnt)++;
@@ -37,7 +54,14 @@ static void	cnt_skip_qmbt(int *cnt, char *one_ln, char *qmbt)
 			*cnt = 0;
 			is_qmbt(one_ln + i, &qmbt);
 		}
-		i++;
+		if (*(one_ln + i) == '\\')
+		{
+			i++;
+			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
+				i++;
+		}
+		else if (*(one_ln + i) != '\0')
+			i++;
 	}
 }
 
