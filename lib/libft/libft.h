@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/09 14:36:04 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/11 11:50:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void			ft_putnbr_fd(int n, int fd);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			**ft_split_charset(char const *s, char *charset);
 int				ft_strsetlen(char **strs);
+char			*ft_strrnstr(const char *haystack, const char *needle,
+					size_t len);
 
 /*
 ** To handle List

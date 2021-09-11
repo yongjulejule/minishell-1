@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:31:23 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/10 16:35:47 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 15:51:46 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	re_alloc(t_file *cur, int size)
 	idx = 0;
 	tmp = (char *)malloc(size + 1);
 	if (!tmp)
-		is_error("gnl: ", "Error during malloc", EXIT_FAILURE);
+		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	while (idx < cur->size)
 	{
 		*(tmp + idx) = *(cur->text + idx);

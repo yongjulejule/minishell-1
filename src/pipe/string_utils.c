@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:18:48 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:32:01 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 15:19:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	split_once(char *str, char *charset)
 	return (idx);
 }
 
-int	make_string(t_args *args, char *cmdset, int c_idx, int p_idx)
+int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 {
 	int	len;
 	int	start;
@@ -37,19 +37,19 @@ int	make_string(t_args *args, char *cmdset, int c_idx, int p_idx)
 	if (is_charset(cmdset[start], "'"))
 	{
 		len = split_once(&cmdset[start], "'");
-		args->params[c_idx][p_idx]
+		cmd->params[p_idx]
 			= ft_substr(cmdset, start + 1, len - 1);
 	}
 	else if (is_charset(cmdset[start], "\""))
 	{
 		len = split_once(&cmdset[start], "\"");
-		args->params[c_idx][p_idx]
+		cmd->params[p_idx]
 			= ft_substr(cmdset, start + 1, len - 1);
 	}
 	else
 	{
 		len = split_once(&cmdset[start], "\t\n\v\f\r ");
-		args->params[c_idx][p_idx] = ft_substr(cmdset, start, len);
+		cmd->params[p_idx] = ft_substr(cmdset, start, len);
 	}
 	return (len);
 }

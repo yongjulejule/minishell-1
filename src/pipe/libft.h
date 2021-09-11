@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/07/13 13:46:50 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 11:50:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isprint(int c);
 int				is_charset(char c, char *charset);
+void			is_error(char *str_1, char *str_2, char *err_msg, int exit_status);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 void			*ft_calloc(size_t count, size_t size);
@@ -58,6 +60,10 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
+char			**ft_split_charset(char const *s, char *charset);
+int				ft_strsetlen(char **strs);
+char			*ft_strrnstr(const char *haystack, const char *needle,
+					size_t len);
 
 /*
 ** To handle List

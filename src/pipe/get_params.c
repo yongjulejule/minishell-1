@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 16:14:23 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:35:51 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 15:19:06 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,51 +36,44 @@ static	int	count_params(char *cmdset)
 	return (size);
 }
 
-static	void	parse_param(t_args *args, char *cmdset, int c_idx, int p_idx)
+static	void	parse_param(char *cmdset, t_cmd *cmd)
 {
 	int	start;
 	int	len;
 	int	size;
+	int	p_idx;
 
 	size = count_params(cmdset);
 	start = 0;
+	p_idx = 0;
 	while (p_idx < size)
 	{
 		while (is_charset(cmdset[start], "\t\n\v\f\r "))
 			start++;
-		len = make_string(args, &cmdset[start], c_idx, p_idx);
+		len = make_string(&cmdset[start], cmd, p_idx);
 		start = len + start + 1;
 		p_idx++;
 	}
 }
 
-static	void	get_each_params(char *cmdset, int cmd_idx, t_args *args)
+static	void	get_each_params(char *cmdset, t_cmd *cmd)
 {
-	int	param_idx;
 	int	size;
 
-	param_idx = 0;
 	size = count_params(cmdset);
-	args->params[cmd_idx]
-		= (char **)ft_calloc(sizeof(char *), size + 1);
-	parse_param(args, cmdset, cmd_idx, param_idx);
+	/* NOTE : can occur leak here */
+	cmd->params = (char **)ft_calloc(sizeof(char *), size + 1);
+	parse_param(cmdset, cmd);
 }
 
-void	get_params(char **argv, t_args *args)
+void	get_params(t_args *args)
 {
 	int	idx;
 
 	idx = 0;
-	while (idx < args->argc - 3)
+	while (&args->cmd[idx])
 	{
-		if (args->is_heredoc == 0)
-			get_each_params(argv[idx + 2], idx, args);
-		else
-		{
-			if (idx == args->argc - 4)
-				break ;
-			get_each_params(argv[idx + 3], idx, args);
-		}
+		get_each_params(args->cmd[idx].params[0], &args->cmd[idx]);
 		idx++;
 	}
 }

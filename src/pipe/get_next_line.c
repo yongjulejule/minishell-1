@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:24:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/10 16:20:24 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/11 15:51:03 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	read_fd(int fd, t_file *cur)
 		return (0);
 	cur->size += size;
 	if (size == -1 || !re_alloc(cur, cur->size + BUFFER_SIZE))
-		is_error("gnl: ", "error while read", EXIT_FAILURE);
+		is_error(NULL, NULL, "error while read", EXIT_FAILURE);
 	return (size);
 }
 
@@ -63,7 +63,7 @@ int	get_next_line(int fd, char **line)
 	if (!root)
 		root = init_fd(fd);
 	if (BUFFER_SIZE < 1 || !line)
-		is_error("gnl: ", "error while read", EXIT_FAILURE);
+		is_error(NULL, NULL, "error while read", EXIT_FAILURE);
 	cur = root;
 	while (1)
 	{
