@@ -1,5 +1,22 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
+#    Updated: 2021/09/11 16:52:44 by yongjule         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+ifdef DEBUG
+	CFLAGS = -g3 -fsanitize=address
+#	CFLAGS = -g
+else
+	CFLAGS = -Wall -Wextra -Werror
+endif
 NAME = libft.a
 SRCS = ft_memset.c\
 	   ft_memcpy.c\

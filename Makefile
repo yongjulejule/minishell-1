@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/11 15:50:13 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/11 18:25:16 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,11 +43,11 @@ LIBFT_FILE	= $(LIBFT_DIR)libft.a
 INC_DIR_MAN	= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
 
-#			breed_process.c
-#			file_redirection.c
-#			wait_info.c
-#			waiting.c
 SRCS_PIPE	= $(addprefix $(SRCS_PIPE_DIR), \
+			breed_process.c\
+			file_redirection.c\
+			wait_info.c\
+			waiting.c\
 			check_validity.c\
 			get_next_line.c\
 			get_next_line_utils.c\
@@ -124,4 +124,5 @@ re_bonus		: fclean bonus
 
 .PHONY			: debug
 debug			: 
+				@make -C $(LIBFT_DIR) DEBUG=1
 				@make DEBUG=1
