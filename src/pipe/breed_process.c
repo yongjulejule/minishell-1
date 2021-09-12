@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 19:10:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/12 11:32:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	execute_processes(t_args *args, int cmd)
 		execute_pipe_cmd(args, cmd);
 	else if (pid > 0)
 	{
-		if (cmd > 0 && args->cnt > 1)
+		if (args->cnt > 1)
 			destroy_pipe(args->cmd[cmd - 1].pipe_fd);
 		if (args->cnt - 1 == cmd)
 			wait_process(args);
