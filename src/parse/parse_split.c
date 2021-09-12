@@ -12,67 +12,81 @@
 
 #include "parse.h"
 
-static char	*skip_qmbt(char *str)
+static int	skip_normal_bslash(char *s, char *charset, int i)
 {
-	char	qmbt;
-
-	qmbt = *str;
-	if (is_charset(qmbt, "\"'`"))
+	while (*(s + i) && !is_charset(*(s + i), "\"'`")
+		&& !is_charset(*(s + i), charset))
 	{
-		str++;
-		while (*str && *str != qmbt)
-			str++;
+		if (*(s + i) == '\\')
+		{
+			i++;
+			if (is_charset(*(s + i), "\\\"`';|"))
+				i++;
+		}
+		else if (*(s + i))
+			i++;
 	}
-	return (str);
+	return (i);
 }
 
-static int	get_size(char *str, char *charset, int size)
+static int	get_size(char *s, char *charset, int size)
 {
-	if (!str)
+	int	i;
+
+	i = 0;
+	if (!s)
 		return (0);
-	while (*str)
+	while (*(s + i))
 	{
-		while (*str && !is_charset(*str, "\"'`") && !is_charset(*str, charset))
-			str++;
-		str = skip_qmbt(str);
-		if (is_charset(*str, charset))
+		i = skip_normal_bslash(s, charset, i);
+		i = skip_qmbt(s, i);
+		if (is_charset(*(s + i), charset))
 		{
 			size += 2;
-			str++;
-			while (*str && is_charset(*str, charset))
+			i++;
+			while (*(s + i) && is_charset(*(s + i), charset))
 			{
-				str++;
+				i++;
 				size++;
 			}
 		}
-		if (*str != '\0')
-			str++;
+		if (*(s + i) != '\0' && *(s + i) != '\\')
+			i++;
 	}
-	if (!is_charset(*(str - 1), charset))
+	if (!is_charset(*(s + i - 1), charset) || check_end_esc(s, charset))
 		size++;
 	return (size);
 }
 
-static char	**alloc_mem(char **tmp, char *start_addr, int len, int idx)
+static int	get_end(char *s, char *charset, int i)
 {
-	char	*to_free;
+	char	qmbt;
 
-	tmp[idx] = (char *)ft_calloc(len, sizeof(char));
-	if (!tmp[idx])
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
-	ft_strlcpy(tmp[idx], start_addr, len);
-	to_free = tmp[idx];
-	tmp[idx] = ft_strtrim(tmp[idx], " \t\r\v\f");
-	free(to_free);
-	to_free = NULL;
-	return (tmp);
+	while (*(s + i) && !is_charset(*(s + i), charset))
+	{
+		if (*(s + i) != '\\')
+		{
+			qmbt = *(s + i++);
+			while (is_charset(qmbt, "\"'`")
+				&& *(s + i) && *(s + i) != qmbt)
+				i++;
+			if (is_charset(qmbt, "\"'`"))
+				i++;
+		}
+		else
+		{
+			i++;
+			if (is_charset(*(s + i), "\\;|'\"`"))
+				i++;
+		}
+	}
+	return (i);
 }
 
 static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 {
 	int		i;
 	int		start;
-	char	qmbt;
 
 	i = 0;
 	while (*(s + i))
@@ -80,13 +94,7 @@ static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 		if (!is_charset(*(s + i), charset))
 		{
 			start = i;
-			while (*(s + i) && !is_charset(*(s + i), charset))
-			{
-				qmbt = *(s + i);
-				while (is_charset(qmbt, "\"'`")
-					&& (s + ++i) && *(s + i) != qmbt);
-				i++;
-			}
+			i = get_end(s, charset, i);
 			tmp = alloc_mem(tmp, s + start, i - start + 1, idx++);
 		}
 		if (*(s + i) != '\0')

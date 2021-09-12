@@ -41,6 +41,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*one_line;
 	char	**cmds;
 
+	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);

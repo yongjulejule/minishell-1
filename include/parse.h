@@ -24,6 +24,9 @@
 /* FUNCTIONS */
 
 char	**split_by_pipe_sc(char const *s, char *charset);
-
-
+int		end_by_pipe(char *one_ln, char *to_free);
+int		end_by_esc(char *one_ln);
+int		skip_qmbt(char *str, int idx);
+int		check_end_esc(char *str, char *charset);
+char	**alloc_mem(char **tmp, char *start_addr, int len, int idx);
 #endif

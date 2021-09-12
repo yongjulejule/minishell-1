@@ -12,7 +12,7 @@
 
 #include "parse.h"
 
-char	*strchr_skip_bslash(const char *s, int c)
+static char	*strchr_skip_bslash(const char *s, int c)
 {
 	unsigned char	*str;
 
@@ -51,9 +51,10 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 	{
 		if (*(one_ln + i) == *qmbt)
 			cnt++;
-		if (cnt % 2 == 0 && is_charset(*(one_ln + i), ";|"))
+		if (cnt && cnt % 2 == 0)
 		{
 			cnt = 0;
+			i++;
 			is_qmbt(one_ln + i, &qmbt);
 		}
 		if (*(one_ln + i) == '\\')
@@ -62,7 +63,7 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
 				i++;
 		}
-		else if (*(one_ln + i) != '\0')
+		if (*(one_ln + i) != '\0' && *(one_ln + i) != '\\')
 			i++;
 	}
 	return (cnt);
@@ -79,21 +80,10 @@ static int	check_line_end(char **one_ln, char *ln)
 	free(to_free);
 	is_qmbt(*one_ln, &qmbt);
 	cnt = cnt_skip_qmbt(*one_ln, qmbt);
-	to_free = ft_strtrim(*one_ln, " \t\r\v\f");
-	if (cnt % 2 || *(to_free + ft_strlen(to_free) - 1) == '|')
-	{
-		free(to_free);
+	if (cnt % 2 || !end_by_pipe(*one_ln, to_free) || !end_by_esc(*one_ln))
 		return (0);
-	}
-	free(to_free);
 	return (1);
 }
-
-/* TODO
-- \\n ignore
-- improve split by ;|
-- error message when EOF has been given as the input to the unclosed line
-*/
 
 char	**complete_a_line(char **one_ln, char *ln_read)
 {
@@ -113,7 +103,7 @@ char	**complete_a_line(char **one_ln, char *ln_read)
 		}
 		add_history(rl_line_buffer);
 	}
-	trim_ln = ft_strtrim(*one_ln, " \t\r\v\f");
+	trim_ln = ft_strtrim(*one_ln, " \t\n");
 	cmds = split_by_pipe_sc(trim_ln, ";|");
 	if (!cmds)
 		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
