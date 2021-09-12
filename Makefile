@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC			= gcc
+CC				= gcc
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
 #	CFLAGS = -g
@@ -18,11 +18,12 @@ else
 	CFLAGS = -Wall -Wextra -Werror
 endif
 
-NAME		= minishell 
+NAME			= minishell 
 
-SRCS_DIR	= ./src/
+SRCS_DIR		= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
-SRCS_PIPE_DIR = ./src/pipe/
+SRCS_PIPE_DIR	= ./src/pipe/
+SRCS_PARSE_DIR	= ./src/parse/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
 ARCH := $(shell arch)
@@ -35,42 +36,46 @@ ifeq ($(ARCH), arm64)
 	RDLN_INC	= -I /opt/homebrew/opt/readline/include
 endif
 
-LIB_DIR		= lib/
-LIBFT_DIR	= $(LIB_DIR)libft/
-LIBFT_FLAGS	= -L./$(LIBFT_DIR) -lft
-LIBFT_FILE	= $(LIBFT_DIR)libft.a
+LIB_DIR			= lib/
+LIBFT_DIR		= $(LIB_DIR)libft/
+LIBFT_FLAGS		= -L./$(LIBFT_DIR) -lft
+LIBFT_FILE		= $(LIBFT_DIR)libft.a
 
-INC_DIR_MAN	= ./include/
+INC_DIR_MAN		= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
 
-SRCS_PIPE	= $(addprefix $(SRCS_PIPE_DIR), \
-			breed_process.c\
-			file_redirection.c\
-			wait_info.c\
-			waiting.c\
-			check_validity.c\
-			get_next_line.c\
-			get_next_line_utils.c\
-			get_params.c\
-			get_rdr_info.c\
-			parse_commend.c\
-			pipe_main.c\
-			string_utils.c\
-			  )
+SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
+				breed_process.c\
+				file_redirection.c\
+				wait_info.c\
+				waiting.c\
+				check_validity.c\
+				get_next_line.c\
+				get_next_line_utils.c\
+				get_params.c\
+				get_rdr_info.c\
+				parse_commend.c\
+				pipe_main.c\
+				string_utils.c\
+				)
 
-SRCS_MAN	= $(addprefix $(SRCS_DIR), \
-			main.c\
-			parse.c\
-			parse_split.c\
-			)
+SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
+				parse.c\
+				parse_split.c\
+				)
 
-SRCS_MAN	+= $(SRCS_PIPE)
-SRCS_BONUS	= $(addprefix $(SRCS_DIR_BONUS), \
-	   )
+SRCS_MAN		= $(addprefix $(SRCS_DIR), \
+				main.c\
+				)
 
-OBJS_MAN	= ${SRCS_MAN:%.c=%.o}
+SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
 
-OBJS_BONUS	= ${SRCS_BONUS:%.c=%.o}
+SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
+	   			)
+
+OBJS_MAN		= ${SRCS_MAN:%.c=%.o}
+
+OBJS_BONUS		= ${SRCS_BONUS:%.c=%.o}
 
 ifdef WITH_BONUS
 	OBJ_FILES = $(OBJS_BONUS)

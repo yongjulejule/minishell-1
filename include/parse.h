@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/11 10:04:45 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
+/*   Updated: 2021/09/12 17:11:57 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSE_H
+# define PARSE_H
 
-/* SECTION - include .h files */
+/* Include Libraries */
 
-# define READLINE_LIBRARY 1
 # include <stdlib.h>
 # include <stdio.h>
-# include <string.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <dirent.h>
-# include <termios.h>
-# include <term.h>
-# include <curses.h>
-# include <sys/wait.h>
-# include <sys/errno.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
 # include "../lib/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* SECTION - structs */
+/* FUNCTIONS */
 
-/* SECTION - function declarations */
-char	**complete_a_line(char **one_ln, char *ln_read);
-int		exec_cmd_main(char **cmds, char **envp);
+char	**split_by_pipe_sc(char const *s, char *charset);
+
+
 #endif
