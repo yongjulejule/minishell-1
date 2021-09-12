@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/11 16:11:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/12 09:50:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*one_line;
 	char	**cmds;
 
-	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);
@@ -50,7 +49,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		line_read = readline("🐘 esh > ");
-		if (!line_read)
+		if (!line_read || !ft_strncmp(line_read, "exit", 4))
 		{
 			printf("exit\n");
 			exit(EXIT_SUCCESS);

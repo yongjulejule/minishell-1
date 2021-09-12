@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/11 19:15:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/12 08:50:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ int	exec_cmd_main(char **cmds, char **envp)
 				args->envp = envp;
 				args->cnt = cmd_cnt;
 				build_structure(&cmds[cmd_start], envp, args);
-//			int cnt = 0 , cnt1 = 0;
-//			while (args->cmd[cnt].params)
-//			{
-//				while (args->cmd[cnt].params[cnt1])
-//				{
-//					printf("%s\n", args->cmd[cnt].params[cnt1]);
-//					cnt1++;
-//				}
-//				cnt++;
-//			}
 				breed_process(args);
 			}
 			waitpid(pid, NULL, 0);
