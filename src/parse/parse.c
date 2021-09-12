@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "parse.h"
 
 char	*strchr_skip_bslash(const char *s, int c)
 {
@@ -40,18 +40,20 @@ static void	is_qmbt(char *one_ln, char **qmbt)
 		*qmbt = strchr_skip_bslash(one_ln, '"');
 }
 
-static void	cnt_skip_qmbt(int *cnt, char *one_ln, char *qmbt)
+static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 {
 	size_t	i;
+	int		cnt;
 
+	cnt = 0;
 	i = 0;
 	while (qmbt && *(one_ln + i))
 	{
 		if (*(one_ln + i) == *qmbt)
-			(*cnt)++;
-		if (*cnt % 2 == 0 && is_charset(*(one_ln + i), ";|"))
+			cnt++;
+		if (cnt % 2 == 0 && is_charset(*(one_ln + i), ";|"))
 		{
-			*cnt = 0;
+			cnt = 0;
 			is_qmbt(one_ln + i, &qmbt);
 		}
 		if (*(one_ln + i) == '\\')
@@ -63,6 +65,7 @@ static void	cnt_skip_qmbt(int *cnt, char *one_ln, char *qmbt)
 		else if (*(one_ln + i) != '\0')
 			i++;
 	}
+	return (cnt);
 }
 
 static int	check_line_end(char **one_ln, char *ln)
@@ -75,8 +78,7 @@ static int	check_line_end(char **one_ln, char *ln)
 	*one_ln = ft_strjoin(*one_ln, ln);
 	free(to_free);
 	is_qmbt(*one_ln, &qmbt);
-	cnt = 0;
-	cnt_skip_qmbt(&cnt, *one_ln, qmbt);
+	cnt = cnt_skip_qmbt(*one_ln, qmbt);
 	to_free = ft_strtrim(*one_ln, " \t\r\v\f");
 	if (cnt % 2 || *(to_free + ft_strlen(to_free) - 1) == '|')
 	{

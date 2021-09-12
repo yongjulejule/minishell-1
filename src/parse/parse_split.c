@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "parse.h"
 
 static char	*skip_qmbt(char *str)
 {
