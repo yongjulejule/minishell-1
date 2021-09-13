@@ -26,9 +26,8 @@ static char	*prefix_dir_to_cmd(t_args *args, char *param, int nth_path)
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 {
-	int			nth_path;
-	char		*tmp_cmd;
-	extern int	errno;
+	int		nth_path;
+	char	*tmp_cmd;
 
 	nth_path = 0;
 	while (args->env_path[nth_path] != NULL)

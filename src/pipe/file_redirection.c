@@ -20,8 +20,6 @@ void	destroy_pipe(int *pipe_fd)
 
 void	connect_pipe_fd(int *pipe_fd, int pipe_status)
 {
-	extern int	errno;
-
 	if (dup2(pipe_fd[pipe_status], pipe_status) == -1)
 		is_error(NULL, "pipe: ", strerror(errno), EXIT_FAILURE);
 	destroy_pipe(pipe_fd);
@@ -29,10 +27,9 @@ void	connect_pipe_fd(int *pipe_fd, int pipe_status)
 
 static void	make_tmp_heredoc(char *file, t_cmd *cmd)
 {
-	int			fd;
-	int			size;
-	char		*line;
-	extern int	errno;
+	int		fd;
+	int		size;
+	char	*line;
 
 	size = ft_strlen(cmd->limiter);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
@@ -57,8 +54,7 @@ static void	make_tmp_heredoc(char *file, t_cmd *cmd)
 
 void	rdr_file_to_stdin(char *file, t_cmd *cmd)
 {
-	int			fd;
-	extern int	errno;
+	int	fd;
 
 	if (cmd->is_heredoc == 1)
 		make_tmp_heredoc(file, cmd);
@@ -75,8 +71,7 @@ void	rdr_file_to_stdin(char *file, t_cmd *cmd)
 
 void	rdr_stdout_to_file(char *file, t_cmd *cmd)
 {
-	int			fd;
-	extern int	errno;
+	int	fd;
 
 	if (cmd->is_heredoc != 1)
 		fd = open(file, O_RDWR | O_TRUNC | O_CREAT, 0644);
