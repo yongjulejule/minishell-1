@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 18:23:08 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 08:59:09 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	wait_process(t_args *args);
 
 int		split_once(char *str, char *charset);
 int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
+void	free_strset(char **strset);
 
 #endif
