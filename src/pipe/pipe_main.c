@@ -24,14 +24,14 @@ static void	process_to_execute(char **cmds, char **envp,
 	breed_process(args);
 }
 
-static void	signal_handler_two(int signal)
+static void	signal_handle_wo_rl_prompt(int signal)
 {
-	signal = 0;
-	write(STDOUT_FILENO, "\n", 1);
+	if (signal == SIGINT)
+		write(STDOUT_FILENO, "\n", 1);
 	return ;
 }
 
-static void	signal_handler(int signal)
+static void	signal_exit(int signal)
 {
 	exit(signal);
 }
@@ -41,8 +41,8 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 	pid_t		pid;
 	static int	cmd_start;
 
-	signal(SIGINT, signal_handler_two);
-	signal(SIGQUIT, signal_handler_two);
+	signal(SIGINT, signal_handle_wo_rl_prompt);
+	signal(SIGQUIT, signal_handle_wo_rl_prompt);
 	if (!ft_strncmp(cmds[cmd_end], ";", 2) || !cmds[cmd_end + 1])
 	{
 		pid = fork();
@@ -50,8 +50,8 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			signal(SIGINT, signal_handler);
-			signal(SIGQUIT, signal_handler);
+			signal(SIGINT, signal_exit);
+			signal(SIGQUIT, signal_exit);
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		}
 		waitpid(pid, NULL, 0);

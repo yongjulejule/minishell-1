@@ -22,7 +22,7 @@ int	end_by_pipe(char *one_ln, char *to_free)
 		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	len = ft_strlen(to_free);
 	cnt = 0;
-	while (len > 1 && to_free[len - 1] == '|'
+	while (len >= cnt + 2 && to_free[len - 1] == '|'
 		&& to_free[len - cnt - 2] == '\\')
 		cnt++;
 	if (to_free[len - 1] == '|' && cnt % 2 == 0)
@@ -78,7 +78,7 @@ int	check_end_esc(char *str, char *charset)
 
 	len = ft_strlen(str);
 	cnt = 0;
-	while (len > 1 && is_charset(*(str + len - 1), charset)
+	while (len >= cnt + 2 && is_charset(*(str + len - 1), charset)
 		&& *(str + len - cnt - 2) == '\\')
 		cnt++;
 	if (cnt % 2)
