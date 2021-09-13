@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 17:32:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:31:32 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	init_structure(char **cmds, t_args *args)
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
 	while (cnt < args->cnt)
 	{
-		if (!ft_strncmp(cmds[cur], "|", 1))
+		if (!ft_strncmp(cmds[cur], "|", 2))
 			cur++;
 		args->cmd[cnt].params = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
 		args->cmd[cnt].params[0] = cmds[cur];

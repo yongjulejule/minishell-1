@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 08:59:09 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:51:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "get_next_line.h"
+# include <readline/readline.h>
 
 /*User Defines*/
 
@@ -35,18 +36,28 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 
-/* NOTE : we can integrate flags by using 4-digit bit switch */
-typedef struct s_cmd
+# define RDR_FROM 0b1
+# define HEREDOC 0b10
+# define RDR_TO 0b100
+# define APPEND 0b1000
+
+typedef struct s_rdr
 {
+	int				rdr_flag;
 	int				is_heredoc;
 	int				is_append;
 	int				rdr_to;
 	int				rdr_from;
-	pid_t			pid;
 	char			*limiter;
 	char			*file[2];
-	char			**params;
+	struct s_rdr	*next;
+}	t_rdr;
+
+typedef struct s_cmd
+{
+	pid_t			pid;
 	int				pipe_fd[2];
+	char			**params;
 }	t_cmd;
 
 typedef struct s_args
