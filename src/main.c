@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/12 09:50:11 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 09:01:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*one_line;
 	char	**cmds;
 
-	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);

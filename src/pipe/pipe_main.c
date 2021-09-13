@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/12 11:31:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 09:01:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		waitpid(pid, NULL, 0);
 		cmd_start = cmd_end + 1;
-		//			free_structure();
+//		free_structure();
 		*cmd_cnt = 1;
 	}
 	if (!ft_strncmp(cmds[cmd_end], "|", 2))

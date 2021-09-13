@@ -9,7 +9,7 @@
 
 - [ ] git organization 만들기
 
-  - [git](https://github.com/brilliantshell/minishell)
+  - [link](https://github.com/brilliantshell/minishell)
 
 - [ ] 함수 공부
 
@@ -46,11 +46,7 @@
 
 ---
 
-
-
 [FlowChart](https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=MiniShell#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D15pffYmkiKE5KO0HpZuSJLfFW-IhJ4zwm%26export%3Ddownload)
-
-
 
 ---
 
@@ -58,3 +54,5 @@
 
 - _[GNU Readline Library description](https://web.mit.edu/gnu/doc/html/rlman_2.html)_
 - _W. Richard Stevens & Stephen A. Rago (2013). Advanced Programming in the UNIX Environment (3rd ed.) U.S. : Addison-Wesley_
+- _[Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/index.html)_
+- _[GNU Bash Reference Manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)_
