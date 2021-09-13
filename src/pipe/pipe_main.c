@@ -24,19 +24,36 @@ static void	process_to_execute(char **cmds, char **envp,
 	breed_process(args);
 }
 
+static void	signal_handler_two(int signal)
+{
+	signal = 0;
+	write(STDOUT_FILENO, "\n", 1);
+	return ;
+}
+
+static void	signal_handler(int signal)
+{
+	exit(signal);
+}
+
 static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 {
 	pid_t		pid;
-	extern int	errno;
 	static int	cmd_start;
 
+	signal(SIGINT, signal_handler_two);
+	signal(SIGQUIT, signal_handler_two);
 	if (!ft_strncmp(cmds[cmd_end], ";", 2) || !cmds[cmd_end + 1])
 	{
 		pid = fork();
 		if (pid < 0)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 		else if (pid == 0)
+		{
+			signal(SIGINT, signal_handler);
+			signal(SIGQUIT, signal_handler);
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
+		}
 		waitpid(pid, NULL, 0);
 		cmd_start = cmd_end + 1;
 //		free_structure();

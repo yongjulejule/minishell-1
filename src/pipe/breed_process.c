@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "pipe.h"
+#include <readline/readline.h>
 
 static void	execute_pipe_cmd(t_args *args, int cmd)
 {
-	extern int	errno;
-
 	if (args->cmd[cmd].rdr_to)
 		rdr_stdout_to_file(args->cmd[cmd].file[1], &args->cmd[cmd]);
 	else if (args->cnt > cmd + 1)
@@ -36,7 +35,6 @@ static void	execute_pipe_cmd(t_args *args, int cmd)
 static void	execute_processes(t_args *args, int cmd)
 {
 	pid_t		pid;
-	extern int	errno;
 
 	if (args->cnt != cmd && args->cnt > 1)
 		if (pipe(args->cmd[cmd].pipe_fd) == -1)
@@ -61,7 +59,6 @@ void	breed_process(t_args *args)
 {
 	int			status;
 	pid_t		pid;
-	extern int	errno;
 
 	pid = fork();
 	if (pid == 0)

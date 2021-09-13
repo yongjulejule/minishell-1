@@ -24,6 +24,7 @@ static void	free_cmds(char **cmds)
 
 static void	signal_handler(int signal)
 {
+
 	if (signal == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);

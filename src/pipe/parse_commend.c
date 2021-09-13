@@ -48,7 +48,6 @@ void	build_structure(char **cmds, char **envp, t_args *args)
 {
 	int			idx;
 	char		*tmp;
-	extern int	errno;
 
 	init_structure(cmds, args);
 	idx = 0;

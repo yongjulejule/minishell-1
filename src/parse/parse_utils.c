@@ -41,7 +41,7 @@ int	end_by_esc(char *one_ln)
 
 	len = ft_strlen(one_ln);
 	cnt = 0;
-	while (one_ln[len - cnt - 1] == '\\')
+	while (len >= cnt + 1 && one_ln[len - cnt - 1] == '\\')
 		cnt++;
 	if (cnt % 2)
 		return (0);
