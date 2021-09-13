@@ -59,6 +59,8 @@ int	main(int argc, char *argv[], char *envp[])
 		cmds = complete_a_line(&one_line, line_read);
 		/* NOTE : Do we need error_code here? */
 		exec_cmd_main(cmds, envp);
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, signal_handler);
 		free_cmds(cmds);
 		free(line_read);
 	}
