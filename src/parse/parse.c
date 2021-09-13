@@ -49,6 +49,12 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 	i = 0;
 	while (qmbt && *(one_ln + i))
 	{
+		if (qmbt && *(one_ln + i) == '\\')
+		{
+			i++;
+			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
+				i++;
+		}
 		if (*(one_ln + i) == *qmbt)
 			cnt++;
 		if (cnt && cnt % 2 == 0)
@@ -57,13 +63,7 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 			i++;
 			is_qmbt(one_ln + i, &qmbt);
 		}
-		if (*(one_ln + i) == '\\')
-		{
-			i++;
-			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
-				i++;
-		}
-		if (*(one_ln + i) != '\0' && *(one_ln + i) != '\\')
+		if (*(one_ln + i) != '\0')
 			i++;
 	}
 	return (cnt);
