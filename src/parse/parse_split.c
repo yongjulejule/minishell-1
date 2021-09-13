@@ -50,7 +50,7 @@ static int	get_size(char *s, char *charset, int size)
 				size++;
 			}
 		}
-		if (*(s + i) != '\0' && *(s + i) != '\\')
+		else if (*(s + i) != '\0' && *(s + i) != '\\')
 			i++;
 	}
 	if (!is_charset(*(s + i - 1), charset) || check_end_esc(s, charset))
