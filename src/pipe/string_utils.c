@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 16:33:07 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:22:05 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,17 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 	if (is_charset(cmdset[start], "'"))
 	{
 		len = split_once(&cmdset[start], "'");
-		cmd->params[p_idx]
-			= ft_substr(cmdset, start + 1, len - 1);
+		cmd->params[p_idx] = ft_substr(cmdset, start + 1, len - 1);
 	}
 	else if (is_charset(cmdset[start], "\""))
 	{
 		len = split_once(&cmdset[start], "\"");
-		cmd->params[p_idx]
-			= ft_substr(cmdset, start + 1, len - 1);
+		cmd->params[p_idx] = ft_substr(cmdset, start + 1, len - 1);
 	}
 	else
 	{
-		len = split_once(&cmdset[start], "\t\n\v\f\r ");
+		/* TODO : get redirection here...! */
+		len = split_once(&cmdset[start], "\t\n ");
 		cmd->params[p_idx] = ft_substr(cmdset, start, len);
 	}
 	return (len);
