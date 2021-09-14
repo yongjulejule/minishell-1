@@ -12,21 +12,20 @@
 
 #include "parse.h"
 
-static int	skip_normal_bslash(char *s, char *charset, int i)
+static void	skip_normal_bslash(char *s, char *charset, int *i)
 {
-	while (*(s + i) && !is_charset(*(s + i), "\"'`")
-		&& !is_charset(*(s + i), charset))
+	while (*(s + *i) && !is_charset(*(s + *i), "\"'`")
+		&& !is_charset(*(s + *i), charset))
 	{
-		if (*(s + i) == '\\')
+		if (*(s + *i) == '\\')
 		{
-			i++;
-			if (is_charset(*(s + i), "\\\"`';|"))
-				i++;
+			(*i)++;
+			if (is_charset(*(s + *i), "\\\"`';|"))
+				(*i)++;
 		}
-		else if (*(s + i))
-			i++;
+		else if (*(s + *i))
+			(*i)++;
 	}
-	return (i);
 }
 
 static int	get_size(char *s, char *charset, int size)
@@ -38,8 +37,8 @@ static int	get_size(char *s, char *charset, int size)
 		return (0);
 	while (*(s + i))
 	{
-		i = skip_normal_bslash(s, charset, i);
-		i = skip_qmbt(s, i);
+		skip_normal_bslash(s, charset, &i);
+		skip_qmbt(s, &i);
 		if (is_charset(*(s + i), charset))
 		{
 			size += 2;
@@ -105,7 +104,7 @@ static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 
 char	**split_by_pipe_sc(char const *s, char *charset)
 {
-	char	**tmp;
+	char	**ret;
 	int		size;
 
 	if (!s)
@@ -113,9 +112,8 @@ char	**split_by_pipe_sc(char const *s, char *charset)
 	size = 1;
 	if (*s == '\0' || is_charset(*s, charset))
 		size = 0;
-	tmp = (char **)ft_calloc(get_size((char *)s, charset, size),
+	ret = (char **)ft_calloc(get_size((char *)s, charset, size),
 			sizeof(char *));
-	if (!tmp)
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
-	return (get_strs((char *)s, charset, tmp, 0));
+	ret = get_strs((char *)s, charset, ret, 0);
+	return (ret);
 }

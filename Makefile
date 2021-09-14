@@ -60,16 +60,20 @@ SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
-				parse.c\
+				parse_main.c\
 				parse_split.c\
-				parse_utils.c\
+				sub_env.c\
+				utils_main.c\
+				utils_split.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				main.c\
 				)
 
-SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
+# NOTE - parse only
+SRCS_MAN		+= $(SRCS_PARSE)
+# SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 	   			)

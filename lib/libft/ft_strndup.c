@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 14:46:43 by yongjule          #+#    #+#             */
-/*   Updated: 2021/07/04 12:10:13 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/14 14:48:10 by ghan              #+#    #+#             */
+/*   Updated: 2021/09/14 14:48:10 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	size_t	idx;
+	char	*ret;
 	size_t	len;
-	char	*tmp;
+	size_t	i;
 
-	idx = 0;
-	len = ft_strlen(s1);
-	tmp = (char *)ft_calloc(len + 1, sizeof(char));
-	while (idx < len)
+	len = 0;
+	while (s1[len])
+		len++;
+	if (len > n)
+		len = n;
+	ret = (char *)ft_calloc(len + 1, 1);
+	i = 0;
+	while (i < len)
 	{
-		*(tmp + idx) = *(s1 + idx);
-		idx++;
+		ret[i] = s1[i];
+		i++;
 	}
-	return (tmp);
+	return (ret);
 }

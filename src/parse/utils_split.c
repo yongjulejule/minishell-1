@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,63 +12,26 @@
 
 #include "parse.h"
 
-int	end_by_pipe(char *one_ln, char *to_free)
-{
-	size_t	len;
-	size_t	cnt;
-
-	to_free = ft_strtrim(one_ln, " \t\n");
-	if (!to_free)
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
-	len = ft_strlen(to_free);
-	cnt = 0;
-	while (len >= cnt + 2 && to_free[len - 1] == '|'
-		&& to_free[len - cnt - 2] == '\\')
-		cnt++;
-	if (to_free[len - 1] == '|' && cnt % 2 == 0)
-	{
-		free(to_free);
-		return (0);
-	}
-	free(to_free);
-	return (1);
-}
-
-int	end_by_esc(char *one_ln)
-{
-	size_t	len;
-	size_t	cnt;
-
-	len = ft_strlen(one_ln);
-	cnt = 0;
-	while (len >= cnt + 1 && one_ln[len - cnt - 1] == '\\')
-		cnt++;
-	if (cnt % 2)
-		return (0);
-	return (1);
-}
-
-int	skip_qmbt(char *str, int idx)
+void	skip_qmbt(char *str, int *i)
 {
 	char	qmbt;
 
-	qmbt = *(str + idx);
+	qmbt = *(str + *i);
 	if (is_charset(qmbt, "\"'`"))
 	{
-		idx++;
-		while (*(str + idx) && *(str + idx) != qmbt)
+		(*i)++;
+		while (*(str + *i) && *(str + *i) != qmbt)
 		{
-			if (*(str + idx) == '\\')
+			if (*(str + *i) == '\\')
 			{
-				idx++;
-				if (*(str + idx) == qmbt)
-					idx++;
+				(*i)++;
+				if (*(str + *i) == qmbt)
+					(*i)++;
 			}
-			else if (*(str + idx))
-				idx++;
+			else if (*(str + *i))
+				(*i)++;
 		}
 	}
-	return (idx);
 }
 
 int	check_end_esc(char *str, char *charset)
