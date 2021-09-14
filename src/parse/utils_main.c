@@ -58,7 +58,7 @@ static void	check_pipe_front(char *trim, int *val)
 		if (trim[i] == '\\')
 			i++;
 		if (trim[i] != '\0')
-		i++;
+			i++;
 	}
 }
 

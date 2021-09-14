@@ -57,29 +57,28 @@ static int	get_size(char *s, char *charset, int size)
 	return (size);
 }
 
-static int	get_end(char *s, char *charset, int i)
+static void	get_end(char *s, char *charset, int *i)
 {
 	char	qmbt;
 
-	while (*(s + i) && !is_charset(*(s + i), charset))
+	while (*(s + *i) && !is_charset(*(s + *i), charset))
 	{
-		if (*(s + i) != '\\')
+		if (*(s + *i) != '\\')
 		{
-			qmbt = *(s + i++);
+			qmbt = *(s + (*i)++);
 			while (is_charset(qmbt, "\"'`")
-				&& *(s + i) && *(s + i) != qmbt)
-				i++;
+				&& *(s + *i) && *(s + *i) != qmbt)
+				(*i)++;
 			if (is_charset(qmbt, "\"'`"))
-				i++;
+				(*i)++;
 		}
 		else
 		{
-			i++;
-			if (is_charset(*(s + i), "\\;|'\"`"))
-				i++;
+			(*i)++;
+			if (is_charset(*(s + *i), "\\;|'\"`"))
+				(*i)++;
 		}
 	}
-	return (i);
 }
 
 static char	**get_strs(char *s, char *charset, char **tmp, int idx)
@@ -93,10 +92,10 @@ static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 		if (!is_charset(*(s + i), charset))
 		{
 			start = i;
-			i = get_end(s, charset, i);
+			get_end(s, charset, &i);
 			tmp = alloc_mem(tmp, s + start, i - start + 1, idx++);
 		}
-		if (*(s + i) != '\0')
+		else if (*(s + i) != '\0')
 			tmp = alloc_mem(tmp, s + i++, 2, idx++);
 	}
 	return (tmp);
