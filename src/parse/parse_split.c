@@ -28,11 +28,8 @@ static void	skip_normal_bslash(char *s, char *charset, int *i)
 	}
 }
 
-static int	get_size(char *s, char *charset, int size)
+static int	get_size(char *s, char *charset, int size, int i)
 {
-	int	i;
-
-	i = 0;
 	if (!s)
 		return (0);
 	while (*(s + i))
@@ -52,7 +49,8 @@ static int	get_size(char *s, char *charset, int size)
 		else if (*(s + i) != '\0' && *(s + i) != '\\')
 			i++;
 	}
-	if (!is_charset(*(s + i - 1), charset) || check_end_esc(s, charset))
+	if (*s == '\0' || !is_charset(*(s + i - 1), charset)
+		|| check_end_esc(s, charset))
 		size++;
 	return (size);
 }
@@ -87,6 +85,11 @@ static char	**get_strs(char *s, char *charset, char **tmp, int idx)
 	int		start;
 
 	i = 0;
+	if (*s == '\0')
+	{
+		tmp = alloc_mem(tmp, s, 1, idx);
+		return (tmp);
+	}
 	while (*(s + i))
 	{
 		if (!is_charset(*(s + i), charset))
@@ -109,9 +112,9 @@ char	**split_by_pipe_sc(char const *s, char *charset)
 	if (!s)
 		return (NULL);
 	size = 1;
-	if (*s == '\0' || is_charset(*s, charset))
+	if (is_charset(*s, charset))
 		size = 0;
-	ret = (char **)ft_calloc(get_size((char *)s, charset, size),
+	ret = (char **)ft_calloc(get_size((char *)s, charset, size, 0),
 			sizeof(char *));
 	ret = get_strs((char *)s, charset, ret, 0);
 	return (ret);
