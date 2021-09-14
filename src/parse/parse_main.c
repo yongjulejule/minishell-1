@@ -59,7 +59,7 @@ static int	check_line_end(char **one_ln, char *ln)
 
 char	**complete_a_line(char *ln_read)
 {
-	char	**cmds;
+	char	**cmds = NULL;
 	char	*one_ln;
 	int		read_flag;
 
@@ -77,6 +77,7 @@ char	**complete_a_line(char *ln_read)
 		add_history(rl_line_buffer);
 		read_flag = 1;
 	}
+	sub_env(&one_ln);
 	cmds = split_by_pipe_sc(one_ln, ";|");
 	free(one_ln);
 	if (read_flag)

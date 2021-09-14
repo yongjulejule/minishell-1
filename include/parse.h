@@ -31,5 +31,6 @@ int		check_end_esc(char *str, char *charset);
 char	**alloc_mem(char **tmp, char *start_addr, int len, int idx);
 char	*strchr_skip_bslash(const char *s, int c);
 void	is_qmbt(char *one_ln, char **qmbt);
+void	sub_env(char **one_ln);
 
 #endif
