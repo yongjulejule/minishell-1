@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,35 +11,6 @@
 /* ************************************************************************** */
 
 #include "parse.h"
-
-int	end_by_pipe(char *one_ln)
-{
-	size_t	len;
-	size_t	cnt;
-
-	len = ft_strlen(one_ln);
-	cnt = 0;
-	while (len >= cnt + 2 && one_ln[len - 1] == '|'
-		&& one_ln[len - cnt - 2] == '\\')
-		cnt++;
-	if (one_ln[len - 1] == '|' && cnt % 2 == 0)
-		return (0);
-	return (1);
-}
-
-int	end_by_esc(char *one_ln)
-{
-	size_t	len;
-	size_t	cnt;
-
-	len = ft_strlen(one_ln);
-	cnt = 0;
-	while (len >= cnt + 1 && one_ln[len - cnt - 1] == '\\')
-		cnt++;
-	if (cnt % 2)
-		return (0);
-	return (1);
-}
 
 void	skip_qmbt(char *str, int *i)
 {

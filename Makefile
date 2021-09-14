@@ -60,9 +60,10 @@ SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
-				parse.c\
+				parse_main.c\
 				parse_split.c\
-				parse_utils.c\
+				utils_main.c\
+				utils_split.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \

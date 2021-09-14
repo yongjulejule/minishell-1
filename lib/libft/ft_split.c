@@ -43,17 +43,7 @@ static int	get_size(char *str, char c)
 
 static	char	**alloc_mem(char **tmp, int start, int i, int idx)
 {
-	tmp[idx] = (char *)malloc(i - start + 1);
-	if (!tmp[idx])
-	{
-		while (0 <= idx)
-		{
-			free(tmp[idx]);
-			idx--;
-		}
-		free(tmp);
-		return (NULL);
-	}
+	tmp[idx] = (char *)ft_calloc(i - start + 1, sizeof(char));
 	return (tmp);
 }
 
@@ -73,8 +63,6 @@ static	char	**get_strs(char *s, char c, char **tmp)
 			while (*(s + i) && !check_chr(*(s + i), c))
 				i++;
 			tmp = alloc_mem(tmp, start, i, idx);
-			if (!tmp)
-				return (NULL);
 			ft_strlcpy(tmp[idx++], (char *)(s + start), i - start + 1);
 		}
 		if (*(s + i) != '\0')
@@ -90,7 +78,5 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	tmp = (char **)ft_calloc(get_size((char *)s, c), sizeof(char *));
-	if (!tmp)
-		return (NULL);
 	return (get_strs((char *)s, c, tmp));
 }

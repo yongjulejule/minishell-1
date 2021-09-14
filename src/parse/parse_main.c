@@ -12,34 +12,6 @@
 
 #include "parse.h"
 
-static char	*strchr_skip_bslash(const char *s, int c)
-{
-	unsigned char	*str;
-
-	str = (unsigned char *)s;
-	while (*str != (unsigned char)c && (*str != '\0'))
-	{
-		if (*str == '\\')
-			str++;
-		if (*str != '\0')
-			str++;
-	}
-	if (*str != (unsigned char)c)
-		return (NULL);
-	return ((char *)str);
-}
-
-static void	is_qmbt(char *one_ln, char **qmbt)
-{
-	*qmbt = strchr_skip_bslash(one_ln, '`');
-	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '\'')
-			&& *qmbt > strchr_skip_bslash(one_ln, '\'')))
-		*qmbt = strchr_skip_bslash(one_ln, '\'');
-	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '"')
-			&& *qmbt > strchr_skip_bslash(one_ln, '"')))
-		*qmbt = strchr_skip_bslash(one_ln, '"');
-}
-
 static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 {
 	size_t	i;
@@ -87,7 +59,7 @@ static int	check_line_end(char **one_ln, char *ln)
 
 char	**complete_a_line(char *ln_read)
 {
-	char	**cmds = NULL;
+	char	**cmds;
 	char	*one_ln;
 	int		read_flag;
 

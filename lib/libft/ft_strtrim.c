@@ -49,8 +49,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (str);
 	}
 	str = (char *)ft_calloc(len - idx + 2, sizeof(char));
-	if (!str)
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	ft_memcpy(str, s1 + idx, len - idx + 1);
 	return (str);
 }
