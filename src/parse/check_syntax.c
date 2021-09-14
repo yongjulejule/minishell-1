@@ -49,10 +49,14 @@ static void	write_error(char *first, char *secnd)
 
 int	check_smcol_pipe_syntax(char **cmds)
 {
-	int	i;
+	size_t	i;
+	size_t	len;
 
+	len = 0;
+	while (cmds[len])
+		len++;
 	i = 0;
-	while (cmds[i + 1])
+	while (i + 1 < len)
 	{
 		if ((!ft_strcmp(";", cmds[i]) && !ft_strcmp(";", cmds[i + 1]))
 			|| (!ft_strcmp("", cmds[i]) && !ft_strcmp(";", cmds[i + 1]))
@@ -66,7 +70,7 @@ int	check_smcol_pipe_syntax(char **cmds)
 		}
 		i++;
 	}
-	if (!i && !check_one_str(cmds[i]))
+	if (!i && !check_one_str(cmds[0]))
 		return (0);
 	return (1);
 }

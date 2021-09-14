@@ -54,8 +54,6 @@ char	**alloc_mem(char **tmp, char *start_addr, int len, int idx)
 	char	*to_free;
 
 	tmp[idx] = (char *)ft_calloc(len, sizeof(char));
-	if (!tmp[idx])
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 	ft_strlcpy(tmp[idx], start_addr, len);
 	to_free = tmp[idx];
 	tmp[idx] = ft_strtrim(tmp[idx], " \t\n");

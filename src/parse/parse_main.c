@@ -69,8 +69,11 @@ static int	check_line_end(char **one_ln, char *ln)
 	return (1);
 }
 
-static void	read_internal_prompt(char **one_ln, char *ln_read, int *read_flag)
+static void	read_internal_prompt(char **one_ln, char *ln_read)
 {
+	int	read_flag;
+
+	read_flag = 0;
 	while (!check_line_end(one_ln, ln_read))
 	{
 		ln_read = readline("> ");
@@ -81,19 +84,19 @@ static void	read_internal_prompt(char **one_ln, char *ln_read, int *read_flag)
 			break ;
 		}
 		add_history(rl_line_buffer);
-		*read_flag = 1;
+		read_flag++;
 	}
+	if (read_flag)
+		free(ln_read);
 }
 
 char	**parse_line_main(char *ln_read)
 {
 	char	**cmds;
 	char	*one_ln;
-	int		read_flag;
 
-	read_flag = 0;
 	one_ln = ft_strdup("");
-	read_internal_prompt(&one_ln, ln_read, &read_flag);
+	read_internal_prompt(&one_ln, ln_read);
 	sub_env(&one_ln);
 	cmds = split_by_pipe_sc(one_ln, ";|");
 	if (!check_smcol_pipe_syntax(cmds))
@@ -102,7 +105,5 @@ char	**parse_line_main(char *ln_read)
 		cmds = NULL;
 	}
 	free(one_ln);
-	if (read_flag)
-		free(ln_read);
 	return (cmds);
 }
