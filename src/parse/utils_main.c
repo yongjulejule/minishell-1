@@ -86,16 +86,19 @@ int	end_by_pipe(char *one_ln)
 	return (1);
 }
 
-int	end_by_esc(char *one_ln)
+int	end_by_esc(char **one_ln)
 {
 	size_t	len;
 	size_t	cnt;
 
-	len = ft_strlen(one_ln);
+	len = ft_strlen(*one_ln);
 	cnt = 0;
-	while (len >= cnt + 1 && one_ln[len - cnt - 1] == '\\')
+	while (len >= cnt + 1 && *(*one_ln + len - cnt - 1) == '\\')
 		cnt++;
 	if (cnt % 2)
+	{
+		*(*one_ln + len - 1) = '\0';
 		return (0);
+	}
 	return (1);
 }

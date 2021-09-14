@@ -23,12 +23,16 @@
 
 /* FUNCTIONS */
 
+/* from_main */
+void	free_cmds(char **cmds);
+void	main_sig_handler(int signal);
+
 /* utils_main */
 
 char	*strchr_skip_bslash(const char *s, int c);
 void	is_qmbt(char *one_ln, char **qmbt);
 int		end_by_pipe(char *one_ln);
-int		end_by_esc(char *one_ln);
+int		end_by_esc(char **one_ln);
 
 /* split */
 
