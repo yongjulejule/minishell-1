@@ -16,6 +16,8 @@ static void	free_cmds(char **cmds)
 {
 	int	i;
 
+	if (!cmds)
+		return ;
 	i = 0;
 	while (cmds[i])
 		free(cmds[i++]);
@@ -39,14 +41,12 @@ static void	signal_handler(int signal)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line_read;
-	char	*one_line;
 	char	**cmds;
 
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
-	one_line = ft_strdup("");
 	while (1)
 	{
 		line_read = readline("🐘 esh > ");
@@ -56,9 +56,10 @@ int	main(int argc, char *argv[], char *envp[])
 			exit(EXIT_SUCCESS);
 		}
 		add_history(rl_line_buffer);
-		cmds = complete_a_line(&one_line, line_read);
+		cmds = complete_a_line(line_read);
 		/* NOTE : Do we need error_code here? */
-		exec_cmd_main(cmds, envp);
+		envp = 0;
+		// exec_cmd_main(cmds, envp);
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, signal_handler);
 		free_cmds(cmds);

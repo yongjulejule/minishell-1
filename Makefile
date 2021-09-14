@@ -69,7 +69,9 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				main.c\
 				)
 
-SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
+# SRCS_MAN		+= $(SRCS_PIPE)
+
+SRCS_MAN		+= $(SRCS_PARSE)
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 	   			)

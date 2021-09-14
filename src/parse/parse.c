@@ -80,35 +80,34 @@ static int	check_line_end(char **one_ln, char *ln)
 	free(to_free);
 	is_qmbt(*one_ln, &qmbt);
 	cnt = cnt_skip_qmbt(*one_ln, qmbt);
-	if (cnt % 2 || !end_by_pipe(*one_ln, to_free) || !end_by_esc(*one_ln))
+	if (cnt % 2 || !end_by_pipe(*one_ln) || !end_by_esc(*one_ln))
 		return (0);
 	return (1);
 }
 
-char	**complete_a_line(char **one_ln, char *ln_read)
+char	**complete_a_line(char *ln_read)
 {
-	char	**cmds;
-	char	*trim_ln;
+	char	**cmds = NULL;
+	char	*one_ln;
+	int		read_flag;
 
-	while (!check_line_end(one_ln, ln_read))
+	read_flag = 0;
+	one_ln = ft_strdup("");
+	while (!check_line_end(&one_ln, ln_read))
 	{
 		ln_read = readline("> ");
 		if (!ln_read)
 		{
 			write(STDERR_FILENO,
 				"🤣 esh: unexpected EOF while looking for matching `\"'\n", 56);
-			free(*one_ln);
-			*one_ln = ft_strdup("");
 			break ;
 		}
 		add_history(rl_line_buffer);
+		read_flag = 1;
 	}
-	trim_ln = ft_strtrim(*one_ln, " \t\n");
-	cmds = split_by_pipe_sc(trim_ln, ";|");
-	if (!cmds)
-		is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
-	free(trim_ln);
-	free(*one_ln);
-	*one_ln = ft_strdup("");
+	cmds = split_by_pipe_sc(one_ln, ";|");
+	free(one_ln);
+	if (read_flag)
+		free(ln_read);
 	return (cmds);
 }
