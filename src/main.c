@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/13 09:01:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:12:14 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*one_line;
 	char	**cmds;
 
+	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
 	signal(SIGINT, signal_handler);
@@ -57,6 +58,9 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		add_history(rl_line_buffer);
 		cmds = complete_a_line(&one_line, line_read);
+		int i = 0;
+		while (cmds[i])
+			printf("%s\n", cmds[i++]);
 		/* NOTE : Do we need error_code here? */
 		exec_cmd_main(cmds, envp);
 		signal(SIGINT, signal_handler);
