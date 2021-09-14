@@ -38,5 +38,6 @@
 
 /* SECTION - function declarations */
 char	**parse_line_main(char *ln_read);
+void	free_cmds(char **cmds);
 int		exec_cmd_main(char **cmds, char **envp);
 #endif

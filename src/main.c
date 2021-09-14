@@ -12,18 +12,6 @@
 
 #include "../include/minishell.h"
 
-static void	free_cmds(char **cmds)
-{
-	int	i;
-
-	if (!cmds)
-		return ;
-	i = 0;
-	while (cmds[i])
-		free(cmds[i++]);
-	free(cmds);
-}
-
 static void	signal_handler(int signal)
 {
 
@@ -59,7 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 		cmds = parse_line_main(line_read);
 		/* NOTE : Do we need error_code here? */
 		envp = 0;
-		// exec_cmd_main(cmds, envp);
+		// if (cmds)
+		// 	exec_cmd_main(cmds, envp);
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, signal_handler);
 		free_cmds(cmds);

@@ -12,6 +12,18 @@
 
 #include "parse.h"
 
+void	free_cmds(char **cmds)
+{
+	int	i;
+
+	if (!cmds)
+		return ;
+	i = 0;
+	while (cmds[i])
+		free(cmds[i++]);
+	free(cmds);
+}
+
 static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 {
 	size_t	i;
@@ -57,6 +69,22 @@ static int	check_line_end(char **one_ln, char *ln)
 	return (1);
 }
 
+static void	read_internal_prompt(char **one_ln, char *ln_read, int *read_flag)
+{
+	while (!check_line_end(one_ln, ln_read))
+	{
+		ln_read = readline("> ");
+		if (!ln_read)
+		{
+			write(STDERR_FILENO,
+				"🤣 esh: unexpected EOF while looking for closing char\n", 56);
+			break ;
+		}
+		add_history(rl_line_buffer);
+		*read_flag = 1;
+	}
+}
+
 char	**parse_line_main(char *ln_read)
 {
 	char	**cmds;
@@ -65,20 +93,14 @@ char	**parse_line_main(char *ln_read)
 
 	read_flag = 0;
 	one_ln = ft_strdup("");
-	while (!check_line_end(&one_ln, ln_read))
-	{
-		ln_read = readline("> ");
-		if (!ln_read)
-		{
-			write(STDERR_FILENO,
-				"🤣 esh: unexpected EOF while looking for matching `\"'\n", 56);
-			break ;
-		}
-		add_history(rl_line_buffer);
-		read_flag = 1;
-	}
+	read_internal_prompt(&one_ln, ln_read, &read_flag);
 	sub_env(&one_ln);
 	cmds = split_by_pipe_sc(one_ln, ";|");
+	if (!check_smcol_pipe_syntax(cmds))
+	{
+		free_cmds(cmds);
+		cmds = NULL;
+	}
 	free(one_ln);
 	if (read_flag)
 		free(ln_read);
