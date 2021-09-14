@@ -37,6 +37,6 @@
 /* SECTION - structs */
 
 /* SECTION - function declarations */
-char	**complete_a_line(char *ln_read);
+char	**parse_line_main(char *ln_read);
 int		exec_cmd_main(char **cmds, char **envp);
 #endif

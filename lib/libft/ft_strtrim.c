@@ -35,7 +35,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (s1 == 0 || set == 0)
 		return (NULL);
 	len = ft_strlen(s1);
-	len--;
+	if (len > 1)
+		len--;
 	idx = 0;
 	while (cmpchr(*(s1 + idx), set) && idx < len)
 		idx++;
@@ -44,8 +45,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (idx > len)
 	{
 		str = ft_strdup("");
-		if (!str)
-			is_error(NULL, NULL, "can't allocate memory", EXIT_FAILURE);
 		return (str);
 	}
 	str = (char *)ft_calloc(len - idx + 2, sizeof(char));

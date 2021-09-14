@@ -57,9 +57,9 @@ static int	check_line_end(char **one_ln, char *ln)
 	return (1);
 }
 
-char	**complete_a_line(char *ln_read)
+char	**parse_line_main(char *ln_read)
 {
-	char	**cmds = NULL;
+	char	**cmds;
 	char	*one_ln;
 	int		read_flag;
 

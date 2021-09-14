@@ -26,7 +26,8 @@ static void	recompose_ln_with_env(char **one_ln, int start, int end)
 		return ;
 	env = ft_strdup(env);
 	front = ft_strndup(*one_ln, start);
-	back = ft_substr(*one_ln, end + 1, ft_strlen(*one_ln) - end - 1);
+	back = ft_substr(*one_ln, start + end + 1,
+			ft_strlen(*one_ln) - start - end - 1);
 	to_free = *one_ln;
 	*one_ln = ft_strjoin(front, env);
 	free(to_free);
@@ -40,13 +41,11 @@ static void	recompose_ln_with_env(char **one_ln, int start, int end)
 
 void	sub_env(char **ln)
 {
-	size_t	len;
-	size_t	i;
+	int	i;
 	int	k;
 
-	len = ft_strlen(*ln);
 	i = 0;
-	while (i < len)
+	while (*(*ln + i))
 	{
 		if (*(*ln + i) == '$')
 		{
@@ -59,7 +58,6 @@ void	sub_env(char **ln)
 					k++;
 			}
 			recompose_ln_with_env(ln, i, k - 1);
-			len = ft_strlen(*ln);
 		}
 		else if (*(*ln + i) == '\\')
 			i++;
