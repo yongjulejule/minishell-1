@@ -6,23 +6,25 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/13 20:12:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:01:55 by jun              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	free_cmds(char **cmds)
+void	free_cmds(char **cmds)
 {
 	int	i;
 
+	if (!cmds)
+		return ;
 	i = 0;
 	while (cmds[i])
 		free(cmds[i++]);
 	free(cmds);
 }
 
-static void	signal_handler(int signal)
+void	main_sig_handler(int signal)
 {
 
 	if (signal == SIGINT)
@@ -39,15 +41,12 @@ static void	signal_handler(int signal)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line_read;
-	char	*one_line;
 	char	**cmds;
 
-	envp = 0;
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	one_line = ft_strdup("");
+	signal(SIGINT, main_sig_handler);
+	signal(SIGQUIT, main_sig_handler);
 	while (1)
 	{
 		line_read = readline("🐘 esh > ");
@@ -57,14 +56,13 @@ int	main(int argc, char *argv[], char *envp[])
 			exit(EXIT_SUCCESS);
 		}
 		add_history(rl_line_buffer);
-		cmds = complete_a_line(&one_line, line_read);
-		int i = 0;
-		while (cmds[i])
-			printf("%s\n", cmds[i++]);
+		cmds = parse_line_main(line_read);
 		/* NOTE : Do we need error_code here? */
-		exec_cmd_main(cmds, envp);
-		signal(SIGINT, signal_handler);
-		signal(SIGQUIT, signal_handler);
+		envp = 0;
+		// if (cmds)
+		// 	exec_cmd_main(cmds, envp);
+		signal(SIGINT, main_sig_handler);
+		signal(SIGQUIT, main_sig_handler);
 		free_cmds(cmds);
 		free(line_read);
 	}
