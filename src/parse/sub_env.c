@@ -12,7 +12,7 @@
 
 #include "parse.h"
 
-extern int	g_exit_stat;
+extern int	g_exit_code;
 
 static void	env_or_exit_stat(char **env, char **ln, int start, int end)
 {
@@ -20,7 +20,7 @@ static void	env_or_exit_stat(char **env, char **ln, int start, int end)
 
 	to_free = ft_strndup(*ln + start + 1, end);
 	if (!ft_strcmp("?", to_free))
-		*env = ft_itoa(g_exit_stat);
+		*env = ft_itoa(g_exit_code);
 	else
 	{
 		*env = getenv(to_free);

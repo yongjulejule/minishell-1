@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_exit_stat = 0;
+int	g_exit_code = 0;
 
 void	free_cmds(char **cmds)
 {
