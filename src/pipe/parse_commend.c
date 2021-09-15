@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 17:31:32 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/15 20:31:34 by jun              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ void	build_structure(char **cmds, char **envp, t_args *args)
 
 	init_structure(cmds, args);
 	idx = 0;
-	while (args->cmd[idx].params != NULL)
-	{
-		get_rdr_info(&args->cmd[idx]);
-		idx++;
-	}
 	tmp = getenv("PATH");
 	if (!tmp)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
