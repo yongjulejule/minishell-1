@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+int	g_exit_stat = 0;
+
 void	free_cmds(char **cmds)
 {
 	int	i;

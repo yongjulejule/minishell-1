@@ -70,7 +70,7 @@ static void	read_internal_prompt(char **one_ln, char *ln_read)
 		if (!ln_read)
 		{
 			write(STDERR_FILENO,
-				"🤣 esh: unexpected EOF while looking for closing char\n", 56);
+				"🤣 esh: syntax error unexpected end of file\n", 46);
 			free(ln_read);
 			break ;
 		}
