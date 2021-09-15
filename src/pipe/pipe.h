@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 17:51:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:54:32 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,14 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 
-# define RDR_FROM 0b1
-# define HEREDOC 0b10
-# define RDR_TO 0b100
+# define RDR_FROM 0b0001
+# define HEREDOC 0b0010
+# define RDR_TO 0b0100
 # define APPEND 0b1000
 
 typedef struct s_rdr
 {
 	int				rdr_flag;
-	int				is_heredoc;
-	int				is_append;
-	int				rdr_to;
-	int				rdr_from;
 	char			*limiter;
 	char			*file[2];
 	struct s_rdr	*next;
@@ -58,6 +54,7 @@ typedef struct s_cmd
 	pid_t			pid;
 	int				pipe_fd[2];
 	char			**params;
+	t_rdr			*rdr;
 }	t_cmd;
 
 typedef struct s_args
