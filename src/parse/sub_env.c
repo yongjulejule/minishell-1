@@ -12,27 +12,42 @@
 
 #include "parse.h"
 
-static void	recompose_ln_with_env(char **one_ln, int start, int end)
+extern int	g_exit_code;
+
+static void	env_or_exit_stat(char **env, char **ln, int start, int end)
 {
+	char	*to_free;
+
+	to_free = ft_strndup(*ln + start + 1, end);
+	if (!ft_strcmp("?", to_free))
+		*env = ft_itoa(g_exit_code);
+	else
+	{
+		*env = getenv(to_free);
+		if (*env)
+			*env = ft_strdup(*env);
+	}
+	free(to_free);
+}
+
+static void	recompose_ln_with_env(char **ln, int start, int end)
+{
+	char	*to_free;
 	char	*front;
 	char	*back;
 	char	*env;
-	char	*to_free;
 
-	to_free = ft_strndup(*one_ln + start + 1, end);
-	env = getenv(to_free);
-	free(to_free);
+	env_or_exit_stat(&env, ln, start, end);
 	if (!env)
 		return ;
-	env = ft_strdup(env);
-	front = ft_strndup(*one_ln, start);
-	back = ft_substr(*one_ln, start + end + 1,
-			ft_strlen(*one_ln) - start - end - 1);
-	to_free = *one_ln;
-	*one_ln = ft_strjoin(front, env);
+	front = ft_strndup(*ln, start);
+	back = ft_substr(*ln, start + end + 1,
+			ft_strlen(*ln) - start - end - 1);
+	to_free = *ln;
+	*ln = ft_strjoin(front, env);
 	free(to_free);
-	to_free = *one_ln;
-	*one_ln = ft_strjoin(*one_ln, back);
+	to_free = *ln;
+	*ln = ft_strjoin(*ln, back);
 	free(to_free);
 	free(front);
 	free(back);
@@ -50,13 +65,14 @@ void	sub_env(char **ln)
 		if (*(*ln + i) == '$')
 		{
 			k = 1;
-			if (ft_isalpha(*(*ln + i + k))
-				|| *(*ln + i + k) == '_')
+			if (ft_isalpha(*(*ln + i + k)) || *(*ln + i + k) == '_')
 			{
 				while (*(*ln + i + k)
 					&& (ft_isalnum(*(*ln + i + k)) || *(*ln + i + k) == '_'))
 					k++;
 			}
+			else if (*(*ln + i + k) == '?')
+				k++;
 			recompose_ln_with_env(ln, i, k - 1);
 		}
 		else if (*(*ln + i) == '\\')

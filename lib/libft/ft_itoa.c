@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	void	to_string(int n, int cnt, char *str)
+static void	to_string(int n, int cnt, char *str)
 {
 	int	digit;
 
@@ -28,7 +28,7 @@ static	void	to_string(int n, int cnt, char *str)
 	}
 }
 
-static	int	get_digit(int n)
+static int	get_digit(int n)
 {
 	int	cnt;
 
@@ -43,13 +43,12 @@ static	int	get_digit(int n)
 	return (cnt);
 }
 
-static	char	*is_zero(void)
+static char	*is_zero(void)
 {
 	char	*str;
 
-	str = (char *)malloc(2);
+	str = (char *)ft_calloc(2, sizeof(char));
 	*str = '0';
-	*(str + 1) = '\0';
 	return (str);
 }
 
@@ -61,19 +60,13 @@ char	*ft_itoa(int n)
 	cnt = get_digit(n);
 	if (n < 0)
 	{
-		str = (char *)malloc(sizeof(char) * cnt + 2);
-		if (!str)
-			return (NULL);
+		str = (char *)ft_calloc(sizeof(char) * cnt + 2, sizeof(char));
 		*str = '-';
-		*(str + cnt + 1) = '\0';
 		to_string(n, cnt, str + 1);
 	}
 	else if (n > 0)
 	{
-		str = (char *)malloc(sizeof(char) * cnt + 1);
-		if (!str)
-			return (NULL);
-		*(str + cnt) = '\0';
+		str = (char *)ft_calloc(sizeof(char) * cnt + 1, sizeof(char));
 		to_string(n, cnt, str);
 	}
 	else
