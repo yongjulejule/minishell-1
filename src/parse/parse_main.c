@@ -12,6 +12,8 @@
 
 #include "parse.h"
 
+extern int	g_exit_code;
+
 static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 {
 	size_t	i;
@@ -57,16 +59,41 @@ static int	check_line_end(char **one_ln, char *ln)
 	return (1);
 }
 
+static void	internal_prompt_sig_handler(int sig)
+{
+	struct termios	term;
+	int				result;
+
+	if (sig == SIGINT)
+	{
+		g_exit_code = -42;
+		result = tcgetattr(STDIN_FILENO, &term);
+		if (result < 0)
+			is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
+		term.c_oflag = ICANON | ECHOE;
+		result = tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		if (result < 0)
+			is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		// close(STDIN_FILENO);
+	}
+}
+
 static void	read_internal_prompt(char **one_ln, char *ln_read)
 {
-	int	read_flag;
+	int		read_flag;
+	// int		fd;
+	// char	*tty;
 
 	read_flag = 0;
 	while (!check_line_end(one_ln, ln_read))
 	{
 		if (read_flag)
 			free(ln_read);
+		signal(SIGINT, internal_prompt_sig_handler);
 		ln_read = readline("> ");
+		if (g_exit_code == -42)
+			break ;
 		if (!ln_read)
 		{
 			write(STDERR_FILENO,
@@ -77,6 +104,12 @@ static void	read_internal_prompt(char **one_ln, char *ln_read)
 		add_history(rl_line_buffer);
 		read_flag++;
 	}
+	// if (g_exit_code == -42)
+	// {
+	// 	tty = ttyname(STDOUT_FILENO);
+	// 	fd = open(tty, O_RDWR);
+	// }
+	g_exit_code = 0;
 	if (read_flag)
 		free(ln_read);
 }
