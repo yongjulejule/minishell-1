@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/15 21:05:15 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/16 08:55:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 	}
 	else
 	{
-		/* TODO : get redirection here...! */
 		len = split_once(&cmdset[start], "\t\n ");
 		cmd->params[p_idx] = ft_substr(cmdset, start, len);
 		if (ft_strchr(cmd->params[p_idx], '>')
