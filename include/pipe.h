@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 19:54:32 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/16 11:54:31 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ typedef struct s_rdr
 {
 	int				rdr_flag;
 	char			*limiter;
-	char			*file[2];
-	struct s_rdr	*next;
+	char			file[2];
+	struct s_rdr	*rdr_from;
+	struct s_rdr	*rdr_to;
 }	t_rdr;
 
 typedef struct s_cmd

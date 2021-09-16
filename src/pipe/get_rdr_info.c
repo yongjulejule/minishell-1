@@ -6,13 +6,13 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 20:03:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/16 09:23:33 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
-static int	get_rdr_from_append_info(t_cmd *cmd)
+static int	get_rdr_from_append_info(t_cmd *cmd, const char *line)
 {
 	char	*tmp;
 
@@ -36,7 +36,7 @@ static int	get_rdr_from_append_info(t_cmd *cmd)
 	return (1);
 }
 
-static int	get_rdr_from_info(t_cmd *cmd)
+static int	get_rdr_from_info(t_cmd *cmd, const char *line)
 {
 	char	*tmp;
 
@@ -57,7 +57,7 @@ static int	get_rdr_from_info(t_cmd *cmd)
 	return (1);
 }
 
-static int	get_rdr_to_append_info(t_cmd *cmd)
+static int	get_rdr_to_append_info(t_cmd *cmd, const char *line)
 {
 	char	*tmp;
 
@@ -80,7 +80,7 @@ static int	get_rdr_to_append_info(t_cmd *cmd)
 	return (1);
 }
 
-static int	get_rdr_to_info(t_cmd *cmd)
+static int	get_rdr_to_info(t_cmd *cmd, const char *line)
 {
 	char	*tmp;
 
@@ -103,15 +103,30 @@ static int	get_rdr_to_info(t_cmd *cmd)
 
 void	get_rdr_info(t_cmd *cmd)
 {
-	int	flag;
+	char	*line;
+	char	*rdr_to;
+	char	*rdr_from;
 
-	flag = 1;
-	while (flag)
+	line = cmd->params[0];
+	while (1)
 	{
-		flag = 0;
-		flag += get_rdr_from_info(cmd);
-		flag += get_rdr_from_append_info(cmd);
-		flag += get_rdr_to_info(cmd);
-		flag += get_rdr_to_append_info(cmd);
-	}
+		if (ft_strchr(line, '>'))
+		{
+			line = ft_strchr(line, '>');
+			if (line[1] == '>')
+				get_rdr_from_append_info(cmd, line);
+			else
+				get_rdr_from_info(cmd, line);
+		}
+		else if (ft_strchr(line '<'))
+		{
+			line = ft_strchr(line, '<');
+			if (line[1] == '<')
+				get_rdr_to_append_info(cmd, line);
+			else
+				get_rdr_to_info(cmd, line);   
+		}
+		else
+			break;
+	}   
 }
