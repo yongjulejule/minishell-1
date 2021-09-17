@@ -61,19 +61,19 @@ static int	check_line_end(char **one_ln, char *ln)
 
 static void	internal_prompt_sig_handler(int sig)
 {
-	struct termios	term;
-	int				result;
+	// struct termios	term;
+	// int				result;
 
 	if (sig == SIGINT)
 	{
 		g_exit_code = -42;
-		result = tcgetattr(STDIN_FILENO, &term);
-		if (result < 0)
-			is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
-		term.c_oflag = ICANON | ECHOE;
-		result = tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		if (result < 0)
-			is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
+		// result = tcgetattr(STDIN_FILENO, &term);
+		// if (result < 0)
+		// 	is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
+		// term.c_oflag = ICANON | ECHOE;
+		// result = tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		// if (result < 0)
+		// 	is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
 		// ft_putchar_fd('\n', STDOUT_FILENO);
 		// close(STDIN_FILENO);
 	}
