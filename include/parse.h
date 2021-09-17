@@ -17,7 +17,12 @@
 
 # include <stdlib.h>
 # include <stdio.h>
-# include "../lib/libft/libft.h"
+# include <unistd.h>
+# include <fcntl.h>
+# include "libft.h"
+# include <term.h>
+# include <curses.h>
+# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
