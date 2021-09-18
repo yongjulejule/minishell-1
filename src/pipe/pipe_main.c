@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/18 13:11:08 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 13:24:56 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 	pid_t		pid;
 	static int	cmd_start;
 
-	signal(SIGINT, signal_handle_wo_rl_prompt);
-	signal(SIGQUIT, signal_handle_wo_rl_prompt);
+	sigint_n_sigquit_handler((signal_handle_wo_rl_prompt));
 	if (cmds[cmd_end][0] == ';' || !cmds[cmd_end + 1])
 	{
 		pid = fork();
@@ -38,8 +37,7 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			signal(SIGINT, signal_exit);
-			signal(SIGQUIT, signal_exit);
+			sigint_n_sigquit_handler(signal_exit);
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		}
 		waitpid(pid, NULL, 0);

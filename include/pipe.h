@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 12:42:33 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 13:27:42 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@
 # define CMD_ERR 127
 # define E_ACCESS 13
 # define E_NOCMD 2
-
-//# define RDR_FROM 0b0001
-//# define HEREDOC 0b0010
-//# define RDR_TO 0b0100
-//# define APPEND 0b1000
 
 enum	e_rdr
 {
@@ -86,6 +81,7 @@ typedef struct s_args
 
 void	signal_handle_wo_rl_prompt(int signal);
 void	signal_exit(int signal);
+void	sigint_n_sigquit_handler(void (*sigfunction));
 
 /*Check Validity*/
 
