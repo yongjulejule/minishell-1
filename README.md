@@ -56,4 +56,5 @@
 - _W. Richard Stevens & Stephen A. Rago (2013). Advanced Programming in the UNIX Environment (3rd ed.) U.S. : Addison-Wesley_
 - _[Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/index.html)_
 - _[GNU Bash Reference Manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)_
--_[bash source code](https://tiswww.case.edu/php/chet/bash/bashtop.html#Availability)
+- _[bash source code](https://tiswww.case.edu/php/chet/bash/bashtop.html#Availability)_
+- _[GNU C Library](https://www.gnu.org/software/libc/manual/html_node/index.html)_
