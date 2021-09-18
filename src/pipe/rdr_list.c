@@ -6,20 +6,21 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 08:56:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/16 09:03:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 15:17:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
-t_rdr	*rdr_lst_newone(int rdr_flag, char *limiter, char *file)
+t_rdr	*rdr_lst_newone(t_info info, char *limiter, char *file[2])
 {
 	t_rdr	*rdr_node;
 
 	rdr_node = (t_rdr *)ft_calloc(1, sizeof(t_rdr));
 	rdr_node->limiter = limiter;
-	rdr_node->file = file;
-	rdr_node->rdr_flag = rdr_flag;
+	rdr_node->file[0] = file[0];
+	rdr_node->file[1] = file[1];
+	rdr_node->info = info;
 	return (rdr_node);
 }
 
