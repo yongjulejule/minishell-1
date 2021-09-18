@@ -72,12 +72,9 @@ static void	internal_prompt_sig_handler(int sig)
 	}
 }
 
-static int	read_internal_prompt(char **one_ln, char *ln_read)
+static int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 {
-	int		read_cnt;
-
-	read_cnt = 0;
-	while (!check_line_end(one_ln, ln_read) && read_cnt++ >= 0)
+	while (!check_line_end(one_ln, ln_read))
 	{
 		if (read_cnt)
 			free(ln_read);
@@ -93,6 +90,7 @@ static int	read_internal_prompt(char **one_ln, char *ln_read)
 			break ;
 		}
 		add_history(rl_line_buffer);
+		read_cnt++;
 	}
 	if (read_cnt || (g_exit_code == -42 && !read_cnt))
 		free(ln_read);
@@ -107,7 +105,7 @@ char	**parse_line_main(char *ln_read)
 	char	*one_ln;
 
 	one_ln = ft_strdup("");
-	if (!read_internal_prompt(&one_ln, ln_read))
+	if (!read_internal_prompt(&one_ln, ln_read, 0))
 	{
 		g_exit_code = 0;
 		free(one_ln);
