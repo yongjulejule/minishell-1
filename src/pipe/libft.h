@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 11:50:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 20:50:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char			**ft_split_charset(char const *s, char *charset);
 int				ft_strsetlen(char **strs);
 char			*ft_strrnstr(const char *haystack, const char *needle,
 					size_t len);
+char			*ft_strchrset(const char *s, char *charset);
 
 /*
 ** To handle List

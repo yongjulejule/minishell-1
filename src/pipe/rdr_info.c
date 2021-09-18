@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_rdr_info.c                                     :+:      :+:    :+:   */
+/*   rdr_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 15:58:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 21:13:25 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,42 +101,53 @@ static int	get_rdr_to_info(t_cmd *cmd, const char *line)
 	return (1);
 }
 
+/* NOTE : line is charactor set which is after rdr symbol*/
+
+char	*get_filename(const char *line)
+{
+	char	*file;
+	char	*tmp;
+
+	if (*line == '\0')
+		return (NULL);
+	tmp = ft_strtrim(line, " \n\t");
+	if (tmp[0] == '\'')
+		file = ft_substr(tmp, 1, split_once(&tmp[1], "'"));
+	else if (file[0] == '"')
+		file = ft_substr(tmp, 1, split_once(&tmp[1], "\""));
+	else
+		file = ft_substr(tmp, 0, split_once(&tmp[0], " \n\f"));
+	free(tmp);
+	tmp = NULL;
+	return (file);
+}
+
+void	rdr_error(t_cmd *cmd)
+{
+	char *file[2];
+
+	file[0] = NULL;
+	file[1] = NULL;
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(error, NULL, file));
+}
+
 void	get_rdr_info(char *rdrs, t_cmd *cmd)
 {
 	char	*line;
-	char	*rdr_to;
-	char	*rdr_from;
 
 	line = rdrs;
-	while (1)
+	line = ft_strchrset(line, "<>&");
+	if (!line)
+		break ;
+	if (line[0] == '<') /* rdr_read */
+		rdr_read(rdr, line, cmd);
+	else if (line[0] == '>') /* rdr_write */
+		rdr_write(rdr, line, cmd);
+	else /*if (line[0] == '&')*/
 	{
-		line = ft_charset(line, "<>&");
-		if (!line)
-			break
-		if (line[0] == '<') /* rdr_read */
-			if (line[1] == '\0')
-				rdr_r_file
-			else if (line[1] == '<')
-				rdr_r_heredoc
-			else if (line[1] == '&')/* TODO : consider <&-*/
-				rdr_r_fd
-			else if (line[1] == '>')
-				rdr_r_w
-			else
-				rdr_r_file
-		else if (line[0] == '>') /* rdr_write */
-			if (line[1] == '\0')
-				rdr_w_file
-			else if (line[1] == '>')
-				rdr_w_append
-			else if (line[1] == '&')/* TODO : consider >&-*/
-				rdr_w_fd
-			else
-				rdr_w_file
-		else /*if (line[0] == '&')*/
-			if (line[1] == '>')
-				rdr_w_output_file
-			else
-				error!
-	}   
+		if (line[1] == '>')
+			rdr_w_output_file(rdr, line, cmd);
+		else
+			rdr_error(cmd);
+	}
 }
