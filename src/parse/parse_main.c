@@ -61,34 +61,25 @@ static int	check_line_end(char **one_ln, char *ln)
 
 static void	internal_prompt_sig_handler(int sig)
 {
-	// struct termios	term;
-	// int				result;
+	char	c;
 
+	c = '\r';
 	if (sig == SIGINT)
 	{
 		g_exit_code = -42;
-		// result = tcgetattr(STDIN_FILENO, &term);
-		// if (result < 0)
-		// 	is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
-		// term.c_oflag = ICANON | ECHOE;
-		// result = tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		// if (result < 0)
-		// 	is_error(NULL, NULL, "error in tcgetattr", EXIT_FAILURE);
-		// ft_putchar_fd('\n', STDOUT_FILENO);
-		// close(STDIN_FILENO);
+		rl_on_new_line();
+		ioctl(STDIN_FILENO, TIOCSTI, &c);
 	}
 }
 
-static void	read_internal_prompt(char **one_ln, char *ln_read)
+static int	read_internal_prompt(char **one_ln, char *ln_read)
 {
-	int		read_flag;
-	// int		fd;
-	// char	*tty;
+	int		read_cnt;
 
-	read_flag = 0;
-	while (!check_line_end(one_ln, ln_read))
+	read_cnt = 0;
+	while (!check_line_end(one_ln, ln_read) && read_cnt++ >= 0)
 	{
-		if (read_flag)
+		if (read_cnt)
 			free(ln_read);
 		signal(SIGINT, internal_prompt_sig_handler);
 		ln_read = readline("> ");
@@ -102,16 +93,12 @@ static void	read_internal_prompt(char **one_ln, char *ln_read)
 			break ;
 		}
 		add_history(rl_line_buffer);
-		read_flag++;
 	}
-	// if (g_exit_code == -42)
-	// {
-	// 	tty = ttyname(STDOUT_FILENO);
-	// 	fd = open(tty, O_RDWR);
-	// }
-	g_exit_code = 0;
-	if (read_flag)
+	if (read_cnt || (g_exit_code == -42 && !read_cnt))
 		free(ln_read);
+	if (g_exit_code == -42)
+		return (0);
+	return (1);
 }
 
 char	**parse_line_main(char *ln_read)
@@ -120,7 +107,12 @@ char	**parse_line_main(char *ln_read)
 	char	*one_ln;
 
 	one_ln = ft_strdup("");
-	read_internal_prompt(&one_ln, ln_read);
+	if (!read_internal_prompt(&one_ln, ln_read))
+	{
+		g_exit_code = 0;
+		free(one_ln);
+		return (NULL);
+	}
 	sub_env(&one_ln);
 	cmds = split_by_pipe_sc(one_ln, ";|");
 	if (!check_smcol_pipe_syntax(cmds))
