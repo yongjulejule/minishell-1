@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 15:58:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 19:52:23 by jun              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,15 @@ static int	get_rdr_to_info(t_cmd *cmd, const char *line)
 	return (1);
 }
 
+void	rdr_error(t_cmd *cmd)
+{
+	char *file[2];
+
+	file[0] = NULL;
+	file[1] = NULL;
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(error, NULL, file));
+}
+
 void	get_rdr_info(char *rdrs, t_cmd *cmd)
 {
 	char	*line;
@@ -108,35 +117,18 @@ void	get_rdr_info(char *rdrs, t_cmd *cmd)
 	char	*rdr_from;
 
 	line = rdrs;
-	while (1)
+	line = ft_charset(line, "<>&");
+	if (!line)
+		break ;
+	if (line[0] == '<') /* rdr_read */
+		rdr_read(rdr, line, cmd);
+	else if (line[0] == '>') /* rdr_write */
+		rdr_write(rdr, line, cmd);
+	else /*if (line[0] == '&')*/
 	{
-		line = ft_charset(line, "<>&");
-		if (!line)
-			break
-		if (line[0] == '<') /* rdr_read */
-			if (line[1] == '\0')
-				rdr_r_file
-			else if (line[1] == '<')
-				rdr_r_heredoc
-			else if (line[1] == '&')/* TODO : consider <&-*/
-				rdr_r_fd
-			else if (line[1] == '>')
-				rdr_r_w
-			else
-				rdr_r_file
-		else if (line[0] == '>') /* rdr_write */
-			if (line[1] == '\0')
-				rdr_w_file
-			else if (line[1] == '>')
-				rdr_w_append
-			else if (line[1] == '&')/* TODO : consider >&-*/
-				rdr_w_fd
-			else
-				rdr_w_file
-		else /*if (line[0] == '&')*/
-			if (line[1] == '>')
-				rdr_w_output_file
-			else
-				error!
-	}   
+		if (line[1] == '>')
+			rdr_w_output_file(rdr, line, cmd);
+		else
+			rdr_error(cmd);
+	}
 }
