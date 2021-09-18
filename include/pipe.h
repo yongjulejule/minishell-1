@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 15:16:36 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 21:12:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef enum	e_info
 
 typedef struct s_rdr
 {
-	char			*file[2];
+	int				*fd[2];
+	char			*file;
 	t_info			info;
 	char			*limiter;
 	struct s_rdr	*next;
@@ -90,10 +91,16 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param);
 /*Redirecting*/
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
+void	rdr_write(char *rdr, char *line, t_cmd *cmd);
+void	rdr_read(char *rdr, char *line, t_cmd *cmd);
 void	rdr_file_to_stdin(char *file, t_cmd *cmd);
 void	rdr_stdout_to_file(char *file, t_cmd *cmd);
+void	rdr_w_output_file(char *rdr, char *line, t_cmd *cmd);
+void	rdr_error(t_cmd *cmd);
 void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	destroy_pipe(int *pipe_fd);
+t_rdr	*rdr_lst_newone(t_info info, char *limiter, char *file[2]);
+void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 
 /*Preprocessing*/
 

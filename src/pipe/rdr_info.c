@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_rdr_info.c                                     :+:      :+:    :+:   */
+/*   rdr_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 19:52:23 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/18 21:13:25 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,27 @@ static int	get_rdr_to_info(t_cmd *cmd, const char *line)
 	return (1);
 }
 
+/* NOTE : line is charactor set which is after rdr symbol*/
+
+char	*get_filename(const char *line)
+{
+	char	*file;
+	char	*tmp;
+
+	if (*line == '\0')
+		return (NULL);
+	tmp = ft_strtrim(line, " \n\t");
+	if (tmp[0] == '\'')
+		file = ft_substr(tmp, 1, split_once(&tmp[1], "'"));
+	else if (file[0] == '"')
+		file = ft_substr(tmp, 1, split_once(&tmp[1], "\""));
+	else
+		file = ft_substr(tmp, 0, split_once(&tmp[0], " \n\f"));
+	free(tmp);
+	tmp = NULL;
+	return (file);
+}
+
 void	rdr_error(t_cmd *cmd)
 {
 	char *file[2];
@@ -113,11 +134,9 @@ void	rdr_error(t_cmd *cmd)
 void	get_rdr_info(char *rdrs, t_cmd *cmd)
 {
 	char	*line;
-	char	*rdr_to;
-	char	*rdr_from;
 
 	line = rdrs;
-	line = ft_charset(line, "<>&");
+	line = ft_strchrset(line, "<>&");
 	if (!line)
 		break ;
 	if (line[0] == '<') /* rdr_read */

@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/18 19:40:13 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/18 21:04:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	rdr_r_file(char *rdr, char *line, t_cmd *cmd)
 {
+	int	fd_to;
+
+	fd_to = ft_atoi(rdr);
 }
 
 static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)

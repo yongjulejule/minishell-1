@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 19:49:24 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/18 21:12:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef enum	e_info
 
 typedef struct s_rdr
 {
-	char			*file[2];
+	int				*fd[2];
+	char			*file;
 	t_info			info;
 	char			*limiter;
 	struct s_rdr	*next;
