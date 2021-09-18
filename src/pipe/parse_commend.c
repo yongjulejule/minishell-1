@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 12:40:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 14:53:29 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,17 @@ static void	make_cmds(t_args *args)
 	}
 }
 
-static void	init_structure(char **cmds, t_args *args)
-{
-	int		cnt;
-	int		cur;
-	t_rdr	*rdr;
-
-	cur = 0;
-	cnt = 0;
-	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
-	while (cnt < args->cnt)
-	{
-		if (!ft_strcmp(cmds[cur], "|"))
-			cur++;
-		args->cmd[cnt].params = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
-		args->cmd[cnt].params[0] = cmds[cur];
-		cnt++;
-		cur++;
-	}
-}
-
 void	build_structure(char **cmds, char **envp, t_args *args)
 {
 	int			idx;
 	char		*tmp;
 
-	init_structure(cmds, args);
 	idx = 0;
 	tmp = getenv("PATH");
 	if (!tmp)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	args->env_path = ft_split(tmp, ':');
 	args->envp = envp;
-	get_params(args);
+	get_params(args, cmds);
 	make_cmds(args);
 }

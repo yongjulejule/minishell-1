@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 11:15:54 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 15:58:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,42 @@ static int	get_rdr_to_info(t_cmd *cmd, const char *line)
 	return (1);
 }
 
-void	get_rdr_info(t_cmd *cmd)
+void	get_rdr_info(char *rdrs, t_cmd *cmd)
 {
 	char	*line;
 	char	*rdr_to;
 	char	*rdr_from;
 
-	line = cmd->params[0];
+	line = rdrs;
 	while (1)
 	{
 		line = ft_charset(line, "<>&");
-		if (line[0] == '<')
-			if (line[1] == '<')
-				get_heredoc
-			else if (line[1] == '&')
-				get_from_fd
+		if (!line)
+			break
+		if (line[0] == '<') /* rdr_read */
+			if (line[1] == '\0')
+				rdr_r_file
+			else if (line[1] == '<')
+				rdr_r_heredoc
+			else if (line[1] == '&')/* TODO : consider <&-*/
+				rdr_r_fd
+			else if (line[1] == '>')
+				rdr_r_w
 			else
-				get_from_file
-		else if (line[0] == '>')
-		else if (line[0] == '&')
-		else
-			break;
+				rdr_r_file
+		else if (line[0] == '>') /* rdr_write */
+			if (line[1] == '\0')
+				rdr_w_file
+			else if (line[1] == '>')
+				rdr_w_append
+			else if (line[1] == '&')/* TODO : consider >&-*/
+				rdr_w_fd
+			else
+				rdr_w_file
+		else /*if (line[0] == '&')*/
+			if (line[1] == '>')
+				rdr_w_output_file
+			else
+				error!
 	}   
 }

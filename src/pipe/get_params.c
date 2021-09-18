@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/11 17:26:07 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 14:57:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static	int	count_params(char *cmdset)
 	while (cmdset[start] != '\0')
 	{
 		size++;
-		while (is_charset(cmdset[start], "\t\n\v\f\r "))
+		while (is_charset(cmdset[start], "\t\n "))
 			start++;
 		if (is_charset(cmdset[start], "'"))
 			len = split_once(&cmdset[start], "'") + start + 1;
 		else if (is_charset(cmdset[start], "\""))
 			len = split_once(&cmdset[start], "\"") + start + 1;
 		else
-			len = split_once(&cmdset[start], "\t\n\v\f\r ") + start;
+			len = split_once(&cmdset[start], "\t\n ") + start;
 		start = len;
 	}
 	return (size);
@@ -48,7 +48,7 @@ static	void	parse_param(char *cmdset, t_cmd *cmd)
 	p_idx = 0;
 	while (p_idx < size)
 	{
-		while (is_charset(cmdset[start], "\t\n\v\f\r "))
+		while (is_charset(cmdset[start], "\t\n "))
 			start++;
 		len = make_string(&cmdset[start], cmd, p_idx);
 		start = len + start + 1;
@@ -66,14 +66,35 @@ static	void	get_each_params(char *cmdset, t_cmd *cmd)
 	parse_param(cmdset, cmd);
 }
 
-void	get_params(t_args *args)
+static int	is_rdr(char *str)
+{
+	if (!str)
+		return (0);
+	while (ft_isdigit(*str))
+		str++;
+	if (is_charset(*str, "<>&-"))
+		return (1);
+	else
+		return (0);
+}
+
+void	get_params(t_args *args, char **cmds)
 {
 	int	idx;
+	int	cur;
 
+	cur = 0;
 	idx = 0;
-	while (args->cmd[idx].params)
+	while (cmds[idx])
 	{
-		get_each_params(args->cmd[idx].params[0], &args->cmd[idx]);
+		if (cmds[idx][0] != '|')
+		{
+			if (!is_rdr(cmds[idx]))
+				get_each_params(cmds[idx], &args->cmd[cur]);
+			else
+				get_rdr_info(cmds[idx], &args->cmd[cur]);
+			cur++;
+		}
 		idx++;
 	}
 }
