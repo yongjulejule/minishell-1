@@ -54,3 +54,6 @@ dkms.conf
 
 # Vim
 *tags
+
+# vscode
+.vscode

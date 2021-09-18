@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"ioctl.h": "c",
-		"ioccom.h": "c",
-		"filio.h": "c",
-		"ioctl_compat.h": "c"
-	}
-}
