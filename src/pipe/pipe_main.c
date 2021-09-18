@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
+/*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/13 09:01:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 11:28:47 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,6 @@ static void	process_to_execute(char **cmds, char **envp,
 	args->cnt = cmd_cnt;
 	build_structure(&cmds[cmd_start], envp, args);
 	breed_process(args);
-}
-
-static void	signal_handle_wo_rl_prompt(int signal)
-{
-	if (signal == SIGINT)
-		write(STDOUT_FILENO, "\n", 1);
-	return ;
-}
-
-static void	signal_exit(int signal)
-{
-	exit(signal);
 }
 
 static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
@@ -59,7 +47,7 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 //		free_structure();
 		*cmd_cnt = 1;
 	}
-	if (!ft_strncmp(cmds[cmd_end], "|", 2))
+	if (!ft_strcmp(cmds[cmd_end], "|"))
 		*cmd_cnt += 1;
 	if (!cmds[cmd_end + 1])
 		cmd_start = 0;

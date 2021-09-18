@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/11 16:52:44 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/18 11:07:49 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ SRCS = ft_memset.c\
 	   ft_putnbr_fd.c\
 	   ft_strlcat.c\
 	   ft_strsetlen.c\
-	   ft_strrnstr.c
+	   ft_strrnstr.c\
+	   ft_strchrset.c\
 
 OBJS = ${SRCS:.c=.o}
 
