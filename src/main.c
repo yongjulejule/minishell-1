@@ -28,7 +28,6 @@ void	free_cmds(char **cmds)
 
 void	main_sig_handler(int signal)
 {
-
 	if (signal == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);

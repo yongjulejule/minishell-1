@@ -23,6 +23,7 @@
 # include <term.h>
 # include <curses.h>
 # include <termios.h>
+# include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
