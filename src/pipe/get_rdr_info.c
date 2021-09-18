@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/16 09:23:33 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 11:15:54 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,22 +110,16 @@ void	get_rdr_info(t_cmd *cmd)
 	line = cmd->params[0];
 	while (1)
 	{
-		if (ft_strchr(line, '>'))
-		{
-			line = ft_strchr(line, '>');
-			if (line[1] == '>')
-				get_rdr_from_append_info(cmd, line);
-			else
-				get_rdr_from_info(cmd, line);
-		}
-		else if (ft_strchr(line '<'))
-		{
-			line = ft_strchr(line, '<');
+		line = ft_charset(line, "<>&");
+		if (line[0] == '<')
 			if (line[1] == '<')
-				get_rdr_to_append_info(cmd, line);
+				get_heredoc
+			else if (line[1] == '&')
+				get_from_fd
 			else
-				get_rdr_to_info(cmd, line);   
-		}
+				get_from_file
+		else if (line[0] == '>')
+		else if (line[0] == '&')
 		else
 			break;
 	}   
