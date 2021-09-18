@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/16 11:54:31 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 10:54:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,27 @@
 # define RDR_TO 0b0100
 # define APPEND 0b1000
 
+enum	e_rdr
+{
+	rd_from_file = 0,
+	rd_from_fd,
+	rd_heredoc,
+	rd_close,
+	wr_to_file,
+	wr_to_fd,
+	wr_append,
+	wr_output_to_file,
+	wr_close,
+	rdwr,
+	error,
+};
+
 typedef struct s_rdr
 {
-	int				rdr_flag;
-	char			*limiter;
 	char			file[2];
-	struct s_rdr	*rdr_from;
-	struct s_rdr	*rdr_to;
+	enum e_rdr		info;
+	char			*limiter;
+	struct s_rdr	*next;
 }	t_rdr;
 
 typedef struct s_cmd
