@@ -37,7 +37,7 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 			i++;
 			is_qmbt(one_ln + i, &qmbt);
 		}
-		if (*(one_ln + i) != '\0')
+		else if (*(one_ln + i) != '\0')
 			i++;
 	}
 	return (cnt);

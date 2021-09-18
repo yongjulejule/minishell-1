@@ -62,13 +62,31 @@ static void	skip_after_rdr(char *s, int *i)
 
 void	check_rdr_size(char *s, int *size, int *i)
 {
-	if (*(s + *i) == '&' && is_charset(*(s + *i + 1), "<>"))
+	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
 		return ;
-	if (is_charset(*(s + *i), "<>"))
-		less_or_greater_than(s, i, *(s + *i));
+	less_or_greater_than(s, i, *(s + *i));
 	*size += 2;
 	(*i)++;
 	skip_after_rdr(s, i);
 	if (*(s + *i) == '\0')
 		(*size)--;
+}
+
+void	get_rdr_end_idx(char *s, int *i)
+{
+	int	n_cnt;
+
+	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
+		return ;
+	n_cnt = 0;
+	while (n_cnt + 1 < (*i) && ft_isdigit(*(s + *i - n_cnt - 1)))
+		n_cnt++;
+	if (n_cnt && n_cnt < (*i))
+	{
+		(*i) -= n_cnt;
+		return ;
+	}
+	less_or_greater_than(s, i, *(s + *i));
+	(*i)++;
+	skip_after_rdr(s, i);
 }
