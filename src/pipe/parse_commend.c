@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 11:29:01 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 12:40:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ static void	make_cmds(t_args *args)
 
 static void	init_structure(char **cmds, t_args *args)
 {
-	int	cnt;
-	int	cur;
+	int		cnt;
+	int		cur;
+	t_rdr	*rdr;
 
 	cur = 0;
 	cnt = 0;
