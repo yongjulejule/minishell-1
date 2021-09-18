@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commend.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/15 20:31:34 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/18 11:29:01 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
-void	make_cmds(t_args *args)
+static void	make_cmds(t_args *args)
 {
 	int	cmd_idx;
 
@@ -35,7 +35,7 @@ static void	init_structure(char **cmds, t_args *args)
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
 	while (cnt < args->cnt)
 	{
-		if (!ft_strncmp(cmds[cur], "|", 2))
+		if (!ft_strcmp(cmds[cur], "|"))
 			cur++;
 		args->cmd[cnt].params = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
 		args->cmd[cnt].params[0] = cmds[cur];

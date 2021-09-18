@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 10:54:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/18 11:24:04 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ typedef struct s_args
 }	t_args;
 
 /*FUNCTIONS*/
+
+/*Signal handler in pipe*/
+
+void	signal_handle_wo_rl_prompt(int signal);
+void	signal_exit(int signal);
 
 /*Check Validity*/
 
