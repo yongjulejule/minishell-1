@@ -66,6 +66,7 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				utils_main.c\
 				utils_split.c\
 				check_syntax.c\
+				split_rdr.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \

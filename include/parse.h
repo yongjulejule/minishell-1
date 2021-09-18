@@ -52,4 +52,7 @@ char	**alloc_mem(char **tmp, char *start_addr, int len, int idx);
 void	sub_env(char **one_ln);
 int		check_smcol_pipe_syntax(char **cmds);
 
+/* split rdr */
+void	check_rdr_size(char *s, int *size, int *i);
+
 #endif

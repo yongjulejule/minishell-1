@@ -12,15 +12,14 @@
 
 #include "parse.h"
 
-static void	skip_normal_bslash(char *s, char *charset, int *i)
+static void	skip_normal_bslash(char *s, int *i)
 {
-	while (*(s + *i) && !is_charset(*(s + *i), "\"'`")
-		&& !is_charset(*(s + *i), charset))
+	while (*(s + *i) && !is_charset(*(s + *i), "\"'`<>&;|"))
 	{
 		if (*(s + *i) == '\\')
 		{
 			(*i)++;
-			if (is_charset(*(s + *i), "\\\"`';|"))
+			if (is_charset(*(s + *i), "\\\"`'<>&;|"))
 				(*i)++;
 		}
 		else if (*(s + *i))
@@ -34,8 +33,10 @@ static int	get_size(char *s, char *charset, int size, int i)
 		return (0);
 	while (*(s + i))
 	{
-		skip_normal_bslash(s, charset, &i);
+		skip_normal_bslash(s, &i);
 		skip_qmbt(s, &i);
+		if (is_charset(*(s + i), "&<>"))
+			check_rdr_size(s, &size, &i);
 		if (is_charset(*(s + i), charset))
 		{
 			size += 2;
@@ -46,7 +47,7 @@ static int	get_size(char *s, char *charset, int size, int i)
 				size++;
 			}
 		}
-		else if (*(s + i) != '\0' && *(s + i) != '\\')
+		else if (*(s + i) != '\0' && !is_charset(*(s + i), "\\<>&"))
 			i++;
 	}
 	if (*s == '\0' || !is_charset(*(s + i - 1), charset)
@@ -112,7 +113,7 @@ char	**split_by_pipe_sc(char const *s, char *charset)
 	if (!s)
 		return (NULL);
 	size = 1;
-	if (is_charset(*s, charset))
+	if (is_charset(*s, ";|<>"))
 		size = 0;
 	ret = (char **)ft_calloc(get_size((char *)s, charset, size, 0),
 			sizeof(char *));
