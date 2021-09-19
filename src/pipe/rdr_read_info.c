@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rdr_read.c                                         :+:      :+:    :+:   */
+/*   rdr_read_info.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 11:38:01 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 15:11:29 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	rdr_r_dup_fd(char *rdr, char *line, t_cmd *cmd)
 	else
 	{
 		fd[1] = ft_atoi_fd(&line[2]);
-		info = rd_dup_fd;
+		info = dup_fd;
 	}
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(info, NULL, NULL, fd));
 }
@@ -90,7 +90,7 @@ static void	rdr_r_w(char *rdr, char *line, t_cmd *cmd)
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(rdwr, file, NULL, fd));
 }
 
-void	rdr_read(char *rdr, char *line, t_cmd *cmd)
+void	rdr_read_info(char *rdr, char *line, t_cmd *cmd)
 {
 	if (line[1] == '<')
 		rdr_r_heredoc(rdr, line, cmd);
