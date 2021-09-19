@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 21:13:25 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 08:50:22 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,14 @@ char	*get_filename(const char *line)
 	return (file);
 }
 
-void	rdr_error(t_cmd *cmd)
+void	rdr_error(t_cmd *cmd, char *err_msg)
 {
-	char *file[2];
+	char *str[3];
 
-	file[0] = NULL;
-	file[1] = NULL;
-	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(error, NULL, file));
+	str[0] = NULL;
+	str[1] = NULL;
+	str[2] = err_msg;
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(error, NULL, str));
 }
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd)

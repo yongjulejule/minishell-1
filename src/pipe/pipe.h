@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 21:12:59 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 09:50:09 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 /*User Defines*/
 
-# define PIPE_RD 0
-# define PIPE_WR 1
+# define RD 0
+# define WR 1
 # define X_ERR 126
 # define CMD_ERR 127
 # define E_ACCESS 13
@@ -39,11 +39,11 @@
 typedef enum	e_info
 {
 	rd_from_file = 0,
-	rd_from_fd,
+	rd_dup_fd,
 	rd_heredoc,
 	rd_close,
 	wr_to_file,
-	wr_to_fd,
+	wr_dup_fd,
 	wr_append,
 	wr_output_to_file,
 	wr_close,
@@ -53,9 +53,9 @@ typedef enum	e_info
 
 typedef struct s_rdr
 {
-	int				*fd[2];
-	char			*file;
 	t_info			info;
+	char			*file;
+	int				fd[2];
 	char			*limiter;
 	struct s_rdr	*next;
 }	t_rdr;
@@ -99,9 +99,10 @@ void	rdr_w_output_file(char *rdr, char *line, t_cmd *cmd);
 void	rdr_error(t_cmd *cmd);
 void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	destroy_pipe(int *pipe_fd);
-t_rdr	*rdr_lst_newone(t_info info, char *limiter, char *file[2]);
+t_rdr	*rdr_lst_newone(t_info info, char *file, char *limiter, int *fd);
 void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
-
+char	*get_filename(const char *line);
+int		ft_atoi_fd(const char *str);
 /*Preprocessing*/
 
 void	build_structure(char **cmds, char **envp, t_args *args);

@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_fd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/03 17:16:22 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 08:35:27 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/19 08:52:00 by yongjule          #+#    #+#             */
+/*   Updated: 2021/09/19 08:55:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 static char	*go_to_digit(char *str, int *sign)
 {
@@ -26,7 +24,7 @@ static char	*go_to_digit(char *str, int *sign)
 	return (str);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi_fd(const char *str)
 {
 	unsigned long long	num;
 	int					sign;
@@ -34,16 +32,16 @@ int	ft_atoi(const char *str)
 
 	sign = 1;
 	num = 0;
-	cnt = 20;
+	cnt = 10;
 	str = go_to_digit((char *)str, &sign);
 	while (*str >= '0' && *str <= '9' && --cnt)
 		num = 10 * num + (*str++ - '0');
-	if (num > 9223372036854775807 || !cnt)
+	if (num > 2147483647 || !cnt)
 	{
-		if (sign == 1)
+		if (sign == -1 && num == 2147483648)
+			return (sign * num);
+		else 
 			return (-1);
-		else
-			return (0);
 	}
 	return (sign * num);
 }
