@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 15:22:27 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 16:46:09 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,8 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 # NOTE - parse only
 # SRCS_MAN		+= $(SRCS_PARSE)
 SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
+# NOTE - test exec
+#SRCS_MAN		= $(SRCS_PIPE) $(SRCS_PIPE_DIR)testmain.c
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 	   			)

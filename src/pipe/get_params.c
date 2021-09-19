@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 14:57:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:53:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ static	void	parse_param(char *cmdset, t_cmd *cmd)
 	}
 }
 
+/* NOTE : can occur leak here */
+
 static	void	get_each_params(char *cmdset, t_cmd *cmd)
 {
 	int	size;
 
 	size = count_params(cmdset);
-	/* NOTE : can occur leak here */
 	cmd->params = (char **)ft_calloc(sizeof(char *), size + 1);
 	parse_param(cmdset, cmd);
 }
@@ -80,8 +81,8 @@ static int	is_rdr(char *str)
 
 void	get_params(t_args *args, char **cmds)
 {
-	int	idx;
-	int	cur;
+	int		idx;
+	int		cur;
 
 	cur = 0;
 	idx = 0;
@@ -90,9 +91,14 @@ void	get_params(t_args *args, char **cmds)
 		if (cmds[idx][0] != '|')
 		{
 			if (!is_rdr(cmds[idx]))
+			{
 				get_each_params(cmds[idx], &args->cmd[cur]);
+			}
 			else
+			{
+				cur--;
 				get_rdr_info(cmds[idx], &args->cmd[cur]);
+			}
 			cur++;
 		}
 		idx++;

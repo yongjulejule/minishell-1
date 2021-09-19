@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 08:52:00 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 08:55:21 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:53:16 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_atoi_fd(const char *str)
 	{
 		if (sign == -1 && num == 2147483648)
 			return (sign * num);
-		else 
+		else
 			return (-1);
 	}
 	return (sign * num);
