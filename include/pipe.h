@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 09:50:09 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 11:37:46 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 /*User Defines*/
 
-# define RD 0
-# define WR 1
+# define PIPE_RD 0
+# define PIPE_WR 1
 # define X_ERR 126
 # define CMD_ERR 127
 # define E_ACCESS 13
@@ -41,12 +41,11 @@ typedef enum	e_info
 	rd_from_file = 0,
 	rd_dup_fd,
 	rd_heredoc,
-	rd_close,
 	wr_to_file,
 	wr_dup_fd,
 	wr_append,
 	wr_output_to_file,
-	wr_close,
+	close_fd,
 	rdwr,
 	error,
 }	t_info;

@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 08:56:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 09:04:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 10:52:39 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_rdr	*rdr_lst_newone(t_info info, char *file, char*limiter, int fd[2])
 	rdr_node->file = file;
 	rdr_node->limiter = limiter;
 	rdr_node->info = info;
-	rdr_node->fd[RD] = fd[RD];
-	rdr_node->fd[WR] = fd[WR];
+	rdr_node->fd[0] = fd[0];
+	rdr_node->fd[1] = fd[1];
 	return (rdr_node);
 }
 

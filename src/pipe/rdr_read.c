@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 10:22:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 11:38:01 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	rdr_r_file(char *rdr, char *line, t_cmd *cmd)
 	int		fd[2];
 	char	*file;
 
+	fd[1] = -1;
 	if (line == rdr)
-		fd[RD] = 0;
+		fd[0] = 0;
 	else
-		fd[RD] = ft_atoi_fd(rdr);
-	fd[WR] = -1;
+		fd[0] = ft_atoi_fd(rdr);
 	file = get_filename(&line[1]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(rd_from_file, file, NULL, fd));
 }
@@ -33,11 +33,11 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 	char		*tmp;
 	char		*file;
 
+	fd[1] = -1;
 	if (line == rdr)
-		fd[RD] = 0;
+		fd[0] = 0;
 	else
-		fd[RD] = ft_atoi_fd(rdr);
-	fd[WR] = -1;
+		fd[0] = ft_atoi_fd(rdr);
 	tmp = ft_itoa(10000);
 	file = ft_strjoin(".tmp.", tmp);
 	free(tmp);
@@ -53,18 +53,18 @@ static void	rdr_r_dup_fd(char *rdr, char *line, t_cmd *cmd)
 	int		fd[2];
 	t_info	info;
 
+	fd[1] = -1;
 	if (line == rdr)
-		fd[RD] = 0;
+		fd[0] = 0;
 	else
-		fd[RD] = ft_atoi_fd(rdr);
-	fd[WR] = -1;
+		fd[0] = ft_atoi_fd(rdr);
 	if (line[2] == '-')
-		info = rd_close;
+		info = close_fd;
 	else if (!ft_isdigit(line[2]))
 		info = error;
 	else
 	{
-		fd[WR] = ft_atoi_fd(&line[2]);
+		fd[1] = ft_atoi_fd(&line[2]);
 		info = rd_dup_fd;
 	}
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(info, NULL, NULL, fd));
@@ -83,9 +83,9 @@ static void	rdr_r_w(char *rdr, char *line, t_cmd *cmd)
 		return ;
 	}
 	if (line == rdr)
-		fd[RD] = 0;
+		fd[0] = 0;
 	else
-		fd[RD] = ft_atoi_fd(rdr);
+		fd[0] = ft_atoi_fd(rdr);
 	file = get_filename(&line[2]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(rdwr, file, NULL, fd));
 }
