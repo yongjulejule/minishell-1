@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 15:17:54 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:40:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 
-typedef enum	e_info
+typedef enum e_info
 {
 	rd_from_file = 0,
 	rd_heredoc,
@@ -117,6 +117,7 @@ int		wifsignaled(int status);
 int		wexitstatus(int status);
 int		wtermsig(int status);
 void	wait_process(t_args *args);
+int		get_exit_status(int status);
 
 /*Utils*/
 

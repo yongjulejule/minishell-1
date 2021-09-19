@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 08:56:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 10:52:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 15:43:24 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode)
 	t_rdr	*start;
 	t_rdr	*tmp;
 
+	if (!rdr)
+		return ;
 	start = *rdr;
 	if (!start)
 	{
