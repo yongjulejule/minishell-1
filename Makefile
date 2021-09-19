@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 22:38:29 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 23:00:20 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,8 +131,8 @@ all				: $(LIBFT_FILE) $(OBJ_FILES) $(NAME)
 
 $(NAME)			: $(LIBFT_FILE) $(OBJ_FILES)
 				@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
-				@printf $(CUT) $(DOWN)
-				@echo $(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
+				@printf $(CUT)$(DOWN)$(CUT)
+				@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
 
 .PHONY			: bonus
 bonus			:
