@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 16:51:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:27:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	process_to_execute(char **cmds, char **envp,
 
 static void	free_structure(void)
 {
+	return ;
 }
 
 static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
@@ -37,8 +38,8 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 	sigint_n_sigquit_handler((signal_handle_wo_rl_prompt));
 	if (cmds[cmd_end][0] == ';' || !cmds[cmd_end + 1])
 	{
-		if (cmds[cmd_end][0] == ';')
-			cmds[cmd_end] = NULL;
+//		if (cmds[cmd_end][0] == ';')
+//			cmds[cmd_end] = NULL;
 		pid = fork();
 		if (pid < 0)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
@@ -52,7 +53,7 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 		free_structure();
 		*cmd_cnt = 1;
 	}
-	if (cmds[cmd_end][0] == '|')
+	else if (cmds[cmd_end][0] == '|')
 		*cmd_cnt += 1;
 	if (!cmds[cmd_end + 1])
 		cmd_start = 0;

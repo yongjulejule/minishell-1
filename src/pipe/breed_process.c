@@ -6,11 +6,13 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 16:55:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:05:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
+
+extern int	g_exit_code;
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
@@ -64,9 +66,10 @@ void	breed_process(t_args *args)
 	{
 		waitpid(pid, &status, 0);
 		if (wifexited(status))
-			exit(wexitstatus(status));
+			g_exit_code = wexitstatus(status);
 		else
-			exit(EXIT_FAILURE);
+			g_exit_code = EXIT_SUCCESS;
+		exit(g_exit_code);
 	}
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);

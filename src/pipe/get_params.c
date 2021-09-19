@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 16:53:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:29:12 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	get_params(t_args *args, char **cmds)
 
 	cur = 0;
 	idx = 0;
-	while (cmds[idx])
+	while (cmds[idx] && cmds[idx][0] != ';')
 	{
 		if (cmds[idx][0] != '|')
 		{
