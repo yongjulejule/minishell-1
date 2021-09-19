@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 15:10:58 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:54:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	rdr_read(t_rdr *rdr)
 
 	if (rdr->fd[0] > 255 || rdr->fd[0] < -1)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE);
+			": bad file descriptor", EXIT_FAILURE);
 	if (rdr->info == rd_heredoc)
 		make_tmp_heredoc(rdr);
 	fd = open(rdr->file, O_RDONLY);
@@ -60,22 +60,22 @@ static void	rdr_write(t_rdr *rdr)
 {
 	int	fd;
 
-	if (rdr->fd[1] > 255 || rdr->fd[1] < -1)
+	if (rdr->fd[0] > 255 || rdr->fd[0] < -1)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE);
+			": bad file descriptor", EXIT_FAILURE);
 	if (rdr->info == wr_to_file)
 		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (rdr->info == wr_append)
 		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 	{
-		if (dup2(STDERR_FILENO, rdr->fd[1]) == -1)
+		if (dup2(STDERR_FILENO, rdr->fd[0]) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 		fd = STDOUT_FILENO;
 	}
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
-	if (dup2(fd, rdr->fd[1]) == -1)
+	if (dup2(fd, rdr->fd[0]) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
 }
@@ -86,7 +86,7 @@ static void	rdr_rdwr(t_rdr *rdr)
 
 	if (rdr->fd[0] > 255 || rdr->fd[0] < -1)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE);
+			": bad file descriptor", EXIT_FAILURE);
 	fd = open(rdr->file, O_RDWR | O_CREAT, 0644);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
@@ -102,15 +102,15 @@ void	redirect_stream(t_cmd *cmd)
 	rdr = cmd->rdr;
 	while (rdr)
 	{
-		if (rdr->info < 2) /* read */
+		if (rdr->info < 2)
 			rdr_read(rdr);
-		else if (rdr->info < 5) /* write */
+		else if (rdr->info < 5)
 			rdr_write(rdr);
 		else if (rdr->info == dup_fd)
 		{
 			if (dup2(rdr->fd[0], rdr->fd[1]) == -1)
 				is_error(ft_itoa(rdr->fd[1]), NULL,
-						": bad file descriptor", EXIT_FAILURE);
+					": bad file descriptor", EXIT_FAILURE);
 		}
 		else if (rdr->info == close_fd)
 			close(rdr->fd[0]);

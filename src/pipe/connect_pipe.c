@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 13:45:32 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 13:45:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:54:50 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	destroy_pipe(int *pipe_fd)
 {
+	if (!pipe_fd)
+		return ;
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 }
@@ -24,4 +26,3 @@ void	connect_pipe_fd(int *pipe_fd, int pipe_status)
 		is_error(NULL, "pipe: ", strerror(errno), EXIT_FAILURE);
 	destroy_pipe(pipe_fd);
 }
-

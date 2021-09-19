@@ -6,13 +6,13 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/11 19:09:49 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:39:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
-static int	get_exit_status(int status)
+int	get_exit_status(int status)
 {
 	int	exit_code;
 

@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/18 14:53:29 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:51:46 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	make_cmds(t_args *args)
 	while (args->cmd[cmd_idx].params)
 	{
 		check_cmd_validity(args, &args->cmd[cmd_idx],
-				args->cmd[cmd_idx].params[0]);
+			args->cmd[cmd_idx].params[0]);
 		cmd_idx++;
 	}
 }
