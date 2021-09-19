@@ -54,6 +54,6 @@ int		check_smcol_pipe_syntax(char **cmds);
 
 /* split rdr */
 void	check_rdr_size(char *s, int *size, int *i);
-void		get_rdr_end_idx(char *s, int *i);
+void	get_rdr_end_idx(char *s, int start, int *i);
 
 #endif

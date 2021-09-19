@@ -63,30 +63,53 @@ static void	skip_after_rdr(char *s, int *i)
 void	check_rdr_size(char *s, int *size, int *i)
 {
 	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
+	{
+		(*i)++;
 		return ;
-	less_or_greater_than(s, i, *(s + *i));
+	}
+	else if (*(s + *i) == '&' && is_charset(*(s + *i + 1), "<>"))
+		(*i) += 2;
+	else if (is_charset(*(s + *i), "<>"))
+		less_or_greater_than(s, i, *(s + *i));
 	*size += 2;
-	(*i)++;
+	if (!is_charset(*(s + *i), "<>&")
+		|| (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>")))
+	{
+		(*i)++;
+		while (is_charset(*(s + *i), " \t\n"))
+			(*i)++;
+	}
+	if (is_charset(*(s + *i), "<>&"))
+		check_rdr_size(s, size, i);
 	skip_after_rdr(s, i);
 	if (*(s + *i) == '\0')
 		(*size)--;
 }
 
-void	get_rdr_end_idx(char *s, int *i)
+void	get_rdr_end_idx(char *s, int start, int *i)
 {
 	int	n_cnt;
 
 	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
+	{
+		(*i)++;
 		return ;
+	}
 	n_cnt = 0;
-	while (n_cnt + 1 < (*i) && ft_isdigit(*(s + *i - n_cnt - 1)))
+	while (n_cnt + start + 1 < (*i)
+		&& ft_isdigit(*(s + *i - n_cnt - 1)))
 		n_cnt++;
-	if (n_cnt && n_cnt < (*i))
+	if (n_cnt && n_cnt + start + 1 < (*i))
 	{
 		(*i) -= n_cnt;
 		return ;
 	}
-	less_or_greater_than(s, i, *(s + *i));
-	(*i)++;
+	if (*(s + *i) == '&' && is_charset(*(s + *i + 1), "<>"))
+		(*i) += 2;
+	else if (is_charset(*(s + *i), "<>"))
+		less_or_greater_than(s, i, *(s + *i));
+	if (!is_charset(*(s + *i), "<>&")
+		|| (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>")))
+		(*i)++;
 	skip_after_rdr(s, i);
 }
