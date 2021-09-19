@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/13 20:11:58 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 15:22:27 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,16 +46,22 @@ INC_DIR_MAN		= ./include/
 
 SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				breed_process.c\
-				file_redirection.c\
-				wait_info.c\
-				waiting.c\
 				check_validity.c\
+				connect_pipe.c\
+				file_redirection.c\
+				ft_atoi_fd.c\
 				get_next_line.c\
 				get_next_line_utils.c\
 				get_params.c\
-				get_rdr_info.c\
 				parse_commend.c\
 				pipe_main.c\
+				pipe_signal.c\
+				rdr_info.c\
+				rdr_list.c\
+				rdr_read_info.c\
+				rdr_write_info.c\
+				wait_info.c\
+				waiting.c\
 				string_utils.c\
 				)
 
@@ -74,8 +80,8 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				)
 
 # NOTE - parse only
-SRCS_MAN		+= $(SRCS_PARSE)
-# SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
+# SRCS_MAN		+= $(SRCS_PARSE)
+SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 	   			)
