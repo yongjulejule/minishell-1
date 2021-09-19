@@ -12,18 +12,23 @@
 
 #include "parse.h"
 
-static void	skip_normal_bslash(char *s, int *i)
+static void	pipe_sc_size(char *s, int *size, int *i)
 {
-	while (*(s + *i) && !is_charset(*(s + *i), "\"'`<>&;|"))
+	*size += 2;
+	(*i)++;
+	while (*(s + *i) && is_charset(*(s + *i), ";|<>&"))
 	{
-		if (*(s + *i) == '\\')
+		while (is_charset(*(s + *i), "&<>"))
+		{
+			if (!cnt_valid_rdr_symbols(s, i))
+				return ;
+			(*size)++;
+		}
+		if (is_charset(*(s + *i), ";|"))
 		{
 			(*i)++;
-			if (is_charset(*(s + *i), "\\\"`'<>&;|"))
-				(*i)++;
+			(*size)++;
 		}
-		else if (*(s + *i))
-			(*i)++;
 	}
 }
 
@@ -35,18 +40,14 @@ static int	get_size(char *s, char *charset, int size, int i)
 	{
 		skip_normal_bslash(s, &i);
 		skip_qmbt(s, &i);
-		if (is_charset(*(s + i), "&<>"))
-			check_rdr_size(s, &size, &i);
-		if (is_charset(*(s + i), charset))
+		while (is_charset(*(s + i), "&<>"))
 		{
-			size += 2;
-			i++;
-			while (*(s + i) && is_charset(*(s + i), charset))
-			{
-				i++;
+			check_rdr_size(s, &size, &i);
+			if (*(s + i) != '\0' && !is_charset(*(s + i), "|;<>&"))
 				size++;
-			}
 		}
+		if (is_charset(*(s + i), ";|"))
+			pipe_sc_size(s, &size, &i);
 		else if (*(s + i) != '\0' && !is_charset(*(s + i), "\\<>&"))
 			i++;
 	}
@@ -94,10 +95,10 @@ static char	**get_strs(char *s, char **tmp, int idx, int i)
 				get_end(s, &i);
 				if (is_charset(*(s + i), "<>&")
 					&& i > 0 && ft_isdigit(*(s + i - 1)))
-					get_rdr_end_idx(s, start, &i);
+					get_rdr_end_idx(s, start, &i, 0);
 			}
 			else if (is_charset(*(s + i), "<>&"))
-				get_rdr_end_idx(s, start, &i);
+				get_rdr_end_idx(s, start, &i, 0);
 			tmp = alloc_mem(tmp, s + start, i - start + 1, idx++);
 		}
 		else if (*(s + i) != '\0')
@@ -114,7 +115,8 @@ char	**split_by_pipe_sc(char const *s, char *charset)
 	if (!s)
 		return (NULL);
 	size = 1;
-	if (is_charset(*s, ";|<>"))
+	if (is_charset(*s, ";|<>")
+		|| (ft_strlen(s) > 1 && *s == '&' && is_charset(*(s + 1), "<>")))
 		size = 0;
 	ret = (char **)ft_calloc(get_size((char *)s, charset, size, 0),
 			sizeof(char *));

@@ -58,44 +58,53 @@ static void	skip_after_rdr(char *s, int *i)
 	skip_qmbt(s, i);
 	if (is_charset(*(s + *i), "\"'`"))
 		(*i)++;
+	while (is_charset(*(s + *i), " \n\t"))
+		(*i)++;
 }
 
-void	check_rdr_size(char *s, int *size, int *i)
+int	cnt_valid_rdr_symbols(char *s, int *i)
 {
 	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
 	{
 		(*i)++;
-		return ;
+		while (*(s + *i) == '&')
+			(*i)++;
+		return (0);
 	}
 	else if (*(s + *i) == '&' && is_charset(*(s + *i + 1), "<>"))
 		(*i) += 2;
 	else if (is_charset(*(s + *i), "<>"))
 		less_or_greater_than(s, i, *(s + *i));
-	*size += 2;
-	if (!is_charset(*(s + *i), "<>&")
-		|| (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>")))
-	{
-		(*i)++;
-		while (is_charset(*(s + *i), " \t\n"))
-			(*i)++;
-	}
-	if (is_charset(*(s + *i), "<>&"))
-		check_rdr_size(s, size, i);
-	skip_after_rdr(s, i);
-	if (*(s + *i) == '\0')
-		(*size)--;
+	return (1);
 }
 
-void	get_rdr_end_idx(char *s, int start, int *i)
+void	check_rdr_size(char *s, int *size, int *i)
 {
+	int	diff;
 	int	n_cnt;
 
+	diff = *i;
+	if (!cnt_valid_rdr_symbols(s, i))
+		return ;
+	diff = *i - diff + 1;
+	(*size)++;
+	n_cnt = 0;
+	while ((*i) > diff + n_cnt && ft_isdigit(*(s + *i - n_cnt - diff)))
+		n_cnt++;
+	if ((n_cnt && (n_cnt + diff) == (*i)) || (!n_cnt && diff == *i))
+		(*size)--;
+	skip_after_rdr(s, i);
+}
+
+void	get_rdr_end_idx(char *s, int start, int *i, int n_cnt)
+{
 	if (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>"))
 	{
 		(*i)++;
+		while (*(s + *i) == '&')
+			(*i)++;
 		return ;
 	}
-	n_cnt = 0;
 	while (n_cnt + start + 1 < (*i)
 		&& ft_isdigit(*(s + *i - n_cnt - 1)))
 		n_cnt++;
@@ -108,8 +117,6 @@ void	get_rdr_end_idx(char *s, int start, int *i)
 		(*i) += 2;
 	else if (is_charset(*(s + *i), "<>"))
 		less_or_greater_than(s, i, *(s + *i));
-	if (!is_charset(*(s + *i), "<>&")
-		|| (*(s + *i) == '&' && !is_charset(*(s + *i + 1), "<>")))
-		(*i)++;
-	skip_after_rdr(s, i);
+	if (*(s + *i))
+		skip_after_rdr(s, i);
 }
