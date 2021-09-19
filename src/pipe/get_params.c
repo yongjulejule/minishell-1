@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 17:29:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:32:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static	void	parse_param(char *cmdset, t_cmd *cmd)
 		p_idx++;
 	}
 }
-
-/* NOTE : can occur leak here */
 
 static	void	get_each_params(char *cmdset, t_cmd *cmd)
 {
