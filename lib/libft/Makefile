@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 17:30:57 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 22:33:58 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,23 +76,55 @@ BONUS_SRCS = ${SRCS}\
 
 BONUS_OBJS = ${BONUS_SRCS:.c=.o}
 
-.PHONY: all
-all: $(NAME)
+######################### Color #########################
+GREEN="\033[32m"
+L_GREEN="\033[1;32m"
+YELLOW="\033[33m"
+RED="\033[31m"
+L_RED="\033[1;31m"
+BLUE="\033[34m"
+MUTED="\033[130m"
+RESET="\033[0m"
+BOLD="\033[1m"
+L_PUPLE="\033[1;35m"
+UP = "\033[A"
+DOWN = "\033[B"
+RIGHT = "\033[C"
+LEFT = "\033[D"
+CUT = "\033[K"
+SAVE = "\033[s"
+RESTORE = "\033[u"
 
-$(NAME) : $(OBJS) $(BONUS_OBJS)
-	ar rc $@ $(OBJS) $(BONUS_OBJS)
+########################## Rule ##########################
+%.o				: %.c
+				@$(CC) $(CFLAGS) -c $< -o $@
+				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
+				@echo $(CUT) $(GREEN)[$^] to [$@] $(RESET)
+				@printf $(UP)$(UP)
+
+.PHONY: all
+all				: $(NAME)
+
+$(NAME)			: $(OBJS) $(BONUS_OBJS)
+				@ar rc $@ $(OBJS) $(BONUS_OBJS)
+				@printf $(CUT) $(DOWN)
+				@echo $(BOLD)$(L_PUPLE) ✨$@ linked!!📚$(RESET)
 
 .PHONY: clean
-clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+clean			:
+				@rm -f $(OBJS) $(BONUS_OBJS)
+				@echo $(L_RED) Remove OBJ files in libft 👋 $(RESET)
 
 .PHONY: fclean
-fclean: clean
-	rm -f $(NAME)
+fclean			:
+				@rm -f $(NAME)
+				@echo $(RED) Remove $(NAME) 🔥 $(RESET)
 
 .PHONY: re
-re: fclean all
+re				: fclean all
 
 .PHONY: bonus
-bonus: $(BONUS_OBJS)
-	ar cr $(NAME) $(BONUS_OBJS)
+bonus			: $(BONUS_OBJS)
+				@ar cr $(NAME) $(BONUS_OBJS)
+				@printf $(CUT) $(DOWN)
+				@echo $(BOLD)$(L_PUPLE) ✨$(NAME) linked!!📚$(RESET)
