@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 17:30:49 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 22:38:29 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,37 +104,68 @@ else
 	INC_DIR = $(INC_DIR_MAN)
 endif
 
+######################### Color #########################
+GREEN="\033[32m"
+L_GREEN="\033[1;32m"
+YELLOW="\033[33m"
+RED="\033[31m"
+L_RED="\033[1;31m"
+BLUE="\033[34m"
+L_BLUE="\033[1;34m"
+MUTED="\033[130m"
+RESET="\033[0m"
+BOLD="\033[1m"
+L_PUPLE="\033[1;35m"
+UP = "\033[A"
+DOWN = "\033[B"
+RIGHT = "\033[C"
+LEFT = "\033[D"
+CUT = "\033[K"
+SAVE = "\033[s"
+RESTORE = "\033[u"
+
+########################## Rule ##########################
 
 .PHONY			: all
 all				: $(LIBFT_FILE) $(OBJ_FILES) $(NAME)
 
 $(NAME)			: $(LIBFT_FILE) $(OBJ_FILES)
-				$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
+				@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
+				@printf $(CUT) $(DOWN)
+				@echo $(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
 
 .PHONY			: bonus
 bonus			:
 				@make WITH_BONUS=1 $(NAME)
 
 %.o				: %.c
-				$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
+				@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
+				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
+				@echo $(CUT)$(GREEN) [$^] to [$@] $(RESET)
+				@printf $(UP)$(UP)
 
 $(LIBFT_FILE)	:
+				@echo $(CUT)$(YELLOW) Get Library 🏃 $(RESET)
 				@make -C $(LIBFT_DIR) bonus
 
 .PHONY			: clean
 clean			:
-				rm -f $(OBJS_MAN) $(OBJS_BONUS)
-				make -C $(LIBFT_DIR) clean
+				@rm -f $(OBJS_MAN) $(OBJS_BONUS)
+				@make -C $(LIBFT_DIR) clean
+				@echo $(L_RED) Remove🧹 OBJ files in minishell 👋 $(RESET)
+
 
 .PHONY			: fclean
 fclean			: clean
-				rm -f $(NAME)
-				make -C $(LIBFT_DIR) fclean
+				@rm -f $(NAME)
+				@make -C $(LIBFT_DIR) fclean
+				@echo $(RED) Remove🧹 $(NAME)🦪 $(RESET)
+
 
 .PHONY			: ffclean
-ffclean			: clean
-				rm -f $(NAME)
-				rm -rf $(NAME).dSYM
+ffclean			: fclean
+				@rm -rf $(NAME).dSYM
+				@echo $(RED) Remove🧹 $(NAME).dSYM 🎉 $(RESET)
 
 .PHONY			: re
 re				: fclean all
@@ -146,3 +177,4 @@ re_bonus		: fclean bonus
 debug			: 
 				@make -C $(LIBFT_DIR) DEBUG=1
 				@make DEBUG=1
+				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
