@@ -6,11 +6,13 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 17:32:41 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:40:23 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
+
+extern int g_exit_code;
 
 static void	process_to_execute(char **cmds, char **envp,
 		int cmd_cnt, int cmd_start)
@@ -28,6 +30,7 @@ static void	process_to_execute(char **cmds, char **envp,
 static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 {
 	pid_t		pid;
+	int			status;
 	static int	cmd_start;
 
 	sigint_n_sigquit_handler((signal_handle_wo_rl_prompt));
@@ -41,7 +44,8 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 			sigint_n_sigquit_handler(signal_exit);
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		}
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		g_exit_code = get_exit_status(status);
 		cmd_start = cmd_end + 1;
 		*cmd_cnt = 1;
 	}
