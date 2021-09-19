@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 22:34:19 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/19 22:38:29 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -177,4 +177,4 @@ re_bonus		: fclean bonus
 debug			: 
 				@make -C $(LIBFT_DIR) DEBUG=1
 				@make DEBUG=1
-				@echo $(RED)$(BOLD)DEBUG TIME🤪$(RESET)
+				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
