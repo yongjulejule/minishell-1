@@ -60,12 +60,6 @@ int	main(int argc, char *argv[], char *envp[])
 		cmds = parse_line_main(line_read);
 		if (cmds)
 			exec_cmd_main(cmds, envp);
-		if (cmds)
-		{
-			int i = 0;
-			while (cmds[i])
-				printf("%s\n", cmds[i++]);
-		}
 		signal(SIGINT, main_sig_handler);
 		signal(SIGQUIT, main_sig_handler);
 		free_cmds(cmds);

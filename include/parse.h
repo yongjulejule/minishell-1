@@ -42,6 +42,7 @@ int		end_by_esc(char **one_ln);
 
 /* split */
 
+void	skip_normal_bslash(char *s, int *i);
 void	skip_qmbt(char *str, int *i);
 char	**split_by_pipe_sc(char const *s, char *charset);
 int		check_end_esc(char *str, char *charset);
@@ -54,6 +55,7 @@ int		check_smcol_pipe_syntax(char **cmds);
 
 /* split rdr */
 void	check_rdr_size(char *s, int *size, int *i);
-void		get_rdr_end_idx(char *s, int *i);
+void	get_rdr_end_idx(char *s, int start, int *i, int n_cnt);
+int		cnt_valid_rdr_symbols(char *s, int *i);
 
 #endif

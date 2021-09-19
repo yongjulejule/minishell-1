@@ -12,6 +12,21 @@
 
 #include "parse.h"
 
+void	skip_normal_bslash(char *s, int *i)
+{
+	while (*(s + *i) && !is_charset(*(s + *i), "\"'`<>&;|"))
+	{
+		if (*(s + *i) == '\\')
+		{
+			(*i)++;
+			if (is_charset(*(s + *i), "\\\"`'<>&;|"))
+				(*i)++;
+		}
+		else if (*(s + *i))
+			(*i)++;
+	}
+}
+
 void	skip_qmbt(char *str, int *i)
 {
 	char	qmbt;
