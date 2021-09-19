@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 11:49:21 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 14:14:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	get_rdr_info(char *rdrs, t_cmd *cmd)
 	if (!line)
 		return ;
 	if (line[0] == '<') /* rdr_read */
-		rdr_read(rdrs, line, cmd);
+		rdr_read_info(rdrs, line, cmd);
 	else if (line[0] == '>') /* rdr_write */
-		rdr_write(rdrs, line, cmd);
+		rdr_write_info(rdrs, line, cmd);
 	else /*if (line[0] == '&')*/
 	{
 		if (line[1] == '>')

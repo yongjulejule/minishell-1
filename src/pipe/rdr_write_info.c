@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rdr_write.c                                        :+:      :+:    :+:   */
+/*   rdr_write_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:12:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 11:47:36 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 14:15:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "pipe.h"
 
 static void	rdr_w_file(char *rdr, char *line, t_cmd *cmd)
@@ -46,7 +45,7 @@ static void	rdr_w_fd(char *rdr, char *line, t_cmd *cmd)
 	char	*file;
 	t_info	info;
 
-	info = wr_dup_fd;
+	info = dup_fd;
 	fd[1] = -1;
 	if (line == rdr)
 		fd[0] = 1;
@@ -77,7 +76,7 @@ static void	rdr_close(char *rdr, char *line, t_cmd *cmd)
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(close_fd, NULL, NULL, fd));
 }
 
-void	rdr_write(char *rdr, char *line, t_cmd *cmd)
+void	rdr_write_info(char *rdr, char *line, t_cmd *cmd)
 {
 	if (line[1] == '\0')
 		rdr_w_file(rdr, line, cmd);

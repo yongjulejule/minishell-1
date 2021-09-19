@@ -6,50 +6,46 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/12 11:32:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/19 13:53:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
-#include <readline/readline.h>
 
-static void	execute_pipe_cmd(t_args *args, int cmd)
+static void	execute_pipe_cmd(t_args *args, int idx)
 {
-	if (args->cmd[cmd].rdr_to)
-		rdr_stdout_to_file(args->cmd[cmd].file[1], &args->cmd[cmd]);
-	else if (args->cnt > cmd + 1)
-		connect_pipe_fd(args->cmd[cmd].pipe_fd, STDOUT_FILENO);
-	if (args->cmd[cmd].rdr_from)
-		rdr_file_to_stdin(args->cmd[cmd].file[0], &args->cmd[cmd]);
-	else if (cmd > 0)
-		connect_pipe_fd(args->cmd[cmd - 1].pipe_fd, STDIN_FILENO);
-	execve(args->cmd[cmd].params[0], args->cmd[cmd].params, args->envp);
-	if (errno == E_ACCESS || args->cmd[cmd].params[0] == NULL)
-		is_error(NULL, "permission denied: ", args->cmd[cmd].params[0], X_ERR);
+	redirect_stream(&args->cmd[idx]);
+	if (args->cnt > idx + 1)
+		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
+	if (idx > 0)
+		connect_pipe_fd(args->cmd[idx - 1].pipe_fd, STDIN_FILENO);
+	execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
+	if (errno == E_ACCESS || args->cmd[idx].params[0] == NULL)
+		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
 	else if (errno == E_NOCMD)
-		is_error(NULL, "command not found: ", args->cmd[cmd].params[0], CMD_ERR);
+		is_error(NULL, "command not found: ", args->cmd[idx].params[0], CMD_ERR);
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
 
-static void	execute_processes(t_args *args, int cmd)
+static void	execute_processes(t_args *args, int idx)
 {
 	pid_t		pid;
 
-	if (args->cnt != cmd && args->cnt > 1)
-		if (pipe(args->cmd[cmd].pipe_fd) == -1)
+	if (args->cnt != idx && args->cnt > 1)
+		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	pid = fork();
-	args->cmd[cmd].pid = pid;
+	args->cmd[idx].pid = pid;
 	if (pid == 0)
-		execute_pipe_cmd(args, cmd);
+		execute_pipe_cmd(args, idx);
 	else if (pid > 0)
 	{
 		if (args->cnt > 1)
-			destroy_pipe(args->cmd[cmd - 1].pipe_fd);
-		if (args->cnt - 1 == cmd)
+			destroy_pipe(args->cmd[idx - 1].pipe_fd);
+		if (args->cnt - 1 == idx)
 			wait_process(args);
-		execute_processes(args, ++cmd);
+		execute_processes(args, ++idx);
 	}
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
