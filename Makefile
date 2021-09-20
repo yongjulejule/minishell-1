@@ -6,14 +6,18 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 23:00:20 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 10:36:58 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= gcc
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
-#	CFLAGS = -g
+else
+	CFLAGS = -Wall -Wextra -Werror
+endif
+ifdef LEAKS
+	CFLAGS = -g
 else
 	CFLAGS = -Wall -Wextra -Werror
 endif
@@ -178,3 +182,8 @@ debug			:
 				@make -C $(LIBFT_DIR) DEBUG=1
 				@make DEBUG=1
 				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
+
+leaks			:
+				@make -C $(LIBFT_DIR) LEAKS=1
+				@make LEAKS=1
+				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
