@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 09:14:46 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 09:38:50 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ static	int	count_params(char *cmdset)
 	int	size;
 	int	start;
 	int	len;
+	int	origin_size;
 
 	start = 0;
 	size = 0;
+	origin_size = ft_strlen(cmdset);
 	while (cmdset[start] != '\0')
 	{
 		size++;
@@ -32,6 +34,8 @@ static	int	count_params(char *cmdset)
 		else
 			len = split_once(&cmdset[start], "\t\n ") + start;
 		start = len;
+		if (origin_size < start)
+			break;
 	}
 	return (size);
 }

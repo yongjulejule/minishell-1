@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 15:11:29 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 11:19:19 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 	tmp = ft_itoa(10000);
 	file = ft_strjoin(".tmp.", tmp);
 	free(tmp);
-	tmp = get_filename(&line[1]);
+	tmp = get_filename(&line[2]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(rd_heredoc, file, tmp, fd));
 	fileno++;
 	if (fileno > 19999)

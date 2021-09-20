@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 09:20:13 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:35:14 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (idx > 0)
 		connect_pipe_fd(args->cmd[idx - 1].pipe_fd, STDIN_FILENO);
 	redirect_stream(&args->cmd[idx]);
-	execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
+	if (args->cmd[idx].params && args->cmd[idx].params[0])
+		execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
+	else
+		exit(EXIT_SUCCESS);
 	if (errno == E_ACCESS)
 		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
 	else if (errno == E_NOCMD || args->cmd[idx].params[0] == NULL)
@@ -59,6 +62,7 @@ void	breed_process(t_args *args)
 	int			status;
 	pid_t		pid;
 
+	sigint_n_sigquit_handler(reset_signal);
 	pid = fork();
 	if (pid == 0)
 		execute_processes(args, 0);
