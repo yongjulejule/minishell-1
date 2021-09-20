@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 19:29:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:36:30 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void	redirect_stream(t_cmd *cmd)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	while (rdr)
 	{
-	fprintf(stderr, "file : %s, rdr info : %d rdr->fd[0] = %d, rdr->fd[1] = %d\n", rdr->file, rdr->info, rdr->fd[0], rdr->fd[1]);
 		if (rdr->info < 2)
 			rdr_read(rdr);
 		else if (rdr->info < 5)
@@ -130,5 +129,4 @@ void	redirect_stream(t_cmd *cmd)
 		rdr = rdr->next;
 	}
 	close(BACKUP_FD);
-	while(1);
 }
