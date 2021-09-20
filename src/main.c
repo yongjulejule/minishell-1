@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/20 15:05:37 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/21 01:54:08 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	g_exit_code = 0;
 

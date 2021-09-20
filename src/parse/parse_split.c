@@ -1,67 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_split.c                                 :+:      :+:    :+:   */
+/*   parse_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 18:13:39 by yongjule          #+#    #+#             */
-/*   Updated: 2021/08/07 15:11:54 by jun              ###   ########.fr       */
+/*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
+/*   Updated: 2021/09/21 01:55:05 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static void	pipe_sc_size(char *s, int *size, int *i)
-{
-	*size += 2;
-	(*i)++;
-	while (*(s + *i) && is_charset(*(s + *i), ";|<>&"))
-	{
-		while (is_charset(*(s + *i), "&<>"))
-		{
-			if (!cnt_valid_rdr_symbols(s, i))
-				return ;
-			(*size)++;
-		}
-		if (is_charset(*(s + *i), ";|"))
-		{
-			(*i)++;
-			(*size)++;
-		}
-	}
-}
-
-static int	get_size(char *s, char *charset, int size, int i)
-{
-	if (!s)
-		return (0);
-	while (*(s + i))
-	{
-		skip_normal_bslash(s, &i);
-		skip_qmbt(s, &i);
-		while (is_charset(*(s + i), "&<>"))
-		{
-			check_rdr_size(s, &size, &i);
-			if (*(s + i) != '\0' && !is_charset(*(s + i), "|;<>&"))
-				size++;
-		}
-		if (is_charset(*(s + i), ";|"))
-			pipe_sc_size(s, &size, &i);
-		else if (*(s + i) != '\0' && !is_charset(*(s + i), "\\<>&"))
-			i++;
-	}
-	if (*s == '\0' || !is_charset(*(s + i - 1), charset)
-		|| check_end_esc(s, charset))
-		size++;
-	return (size);
-}
-
-static void	get_end(char *s, int *i)
+static void	get_end_idx(char *s, int *i, char *charset)
 {
 	char	qmbt;
 
-	while (*(s + *i) && !is_charset(*(s + *i), ";|<>&"))
+	while (*(s + *i) && !is_charset(*(s + *i), charset))
 	{
 		if (*(s + *i) != '\\')
 		{
@@ -75,54 +30,114 @@ static void	get_end(char *s, int *i)
 		else
 		{
 			(*i)++;
-			if (is_charset(*(s + *i), "\\;|'\"`"))
+			if (is_charset(*(s + *i), "\\;|'\"`<>&"))
 				(*i)++;
 		}
 	}
 }
 
-static char	**get_strs(char *s, char **tmp, int idx, int i)
+static void	split_n_insert(t_cmds **cur, char **s, int start, int *i)
 {
-	int		start;
+	t_cmds	*new;
+	int		len;
 
-	while (*(s + i))
+	(*cur)->cmd = ft_strndup(*s, start);
+	new = ps_lst_init(ft_substr(*s, start, *i - start));
+	new->next = (*cur)->next;
+	(*cur)->next = new;
+	(*cur) = (*cur)->next;
+	len = (int)ft_strlen(*s);
+	free(*s);
+	*s = NULL;
+	if (*i != len)
 	{
-		if (!is_charset(*(s + i), ";|<>&") || is_charset(*(s + i), "<>&"))
-		{
-			start = i;
-			if (!is_charset(*(s + i), ";|<>&"))
-			{
-				get_end(s, &i);
-				if (is_charset(*(s + i), "<>&")
-					&& i > 0 && ft_isdigit(*(s + i - 1)))
-					get_rdr_end_idx(s, start, &i, 0);
-			}
-			else if (is_charset(*(s + i), "<>&"))
-				get_rdr_end_idx(s, start, &i, 0);
-			tmp = alloc_mem(tmp, s + start, i - start + 1, idx++);
-		}
-		else if (*(s + i) != '\0')
-			tmp = alloc_mem(tmp, s + i++, 2, idx++);
+		*s = (*cur)->cmd;
+		*i = 0;
 	}
-	return (tmp);
 }
 
-char	**split_by_pipe_sc(char const *s, char *charset)
+static int	rdr_after_fd(char *s, int *i)
 {
-	char	**ret;
-	int		size;
+	while (ft_isdigit(*(s + *i)))
+		(*i)++;
+	if (check_valid_rdr_symbols(s, *i))
+		return (1);
+	return (0);
+}
 
-	if (!s)
-		return (NULL);
-	size = 1;
-	if (is_charset(*s, ";|<>")
-		|| (ft_strlen(s) > 1 && *s == '&' && is_charset(*(s + 1), "<>")))
-		size = 0;
-	ret = (char **)ft_calloc(get_size((char *)s, charset, size, 0),
-			sizeof(char *));
-	if (*s == '\0')
-		ret = alloc_mem(ret, (char *)s, 1, 0);
+static void	split_by_rdr(t_cmds **cur, int i)
+{
+	char	*s;
+	int		start;
+
+	s = (*cur)->cmd;
+	while (s && *(s + i))
+	{
+		start = i;
+		if (ft_isdigit(*(s + i)))
+		{
+			if (rdr_after_fd(s, &i))
+			{
+				get_rdr_end_idx(s, &i);
+				split_n_insert(cur, &s, start, &i);
+			}
+			else
+				get_end_idx(s, &i, "<>&");
+		}
+		if (!is_charset(*(s + i), "<>&"))
+			get_end_idx(s, &i, "<>&");
+		else if (is_charset(*(s + i), "<>&"))
+		{
+			get_rdr_end_idx(s, &i);
+			split_n_insert(cur, &s, start, &i);
+		}
+	}
+}
+
+static void	split_by_pipe_sc(t_cmds **hd, char *s)
+{
+	int	start;
+	int	i;
+
+	i = 0;
+	while (*(s + i))
+	{
+		if (!is_charset(*(s + i), ";|"))
+		{
+			start = i;
+			get_end_idx(s, &i, ";|");
+			ps_lst_addback(hd, ps_lst_init(ft_substr(s, start, i - start)));
+		}
+		else if (*(s + i) != '\0')
+		{
+			if (*(s + i) == ';')
+				ps_lst_addback(hd, ps_lst_init(ft_strdup(";")));
+			else if (*(s + i) == '|')
+				ps_lst_addback(hd, ps_lst_init(ft_strdup("|")));
+			i++;
+		}
+	}
+}
+
+void	split_by_symbols(t_cmds **cmds_hd, char *one_ln)
+{
+	t_cmds	*elem;
+
+	if (!one_ln)
+		return ;
+	if (*one_ln == '\0')
+		ps_lst_addback(cmds_hd, ps_lst_init(ft_strdup("")));
 	else
-		ret = get_strs((char *)s, ret, 0, 0);
-	return (ret);
+	{
+		split_by_pipe_sc(cmds_hd, one_ln);
+		free(one_ln);
+		one_ln = NULL;
+		elem = (*cmds_hd)->next;
+		while (elem)
+		{
+			if (ft_strcmp(elem->cmd, ";") && ft_strcmp(elem->cmd, "|"))
+				split_by_rdr(&elem, 0);
+			elem = elem->next;
+		}
+	}
 }
