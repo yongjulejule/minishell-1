@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 15:04:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:17:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	int		tty;
 	char	*line;
 
-	fprintf(stderr, "fd = %d\n", rdr->fd[0]);
 	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
