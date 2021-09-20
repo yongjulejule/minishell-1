@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 14:26:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:45:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	reset_signal(int sig)
 
 void	signal_exit(int signal)
 {
+	signal += 128;
 	exit(signal);
 }

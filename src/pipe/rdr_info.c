@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 11:20:31 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:17:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	rdr_w_output_file(char *line, t_cmd *cmd)
 	int		fd[2];
 	char	*file;
 
-	fd[0] = STDIN_FILENO;
+	fd[0] = STDOUT_FILENO;
 	fd[1] = STDERR_FILENO;
 	file = get_filename(&line[2]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(wr_output_to_file,

@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
+#    By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/20 10:53:43 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 18:40:42 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= gcc
+
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
 else ifdef LEAKS
@@ -142,7 +143,7 @@ bonus			:
 %.o				: %.c
 				@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
 				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
-				@echo $(CUT)$(GREEN) [$^] to [$@] $(RESET)
+				@echo $(CUT)$(GREEN) [$(notdir $^)] to [$(notdir $@)] $(RESET)
 				@printf $(UP)$(UP)
 
 $(LIBFT_FILE)	:
@@ -177,10 +178,10 @@ re_bonus		: fclean bonus
 .PHONY			: debug
 debug			: 
 				@make -C $(LIBFT_DIR) DEBUG=1
-				@make -B DEBUG=1
+				@make DEBUG=1
 				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
 
 leaks			:
 				@make -C $(LIBFT_DIR) LEAKS=1
-				@make -B LEAKS=1
+				@make LEAKS=1
 				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)

@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/20 11:19:19 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:11:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 		fd[0] = 0;
 	else
 		fd[0] = ft_atoi_fd(rdr);
-	tmp = ft_itoa(10000);
+	tmp = ft_itoa(fileno);
 	file = ft_strjoin(".tmp.", tmp);
 	free(tmp);
 	tmp = get_filename(&line[2]);
@@ -51,23 +51,26 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 static void	rdr_r_dup_fd(char *rdr, char *line, t_cmd *cmd)
 {
 	int		fd[2];
+	char	*file;
 	t_info	info;
 
 	fd[1] = -1;
+	file = NULL;
 	if (line == rdr)
 		fd[0] = 0;
 	else
 		fd[0] = ft_atoi_fd(rdr);
 	if (line[2] == '-')
 		info = close_fd;
-	else if (!ft_isdigit(line[2]))
-		info = error;
 	else
 	{
-		fd[1] = ft_atoi_fd(&line[2]);
+		if (ft_isdigit(line[2]))
+			fd[1] = ft_atoi_fd(&line[2]);
+		else
+			file = get_filename(&line[2]);
 		info = dup_fd;
 	}
-	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(info, NULL, NULL, fd));
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(info, file, NULL, fd));
 }
 
 static void	rdr_r_w(char *rdr, char *line, t_cmd *cmd)
