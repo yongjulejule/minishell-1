@@ -6,19 +6,16 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/20 10:36:58 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 10:47:42 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= gcc
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
-else
-	CFLAGS = -Wall -Wextra -Werror
-endif
-ifdef LEAKS
+else ifdef LEAKS
 	CFLAGS = -g
-else
+else 
 	CFLAGS = -Wall -Wextra -Werror
 endif
 
@@ -49,39 +46,39 @@ INC_DIR_MAN		= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
 
 SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
-				breed_process.c\
-				check_validity.c\
-				connect_pipe.c\
-				file_redirection.c\
-				ft_atoi_fd.c\
-				get_next_line.c\
-				get_next_line_utils.c\
-				get_params.c\
-				parse_commend.c\
-				pipe_main.c\
-				pipe_signal.c\
-				rdr_info.c\
-				rdr_list.c\
-				rdr_read_info.c\
-				rdr_write_info.c\
-				wait_info.c\
-				waiting.c\
-				string_utils.c\
-				)
+				  breed_process.c\
+				  check_validity.c\
+				  connect_pipe.c\
+				  file_redirection.c\
+				  ft_atoi_fd.c\
+				  get_next_line.c\
+				  get_next_line_utils.c\
+				  get_params.c\
+				  parse_commend.c\
+				  pipe_main.c\
+				  pipe_signal.c\
+				  rdr_info.c\
+				  rdr_list.c\
+				  rdr_read_info.c\
+				  rdr_write_info.c\
+				  wait_info.c\
+				  waiting.c\
+				  string_utils.c\
+				  )
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
-				parse_main.c\
-				parse_split.c\
-				sub_env.c\
-				utils_main.c\
-				utils_split.c\
-				check_syntax.c\
-				split_rdr.c\
-				)
+				  parse_main.c\
+				  parse_split.c\
+				  sub_env.c\
+				  utils_main.c\
+				  utils_split.c\
+				  check_syntax.c\
+				  split_rdr.c\
+				  )
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
-				main.c\
-				)
+				  main.c\
+				  )
 
 # NOTE - parse only
 # SRCS_MAN		+= $(SRCS_PARSE)
@@ -90,7 +87,7 @@ SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
 #SRCS_MAN		= $(SRCS_PIPE) $(SRCS_PIPE_DIR)testmain.c
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
-	   			)
+				  )
 
 OBJS_MAN		= ${SRCS_MAN:%.c=%.o}
 
@@ -134,42 +131,42 @@ RESTORE = "\033[u"
 all				: $(LIBFT_FILE) $(OBJ_FILES) $(NAME)
 
 $(NAME)			: $(LIBFT_FILE) $(OBJ_FILES)
-				@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
-				@printf $(CUT)$(DOWN)$(CUT)
-				@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
+	@printf $(CUT)$(DOWN)$(CUT)
+	@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
 
 .PHONY			: bonus
 bonus			:
-				@make WITH_BONUS=1 $(NAME)
+	@make WITH_BONUS=1 $(NAME)
 
 %.o				: %.c
-				@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
-				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
-				@echo $(CUT)$(GREEN) [$^] to [$@] $(RESET)
-				@printf $(UP)$(UP)
+	@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
+	@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
+	@echo $(CUT)$(GREEN) [$^] to [$@] $(RESET)
+	@printf $(UP)$(UP)
 
 $(LIBFT_FILE)	:
-				@echo $(CUT)$(YELLOW) Get Library 🏃 $(RESET)
-				@make -C $(LIBFT_DIR) bonus
+	@echo $(CUT)$(YELLOW) Get Library 🏃 $(RESET)
+	@make -C $(LIBFT_DIR) bonus
 
 .PHONY			: clean
 clean			:
-				@rm -f $(OBJS_MAN) $(OBJS_BONUS)
-				@make -C $(LIBFT_DIR) clean
-				@echo $(L_RED) Remove🧹 OBJ files in minishell 👋 $(RESET)
+	@rm -f $(OBJS_MAN) $(OBJS_BONUS)
+	@make -C $(LIBFT_DIR) clean
+	@echo $(L_RED) Remove🧹 OBJ files in minishell 👋 $(RESET)
 
 
 .PHONY			: fclean
 fclean			: clean
-				@rm -f $(NAME)
-				@make -C $(LIBFT_DIR) fclean
-				@echo $(RED) Remove🧹 $(NAME)🦪 $(RESET)
+	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@echo $(RED) Remove🧹 $(NAME)🦪 $(RESET)
 
 
 .PHONY			: ffclean
 ffclean			: fclean
-				@rm -rf $(NAME).dSYM
-				@echo $(RED) Remove🧹 $(NAME).dSYM 🎉 $(RESET)
+	@rm -rf $(NAME).dSYM
+	@echo $(RED) Remove🧹 $(NAME).dSYM 🎉 $(RESET)
 
 .PHONY			: re
 re				: fclean all
@@ -179,11 +176,11 @@ re_bonus		: fclean bonus
 
 .PHONY			: debug
 debug			: 
-				@make -C $(LIBFT_DIR) DEBUG=1
-				@make DEBUG=1
-				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
+	@make -C $(LIBFT_DIR) DEBUG=1
+	@make -B DEBUG=1
+	@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
 
 leaks			:
-				@make -C $(LIBFT_DIR) LEAKS=1
-				@make LEAKS=1
-				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
+	@make -C $(LIBFT_DIR) LEAKS=1
+	@make -B LEAKS=1
+	@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
