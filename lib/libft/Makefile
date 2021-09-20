@@ -6,15 +6,16 @@
 #    By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 22:33:58 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 10:44:59 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
-#	CFLAGS = -g
-else
+else ifdef LEAKS
+	CFLAGS = -g
+else 
 	CFLAGS = -Wall -Wextra -Werror
 endif
 NAME = libft.a

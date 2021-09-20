@@ -6,15 +6,16 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/19 23:00:20 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 10:53:43 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= gcc
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
-#	CFLAGS = -g
-else
+else ifdef LEAKS
+	CFLAGS = -g
+else 
 	CFLAGS = -Wall -Wextra -Werror
 endif
 
@@ -86,7 +87,7 @@ SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
 #SRCS_MAN		= $(SRCS_PIPE) $(SRCS_PIPE_DIR)testmain.c
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
-	   			)
+				)
 
 OBJS_MAN		= ${SRCS_MAN:%.c=%.o}
 
@@ -176,5 +177,10 @@ re_bonus		: fclean bonus
 .PHONY			: debug
 debug			: 
 				@make -C $(LIBFT_DIR) DEBUG=1
-				@make DEBUG=1
+				@make -B DEBUG=1
 				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
+
+leaks			:
+				@make -C $(LIBFT_DIR) LEAKS=1
+				@make -B LEAKS=1
+				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
