@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 14:26:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:12:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define CMD_ERR 127
 # define E_ACCESS 13
 # define E_NOCMD 2
+# define BACKUP_FD 255
 
 typedef enum e_info
 {

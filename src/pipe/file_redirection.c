@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 17:08:08 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:29:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	while (1)
 	{
 		ft_putstr_fd(">", STDERR_FILENO);
-		get_next_line(STDIN_FILENO, &line);
+		get_next_line(BACKUP_FD, &line);
 		if (!ft_strcmp(rdr->limiter, line))
 		{
 			free(line);
@@ -70,9 +70,13 @@ static void	rdr_write(t_rdr *rdr)
 		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 	{
-		if (dup2(STDERR_FILENO, rdr->fd[0]) == -1)
+		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (fd < 0)
+			is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
+		if (dup2(fd, rdr->fd[0]) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
-		fd = STDOUT_FILENO;
+		if (dup2(fd, rdr->fd[1]) == -1)
+			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	}
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
@@ -102,10 +106,11 @@ void	redirect_stream(t_cmd *cmd)
 	t_rdr	*rdr;
 
 	rdr = cmd->rdr;
+	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	while (rdr)
 	{
-		fprintf(stderr, "rdrinfo %d\n", rdr->info);
-	fprintf(stderr, "file : %s, rdr->fd[0] = %d, rdr->fd[1] = %d\n", rdr->file, rdr->fd[0], rdr->fd[1]);
+	fprintf(stderr, "file : %s, rdr info : %d rdr->fd[0] = %d, rdr->fd[1] = %d\n", rdr->file, rdr->info, rdr->fd[0], rdr->fd[1]);
 		if (rdr->info < 2)
 			rdr_read(rdr);
 		else if (rdr->info < 5)
@@ -124,5 +129,6 @@ void	redirect_stream(t_cmd *cmd)
 		}
 		rdr = rdr->next;
 	}
-//	while(1);
+	close(BACKUP_FD);
+	while(1);
 }

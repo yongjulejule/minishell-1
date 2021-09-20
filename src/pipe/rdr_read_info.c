@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/20 17:17:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:11:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 		fd[0] = 0;
 	else
 		fd[0] = ft_atoi_fd(rdr);
-	tmp = ft_itoa(10000);
+	tmp = ft_itoa(fileno);
 	file = ft_strjoin(".tmp.", tmp);
 	free(tmp);
 	tmp = get_filename(&line[2]);

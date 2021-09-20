@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
+#    By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/20 16:17:28 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 18:40:42 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= gcc
+
 ifdef DEBUG
 	CFLAGS = -g3 -fsanitize=address
 else ifdef LEAKS
@@ -142,7 +143,7 @@ bonus			:
 %.o				: %.c
 				@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
 				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
-				@echo $(CUT)$(GREEN) [$^] to [$@] $(RESET)
+				@echo $(CUT)$(GREEN) [$(notdir $^)] to [$(notdir $@)] $(RESET)
 				@printf $(UP)$(UP)
 
 $(LIBFT_FILE)	:
