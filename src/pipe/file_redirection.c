@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 16:54:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:04:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 static void	make_tmp_heredoc(t_rdr *rdr)
 {
 	int		fd;
+	int		tty;
 	char	*line;
 
+	fprintf(stderr, "fd = %d\n", rdr->fd[0]);
 	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
+	/* NOTE :  if redirection is <<a <<b <<c, work not properly */
+	tty = open("/dev/fd/255", O_RDWR);
+	if (tty < 0)
+		is_error(strerror(errno), ": ", "tty", EXIT_FAILURE);
 	while (1)
 	{
-		ft_putstr_fd(">", 1);
-		get_next_line(rdr->fd[0], &line);
+		ft_putstr_fd(">", STDERR_FILENO);
+		get_next_line(tty, &line);
 		if (!ft_strcmp(rdr->limiter, line))
 		{
 			free(line);

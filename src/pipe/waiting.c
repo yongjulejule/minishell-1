@@ -6,20 +6,22 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 17:39:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:32:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
+extern int g_exit_code;
+
 int	get_exit_status(int status)
 {
 	int	exit_code;
 
-	if (wifexited(status))
+	if (WIFSIGNALED(status))
+		exit_code = WTERMSIG(status) + 128;
+	else if (wifexited(status))
 		exit_code = wexitstatus(status);
-	else if (wifsignaled(status))
-		exit_code = wtermsig(status);
 	else
 		exit_code = EXIT_FAILURE;
 	return (exit_code);

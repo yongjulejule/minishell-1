@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 18:02:47 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:30:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		}
 		waitpid(pid, &status, 0);
-		g_exit_code = get_exit_status(status);
+		g_exit_code = wexitstatus(status); 
+		fprintf(stderr, "%d\n", g_exit_code);
 		cmd_start = cmd_end + 1;
 		*cmd_cnt = 1;
 	}

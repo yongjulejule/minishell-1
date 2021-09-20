@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 17:40:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:26:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_args
 void	signal_handle_wo_rl_prompt(int signal);
 void	signal_exit(int signal);
 void	sigint_n_sigquit_handler(void (*sigfunction));
+void	reset_signal(int sig);
 
 /*Check Validity*/
 

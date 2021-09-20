@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/13 17:16:55 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 10:05:58 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 	nth_path = 0;
 	while (args->env_path[nth_path] != NULL)
 	{
+		if (!*param)
+			return;
 		tmp_cmd = prefix_dir_to_cmd(args, param, nth_path);
 		if (access(tmp_cmd, X_OK) == -1)
 		{

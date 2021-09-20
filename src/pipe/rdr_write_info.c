@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:12:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/19 14:15:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 11:17:07 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipe.h"
@@ -35,7 +35,7 @@ static void	rdr_w_append(char *rdr, char *line, t_cmd *cmd)
 		fd[0] = 1;
 	else
 		fd[0] = ft_atoi_fd(rdr);
-	file = get_filename(&line[1]);
+	file = get_filename(&line[2]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(wr_append, file, NULL, fd));
 }
 
