@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 17:05:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 09:20:13 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		connect_pipe_fd(args->cmd[idx - 1].pipe_fd, STDIN_FILENO);
 	redirect_stream(&args->cmd[idx]);
 	execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
-	if (errno == E_ACCESS || args->cmd[idx].params[0] == NULL)
+	if (errno == E_ACCESS)
 		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
-	else if (errno == E_NOCMD)
+	else if (errno == E_NOCMD || args->cmd[idx].params[0] == NULL)
 		is_error(NULL, "command not found: ",
 			args->cmd[idx].params[0], CMD_ERR);
 	else
