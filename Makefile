@@ -6,7 +6,7 @@
 #    By: yongjule <yongjule@42student.42seoul.kr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/20 10:53:43 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/20 16:17:28 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -177,10 +177,10 @@ re_bonus		: fclean bonus
 .PHONY			: debug
 debug			: 
 				@make -C $(LIBFT_DIR) DEBUG=1
-				@make -B DEBUG=1
+				@make DEBUG=1
 				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
 
 leaks			:
 				@make -C $(LIBFT_DIR) LEAKS=1
-				@make -B LEAKS=1
+				@make LEAKS=1
 				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)

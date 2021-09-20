@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 14:35:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:43:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	execute_processes(t_args *args, int idx)
 {
 	pid_t		pid;
 
+	sigint_n_sigquit_handler(reset_signal);
 	if (args->cnt != idx && args->cnt > 1)
 		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
@@ -62,7 +63,6 @@ void	breed_process(t_args *args)
 	int			status;
 	pid_t		pid;
 
-	sigint_n_sigquit_handler(reset_signal);
 	pid = fork();
 	if (pid == 0)
 		execute_processes(args, 0);
