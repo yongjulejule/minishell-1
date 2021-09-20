@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 17:32:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 09:14:46 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,11 @@ void	get_params(t_args *args, char **cmds)
 		if (cmds[idx][0] != '|')
 		{
 			if (!is_rdr(cmds[idx]))
-			{
 				get_each_params(cmds[idx], &args->cmd[cur]);
-			}
 			else
 			{
-				cur--;
+				if (cur)
+					cur--;
 				get_rdr_info(cmds[idx], &args->cmd[cur]);
 			}
 			cur++;

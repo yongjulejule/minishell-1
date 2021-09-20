@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/19 17:15:27 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/20 09:28:07 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		add_history(rl_line_buffer);
 		cmds = parse_line_main(line_read);
-		if (cmds)
+		if (cmds && *cmds && **cmds)
 			exec_cmd_main(cmds, envp);
 		signal(SIGINT, main_sig_handler);
 		signal(SIGQUIT, main_sig_handler);
