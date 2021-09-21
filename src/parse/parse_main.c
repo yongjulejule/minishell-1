@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 01:55:21 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 13:52:49 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,24 @@
 
 extern int	g_exit_code;
 
+static void	free_cmds_lst(t_cmds *cmds_hd)
+{
+	t_cmds	*elem;
+
+	elem = cmds_hd;
+	while (elem)
+	{
+		free(elem->cmd);
+		elem = elem->next;
+		free(cmds_hd);
+		cmds_hd = elem;
+	}
+}
+
 static char	**cmds_lst_to_arr(t_cmds *cmds_hd)
 {
 	char	**cmds_arr;
+	char	*to_free;
 	t_cmds	*elem;
 	int		size;
 	int		i;
@@ -27,17 +42,12 @@ static char	**cmds_lst_to_arr(t_cmds *cmds_hd)
 	i = 0;
 	while (elem)
 	{
-		cmds_arr[i++] = ft_strdup(elem->cmd);
+		to_free = ft_strdup(elem->cmd);
+		cmds_arr[i++] = ft_strtrim(to_free, " \t\n");
+		free(to_free);
 		elem = elem->next;
 	}
-	elem = cmds_hd;
-	while (elem)
-	{
-		free(elem->cmd);
-		elem = elem->next;
-		free(cmds_hd);
-		cmds_hd = elem;
-	}
+	free_cmds_lst(cmds_hd);
 	return (cmds_arr);
 }
 
@@ -60,7 +70,8 @@ char	**parse_line_main(char *ln_read)
 	cmds_arr = cmds_lst_to_arr(cmds_hd);
 	// int i = 0;
 	// while (cmds_arr[i])
-	// 	printf("%s\n", cmds[i++]);
+	// 	printf("%s\n", cmds_arr[i++]);
+	// exit(1);
 	// if (!check_smcol_pipe_syntax(cmds_arr))
 	// {
 	// 	free_cmds(cmds_arr);
