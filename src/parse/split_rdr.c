@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 21:31:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 22:18:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 23:32:00 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,10 @@ static void	less_or_greater_than(char *s, int *i, char c)
 		if (*(s + *i) == '-')
 		{
 			(*i)++;
-			if (*(s + *i) == '<')
-			{
-				(*i)++;
-				if (is_charset(*(s + *i), "<>"))
-					(*i)++;
-			}
-			else if (*(s + *i) == '>')
-			{
-				(*i)++;
-				if (*(s + *i) == '>')
-					(*i)++;
-			}
+			if (*(s + *i) == '&' && is_charset(*(s + *i + 1), "<>"))
+				(*i) += 2;
+			else if (is_charset(*(s + *i), "<>"))
+				less_or_greater_than(s, i, *(s + *i));
 		}
 	}
 }
