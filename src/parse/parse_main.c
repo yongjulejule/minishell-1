@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/10 18:06:29 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 14:20:08 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,94 +14,47 @@
 
 extern int	g_exit_code;
 
-static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
+static void	free_cmds_lst(t_cmds *cmds_hd)
 {
-	size_t	i;
-	int		cnt;
+	t_cmds	*elem;
 
-	cnt = 0;
-	i = 0;
-	while (qmbt && *(one_ln + i))
+	elem = cmds_hd;
+	while (elem)
 	{
-		if (qmbt && *(one_ln + i) == '\\')
-		{
-			i++;
-			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
-				i++;
-		}
-		if (*(one_ln + i) == *qmbt)
-			cnt++;
-		if (cnt && cnt % 2 == 0)
-		{
-			cnt = 0;
-			i++;
-			is_qmbt(one_ln + i, &qmbt);
-		}
-		else if (*(one_ln + i) != '\0')
-			i++;
+		free(elem->cmd);
+		elem = elem->next;
+		free(cmds_hd);
+		cmds_hd = elem;
 	}
-	return (cnt);
 }
 
-static int	check_line_end(char **one_ln, char *ln)
+static char	**cmds_lst_to_arr(t_cmds *cmds_hd)
 {
+	char	**cmds_arr;
 	char	*to_free;
-	char	*qmbt;
-	int		cnt;
+	t_cmds	*elem;
+	int		size;
+	int		i;
 
-	to_free = *one_ln;
-	*one_ln = ft_strjoin(*one_ln, ln);
-	free(to_free);
-	is_qmbt(*one_ln, &qmbt);
-	cnt = cnt_skip_qmbt(*one_ln, qmbt);
-	if (cnt % 2 || !end_by_pipe(*one_ln) || !end_by_esc(one_ln))
-		return (0);
-	return (1);
-}
-
-static void	internal_prompt_sig_handler(int sig)
-{
-	char	c;
-
-	c = '\r';
-	if (sig == SIGINT)
+	size = ps_lst_size(cmds_hd->next);
+	cmds_arr = (char **)ft_calloc(size + 1, sizeof(char *));
+	elem = cmds_hd->next;
+	i = 0;
+	while (elem)
 	{
-		g_exit_code = -42;
-		rl_on_new_line();
-		ioctl(STDIN_FILENO, TIOCSTI, &c);
+		to_free = ft_strdup(elem->cmd);
+		cmds_arr[i++] = ft_strtrim(to_free, " \t\n");
+		free(to_free);
+		elem = elem->next;
 	}
-}
-
-static int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
-{
-	while (!check_line_end(one_ln, ln_read))
-	{
-		if (read_cnt)
-			free(ln_read);
-		signal(SIGINT, internal_prompt_sig_handler);
-		ln_read = readline("> ");
-		if (g_exit_code == -42)
-			break ;
-		if (!ln_read)
-		{
-			write(STDERR_FILENO,
-				"🤣 esh: syntax error unexpected end of file\n", 46);
-			free(ln_read);
-			break ;
-		}
-		add_history(rl_line_buffer);
-		read_cnt++;
-	}
-	if (read_cnt || (g_exit_code == -42 && !read_cnt))
-		free(ln_read);
-	if (g_exit_code == -42)
-		return (0);
-	return (1);
+	free_cmds_lst(cmds_hd);
+	return (cmds_arr);
 }
 
 char	**parse_line_main(char *ln_read)
 {
-	char	**cmds;
+	t_cmds	*cmds_hd;
+	char	**cmds_arr;
 	char	*one_ln;
 
 	one_ln = ft_strdup("");
@@ -112,12 +65,13 @@ char	**parse_line_main(char *ln_read)
 		return (NULL);
 	}
 	sub_env(&one_ln);
-	cmds = split_by_pipe_sc(one_ln, ";|");
-	if (!check_smcol_pipe_syntax(cmds))
+	cmds_hd = ps_lst_init(NULL);
+	split_by_symbols(&cmds_hd, one_ln);
+	cmds_arr = cmds_lst_to_arr(cmds_hd);
+	if (!check_smcol_pipe_syntax(cmds_arr))
 	{
-		free_cmds(cmds);
-		cmds = NULL;
+		free_cmds(cmds_arr);
+		cmds_arr = NULL;
 	}
-	free(one_ln);
-	return (cmds);
+	return (cmds_arr);
 }

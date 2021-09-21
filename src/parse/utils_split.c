@@ -6,26 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/12 17:34:58 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 14:14:10 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-void	skip_normal_bslash(char *s, int *i)
-{
-	while (*(s + *i) && !is_charset(*(s + *i), "\"'`<>&;|"))
-	{
-		if (*(s + *i) == '\\')
-		{
-			(*i)++;
-			if (is_charset(*(s + *i), "\\\"`'<>&;|"))
-				(*i)++;
-		}
-		else if (*(s + *i))
-			(*i)++;
-	}
-}
 
 void	skip_qmbt(char *str, int *i)
 {
@@ -49,30 +34,59 @@ void	skip_qmbt(char *str, int *i)
 	}
 }
 
-int	check_end_esc(char *str, char *charset)
+void	get_end_idx(char *s, int *i, char *charset, int flag)
 {
-	size_t	len;
-	size_t	cnt;
+	char	qmbt;
 
-	len = ft_strlen(str);
-	cnt = 0;
-	while (len >= cnt + 2 && is_charset(*(str + len - 1), charset)
-		&& *(str + len - cnt - 2) == '\\')
-		cnt++;
-	if (cnt % 2)
+	while (*(s + *i) && !is_charset(*(s + *i), charset))
+	{
+		if (flag && ft_isdigit(*(s + *i)))
+			break ;
+		if (*(s + *i) != '\\')
+		{
+			qmbt = *(s + (*i)++);
+			while (is_charset(qmbt, "\"'`")
+				&& *(s + *i) && *(s + *i) != qmbt)
+				(*i)++;
+			if (is_charset(qmbt, "\"'`"))
+				(*i)++;
+		}
+		else
+		{
+			(*i)++;
+			if (is_charset(*(s + *i), "\\;|'\"`<>&"))
+				(*i)++;
+		}
+	}
+}
+
+int	rdr_after_fd(char *s, int *i)
+{
+	while (ft_isdigit(*(s + *i)))
+		(*i)++;
+	if (check_valid_rdr_symbols(s, *i))
 		return (1);
 	return (0);
 }
 
-char	**alloc_mem(char **tmp, char *start_addr, int len, int idx)
+void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
 {
-	char	*to_free;
+	t_cmds	*new;
+	int		len;
 
-	tmp[idx] = (char *)ft_calloc(len, sizeof(char));
-	ft_strlcpy(tmp[idx], start_addr, len);
-	to_free = tmp[idx];
-	tmp[idx] = ft_strtrim(tmp[idx], " \t\n");
-	free(to_free);
-	to_free = NULL;
-	return (tmp);
+	if (!start)
+		return ;
+	len = (int)ft_strlen(*s);
+	cur->elem->cmd = ft_strndup(*s, start);
+	new = ps_lst_init(ft_substr(*s, start, len - start));
+	new->next = cur->elem->next;
+	cur->elem->next = new;
+	cur->elem = new;
+	free(*s);
+	*s = NULL;
+	if (*i != len)
+	{
+		*s = new->cmd;
+		*i = 0;
+	}
 }
