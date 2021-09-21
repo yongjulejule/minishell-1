@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/21 01:54:18 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/21 22:40:03 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,12 +71,13 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				parse_main.c\
 				internal_prompt.c\
 				parse_split.c\
+				split_rdr.c\
 				parse_lst.c\
 				sub_env.c\
+				check_syntax.c\
 				utils_main.c\
 				utils_split.c\
-				check_syntax.c\
-				split_rdr.c\
+				utils_syntax.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
@@ -130,60 +131,60 @@ RESTORE = "\033[u"
 
 ########################## Rule ##########################
 
-.PHONY			: all
-all				: $(LIBFT_FILE) $(OBJ_FILES) $(NAME)
+.PHONY			:	all
+all				:	$(LIBFT_FILE) $(OBJ_FILES) $(NAME)
 
-$(NAME)			: $(LIBFT_FILE) $(OBJ_FILES)
-				@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
-				@printf $(CUT)$(DOWN)$(CUT)
-				@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
+$(NAME)			: 	$(LIBFT_FILE) $(OBJ_FILES)
+					@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
+					@printf $(CUT)$(DOWN)$(CUT)
+					@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
 
-.PHONY			: bonus
+.PHONY			:	bonus
 bonus			:
-				@make WITH_BONUS=1 $(NAME)
+					@make WITH_BONUS=1 $(NAME)
 
-%.o				: %.c
-				@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
-				@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
-				@echo $(CUT)$(GREEN) [$(notdir $^)] to [$(notdir $@)] $(RESET)
-				@printf $(UP)$(UP)
+%.o				: 	%.c
+					@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
+					@echo $(SAVE)$(CUT)$(BOLD)$(L_GREEN) Compiling with $(CFLAGS)...$(RESET)
+					@echo $(CUT)$(GREEN) [$(notdir $^)] to [$(notdir $@)] $(RESET)
+					@printf $(UP)$(UP)
 
 $(LIBFT_FILE)	:
-				@echo $(CUT)$(YELLOW) Get Library 🏃 $(RESET)
-				@make -C $(LIBFT_DIR) bonus
+					@echo $(CUT)$(YELLOW) Get Library 🏃 $(RESET)
+					@make -C $(LIBFT_DIR) bonus
 
-.PHONY			: clean
+.PHONY			:	clean
 clean			:
-				@rm -f $(OBJS_MAN) $(OBJS_BONUS)
-				@make -C $(LIBFT_DIR) clean
-				@echo $(L_RED) Remove🧹 OBJ files in minishell 👋 $(RESET)
+					@rm -f $(OBJS_MAN) $(OBJS_BONUS)
+					@make -C $(LIBFT_DIR) clean
+					@echo $(L_RED) Remove🧹 OBJ files in minishell 👋 $(RESET)
 
 
-.PHONY			: fclean
-fclean			: clean
-				@rm -f $(NAME)
-				@make -C $(LIBFT_DIR) fclean
-				@echo $(RED) Remove🧹 $(NAME)🦪 $(RESET)
+.PHONY			:	fclean
+fclean			:	clean
+					@rm -f $(NAME)
+					@make -C $(LIBFT_DIR) fclean
+					@echo $(RED) Remove🧹 $(NAME)🦪 $(RESET)
 
 
-.PHONY			: ffclean
-ffclean			: fclean
-				@rm -rf $(NAME).dSYM
-				@echo $(RED) Remove🧹 $(NAME).dSYM 🎉 $(RESET)
+.PHONY			:	ffclean
+ffclean			:	fclean
+					@rm -rf $(NAME).dSYM
+					@echo $(RED) Remove🧹 $(NAME).dSYM 🎉 $(RESET)
 
-.PHONY			: re
-re				: fclean all
+.PHONY			:	re
+re				:	fclean all
 
-.PHONY			: re_bonus
-re_bonus		: fclean bonus
+.PHONY			:	re_bonus
+re_bonus		:	fclean bonus
 
-.PHONY			: debug
+.PHONY			:	debug
 debug			: 
-				@make -C $(LIBFT_DIR) DEBUG=1
-				@make DEBUG=1
-				@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
+					@make -C $(LIBFT_DIR) DEBUG=1
+					@make DEBUG=1
+					@echo $(CUT)$(RED)$(BOLD) It\'s DEBUG TIME🤪$(RESET)
 
 leaks			:
-				@make -C $(LIBFT_DIR) LEAKS=1
-				@make LEAKS=1
-				@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
+					@make -C $(LIBFT_DIR) LEAKS=1
+					@make LEAKS=1
+					@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
