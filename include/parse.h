@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 14:15:17 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 22:18:51 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		check_smcol_pipe_syntax(char **cmds);
 
 /* split rdr */
 
-void	get_rdr_end_idx(char *s, int *i);
+int		get_rdr_end_idx(char *s, int *i);
 int		check_valid_rdr_symbols(char *s, int i);
 
 /* parse lst */

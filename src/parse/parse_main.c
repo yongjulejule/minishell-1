@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 14:20:08 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 22:21:21 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ char	**parse_line_main(char *ln_read)
 	cmds_hd = ps_lst_init(NULL);
 	split_by_symbols(&cmds_hd, one_ln);
 	cmds_arr = cmds_lst_to_arr(cmds_hd);
+	int i = 0;
+	while (cmds_arr[i])
+		printf("%s\n", cmds_arr[i++]);
 	if (!check_smcol_pipe_syntax(cmds_arr))
 	{
 		free_cmds(cmds_arr);
