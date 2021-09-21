@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 13:31:07 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 14:15:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int		end_by_esc(char **one_ln);
 
 /* split */
 
-void	skip_normal_bslash(char *s, int *i);
-void	skip_qmbt(char *str, int *i);
 void	split_by_symbols(t_cmds **cmds_hd, char *s);
-int		check_end_esc(char *str, char *charset);
-char	**alloc_mem(char **tmp, char *start_addr, int len, int idx);
+void	skip_qmbt(char *str, int *i);
+void	get_end_idx(char *s, int *i, char *charset, int flag);
+int		rdr_after_fd(char *s, int *i);
+void	split_n_insert(t_cursor *cur, char **s, int start, int *i);
 
 /* sub_env & syntax check */
 

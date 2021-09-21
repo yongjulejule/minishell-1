@@ -6,68 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 13:47:22 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/21 14:13:51 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-static void	get_end_idx(char *s, int *i, char *charset, int flag)
-{
-	char	qmbt;
-
-	while (*(s + *i) && !is_charset(*(s + *i), charset))
-	{
-		if (flag && ft_isdigit(*(s + *i)))
-			break ;
-		if (*(s + *i) != '\\')
-		{
-			qmbt = *(s + (*i)++);
-			while (is_charset(qmbt, "\"'`")
-				&& *(s + *i) && *(s + *i) != qmbt)
-				(*i)++;
-			if (is_charset(qmbt, "\"'`"))
-				(*i)++;
-		}
-		else
-		{
-			(*i)++;
-			if (is_charset(*(s + *i), "\\;|'\"`<>&"))
-				(*i)++;
-		}
-	}
-}
-
-static void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
-{
-	t_cmds	*new;
-	int		len;
-
-	if (!start)
-		return ;
-	len = (int)ft_strlen(*s);
-	cur->elem->cmd = ft_strndup(*s, start);
-	new = ps_lst_init(ft_substr(*s, start, len - start));
-	new->next = cur->elem->next;
-	cur->elem->next = new;
-	cur->elem = new;
-	free(*s);
-	*s = NULL;
-	if (*i != len)
-	{
-		*s = new->cmd;
-		*i = 0;
-	}
-}
-
-static int	rdr_after_fd(char *s, int *i)
-{
-	while (ft_isdigit(*(s + *i)))
-		(*i)++;
-	if (check_valid_rdr_symbols(s, *i))
-		return (1);
-	return (0);
-}
 
 static void	split_by_rdr(t_cursor *cur, int i)
 {
