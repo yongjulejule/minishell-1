@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 16:45:00 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 12:25:06 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ void	reset_signal(int sig)
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
 		signal(sig, (void (*)(int))0);
+	}
+}
+
+void	ignore_signal(int sig)
+{
+	if (sig == SIGINT || sig == SIGQUIT)
+	{
+		signal(sig, SIG_IGN);
 	}
 }
 
