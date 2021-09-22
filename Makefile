@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/21 22:40:03 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/22 16:39:45 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,13 +75,14 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				parse_lst.c\
 				sub_env.c\
 				check_syntax.c\
-				utils_main.c\
+				utils_parse_main.c\
 				utils_split.c\
 				utils_syntax.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				main.c\
+				utils_main.c\
 				)
 
 # NOTE - parse only

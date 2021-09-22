@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 11:37:59 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:27:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	signal_handle_wo_rl_prompt(int signal);
 void	signal_exit(int signal);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 void	reset_signal(int sig);
+void	multi_shell_erase_newline(int sig);
 void	ignore_signal(int sig);
 
 /*Check Validity*/

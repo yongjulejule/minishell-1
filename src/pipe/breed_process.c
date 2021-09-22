@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   breed_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 12:28:16 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:35:59 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,7 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	redirect_stream(&args->cmd[idx]);
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
-//		if (!ft_strcmp(args->cmd[idx].params[0], "./minishell"))
-//		{
-//			fprintf(stderr, "u execute minishell! \n");
-//			sigint_n_sigquit_handler(ignore_signal);
-//		}
-//		else
-			sigint_n_sigquit_handler(reset_signal);
+		sigint_n_sigquit_handler(reset_signal);
 		execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
 	}
 	else
@@ -73,7 +67,11 @@ void	breed_process(t_args *args)
 
 	pid = fork();
 	if (pid == 0)
+	{
+		if (!ft_strcmp(args->cmd[0].params[0], "./minishell"))
+			sigint_n_sigquit_handler(multi_shell_erase_newline);
 		execute_processes(args, 0);
+	}
 	else if (pid > 0)
 	{
 		sigint_n_sigquit_handler(ignore_signal);
