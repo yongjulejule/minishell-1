@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/20 15:18:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:20:54 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,14 @@ static void	process_to_execute(char **cmds, char **envp,
 
 static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 {
-	pid_t		pid;
-	int			status;
 	static int	cmd_start;
 
+	/* FIXME : Do we need sig handler here? */
 	sigint_n_sigquit_handler((signal_handle_wo_rl_prompt));
 	if (cmds[cmd_end][0] == ';' || !cmds[cmd_end + 1])
 	{
-		pid = fork();
-		if (pid < 0)
-			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
-		else if (pid == 0)
-		{
-			sigint_n_sigquit_handler(signal_exit);
-			process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
-		}
-		waitpid(pid, &status, 0);
-		g_exit_code = wexitstatus(status); 
+		sigint_n_sigquit_handler(signal_exit);
+		process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
 		cmd_start = cmd_end + 1;
 		*cmd_cnt = 1;
 	}

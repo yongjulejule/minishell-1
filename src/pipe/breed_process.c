@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/21 10:40:40 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:18:12 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	breed_process(t_args *args)
 			g_exit_code = wexitstatus(status);
 		else
 			g_exit_code = EXIT_SUCCESS;
-		exit(g_exit_code);
+		return ;
 	}
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
