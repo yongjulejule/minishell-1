@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 14:14:10 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/22 09:37:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ void	skip_qmbt(char *str, int *i)
 void	get_end_idx(char *s, int *i, char *charset, int flag)
 {
 	char	qmbt;
+	int		k;
 
 	while (*(s + *i) && !is_charset(*(s + *i), charset))
 	{
-		if (flag && ft_isdigit(*(s + *i)))
+		k = 0;
+		if (flag && rdr_after_fd(s + *i, &k))
 			break ;
 		if (*(s + *i) != '\\')
 		{
