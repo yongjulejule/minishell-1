@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/22 12:24:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:36:46 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 static void	process_to_execute(char **cmds, char **envp,
 		int cmd_cnt, int cmd_start)

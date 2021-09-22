@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 09:38:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/22 16:51:50 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**parse_line_main(char *ln_read)
 	one_ln = ft_strdup("");
 	if (!read_internal_prompt(&one_ln, ln_read, 0))
 	{
-		g_exit_code = 0;
+		g_exit_code = 1;
 		free(one_ln);
 		return (NULL);
 	}
@@ -71,6 +71,7 @@ char	**parse_line_main(char *ln_read)
 	if (!check_smcol_pipe_syntax(cmds_arr)
 		|| !check_rdr_syntax(cmds_arr))
 	{
+		g_exit_code = 258;
 		free_cmds(cmds_arr);
 		cmds_arr = NULL;
 	}

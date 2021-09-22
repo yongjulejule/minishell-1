@@ -6,38 +6,13 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 09:25:28 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:37:52 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit_code = 0;
-
-void	free_cmds(char **cmds)
-{
-	int	i;
-
-	if (!cmds)
-		return ;
-	i = 0;
-	while (cmds[i])
-		free(cmds[i++]);
-	free(cmds);
-}
-
-void	main_sig_handler(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-	else if (signal == SIGQUIT)
-		rl_on_new_line();
-	rl_redisplay();
-}
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -46,8 +21,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not receive arguments", EXIT_FAILURE);
-	signal(SIGINT, main_sig_handler);
-	signal(SIGQUIT, main_sig_handler);
+	sigint_n_sigquit_handler(main_sig_handler);
 	while (1)
 	{
 		line_read = readline("🐘 esh > ");
@@ -60,8 +34,7 @@ int	main(int argc, char *argv[], char *envp[])
 		cmds = parse_line_main(line_read);
 		if (cmds && *cmds && **cmds)
 			exec_cmd_main(cmds, envp);
-		signal(SIGINT, main_sig_handler);
-		signal(SIGQUIT, main_sig_handler);
+		sigint_n_sigquit_handler(main_sig_handler);
 		free_cmds(cmds);
 		free(line_read);
 	}
