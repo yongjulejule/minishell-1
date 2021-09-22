@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 11:18:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/22 12:28:16 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	redirect_stream(&args->cmd[idx]);
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
-		sigint_n_sigquit_handler(reset_signal);
+//		if (!ft_strcmp(args->cmd[idx].params[0], "./minishell"))
+//		{
+//			fprintf(stderr, "u execute minishell! \n");
+//			sigint_n_sigquit_handler(ignore_signal);
+//		}
+//		else
+			sigint_n_sigquit_handler(reset_signal);
 		execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
 	}
 	else
@@ -70,11 +76,12 @@ void	breed_process(t_args *args)
 		execute_processes(args, 0);
 	else if (pid > 0)
 	{
+		sigint_n_sigquit_handler(ignore_signal);
 		waitpid(pid, &status, 0);
 		if (wifexited(status))
 			g_exit_code = wexitstatus(status);
 		else
-			g_exit_code = EXIT_SUCCESS;
+			g_exit_code = EXIT_FAILURE;
 		return ;
 	}
 	else
