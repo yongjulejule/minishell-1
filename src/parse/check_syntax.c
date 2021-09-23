@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:15:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 00:34:11 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 13:41:53 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ static int	check_one_str(char *str)
 
 static void	write_pp_sm_error(char *first, char *secnd)
 {
-	if (!ft_strcmp("|", first))
-		ft_putendl_fd("🤣 esh: syntax error near unexpected token `|'",
-			STDERR_FILENO);
-	else if (!ft_strcmp(";", first) && !ft_strcmp(";", secnd))
+	if (!ft_strcmp(";", first) && !ft_strcmp(";", secnd))
 		ft_putendl_fd("🤣 esh: syntax error near unexpected token `;;'",
 			STDERR_FILENO);
 	else if ((!ft_strcmp("", first) && !ft_strcmp(";", secnd))
@@ -46,6 +43,9 @@ static void	write_pp_sm_error(char *first, char *secnd)
 			STDERR_FILENO);
 	else if ((!ft_strcmp("", first) && !ft_strcmp("|", secnd))
 		|| (!ft_strcmp("|", first) && !ft_strcmp(";", secnd)))
+		ft_putendl_fd("🤣 esh: syntax error near unexpected token `|'",
+			STDERR_FILENO);
+	else if (!ft_strcmp("|", first))
 		ft_putendl_fd("🤣 esh: syntax error near unexpected token `|'",
 			STDERR_FILENO);
 }

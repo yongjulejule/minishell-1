@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 09:37:56 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 13:38:30 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,20 @@ int	rdr_after_fd(char *s, int *i)
 	return (0);
 }
 
+static int	check_front_whitespace(char *str, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len && str && *(str + i))
+	{
+		if (!is_charset(*(str + i), " \n\t"))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
 {
 	t_cmds	*new;
@@ -79,6 +93,8 @@ void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
 	if (!start)
 		return ;
 	len = (int)ft_strlen(*s);
+	if (!check_front_whitespace(*s, start))
+		return ;
 	cur->elem->cmd = ft_strndup(*s, start);
 	new = ps_lst_init(ft_substr(*s, start, len - start));
 	new->next = cur->elem->next;
