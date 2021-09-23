@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 11:04:42 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 12:10:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ extern int	g_exit_code;
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
-	sigint_n_sigquit_handler(signal_exit);
 	if (args->cnt > idx + 1)
 		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
 	if (idx > 0)
@@ -75,6 +74,7 @@ void	breed_process(t_args *args)
 	else if (pid > 0)
 	{
 		sigint_n_sigquit_handler(ignore_signal);
+		signal(SIGUSR1, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (wifexited(status))
 			g_exit_code = wexitstatus(status);

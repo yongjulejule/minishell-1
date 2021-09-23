@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 11:18:53 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 12:11:23 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ void	ignore_signal(int sig)
 		signal(sig, SIG_IGN);
 }
 
-void	signal_exit(int signal)
+void	signal_heredoc(int sig)
 {
-	if (signal == SIGINT)
+	if (sig == SIGINT)
 		exit(EXIT_FAILURE);
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 19:12:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:16:43 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 # include "libft.h"
 # include "get_next_line.h"
 # include <readline/readline.h>
@@ -80,9 +81,11 @@ typedef struct s_args
 /*Signal handler in pipe*/
 
 void	signal_handle_wo_rl_prompt(int signal);
-void	signal_exit(int signal);
+void	signal_heredoc(int sig);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 void	reset_signal(int sig);
+void	multi_shell_erase_newline(int sig);
+void	ignore_signal(int sig);
 
 /*Check Validity*/
 

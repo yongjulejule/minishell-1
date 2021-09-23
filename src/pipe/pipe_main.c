@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/23 09:03:27 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:56:41 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,19 @@ static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
 		cmd_start = 0;
 }
 
+void	no_newline_for_sigquit(int sig)
+{
+	if (sig == SIGUSR1)
+		signal(SIGQUIT, SIG_IGN);
+}
+
 int	exec_cmd_main(char **cmds, char **envp)
 {
 	int		cmd_end;
 	int		cmd_cnt;
 
 	sigint_n_sigquit_handler(signal_handle_wo_rl_prompt);
+	signal(SIGUSR1, no_newline_for_sigquit);
 	cmd_end = 0;
 	cmd_cnt = 1;
 	while (cmds[cmd_end])

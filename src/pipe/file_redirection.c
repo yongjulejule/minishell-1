@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 19:36:30 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:12:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	int		fd;
 	char	*line;
 
+	sigint_n_sigquit_handler(signal_heredoc);
 	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
 	/* NOTE :  if redirection is <<a <<b <<c, work not properly */
+	kill(0, SIGUSR1);
 	while (1)
 	{
-		ft_putstr_fd(">", STDERR_FILENO);
-		get_next_line(BACKUP_FD, &line);
-		if (!ft_strcmp(rdr->limiter, line))
+		line = readline("> ");
+		if (!line || !ft_strcmp(rdr->limiter, line))
 		{
 			free(line);
 			line = NULL;
