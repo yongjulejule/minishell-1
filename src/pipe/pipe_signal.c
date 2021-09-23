@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 16:28:03 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 09:04:09 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	signal_handle_wo_rl_prompt(int signal)
 {
 	if (signal == SIGINT || signal == SIGQUIT)
-	{
 		write(STDOUT_FILENO, "\n", 1);
-	}
 }
 
 void	reset_signal(int sig)
@@ -47,6 +45,6 @@ void	ignore_signal(int sig)
 
 void	signal_exit(int signal)
 {
-	signal += 128;
-	exit(signal);
+	if (signal == SIGINT)
+		exit(EXIT_FAILURE);
 }
