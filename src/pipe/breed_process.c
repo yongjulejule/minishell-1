@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 16:35:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/23 09:12:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern int	g_exit_code;
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
+	sigint_n_sigquit_handler(signal_exit);
 	if (args->cnt > idx + 1)
 		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
 	if (idx > 0)
@@ -24,6 +25,8 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);
+		if (!ft_strcmp(args->cmd[idx].params[0], "./minishell"))
+			sigint_n_sigquit_handler(multi_shell_erase_newline);
 		execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
 	}
 	else
@@ -68,8 +71,6 @@ void	breed_process(t_args *args)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!ft_strcmp(args->cmd[0].params[0], "./minishell"))
-			sigint_n_sigquit_handler(multi_shell_erase_newline);
 		execute_processes(args, 0);
 	}
 	else if (pid > 0)
