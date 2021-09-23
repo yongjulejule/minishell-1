@@ -1,32 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsetlen.c                                     :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/07 15:24:52 by jun               #+#    #+#             */
-/*   Updated: 2021/09/23 12:04:31 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
+/*   Updated: 2021/09/23 12:00:25 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtin.h"
 
-int	ft_strsetlen(char **strs)
-{
-	int	cnt;
-
-	cnt = 0;
-	if (strs == NULL)
-		return (0);
-	if (*strs == NULL)
-		return (0);
-	while (*strs)
-	{
-		if (**strs == '\0')
-			break ;
-		cnt++;
-		strs++;
-	}
-	return (cnt);
-}
+void	export(const char *path, char *const argv[], char **envp);
