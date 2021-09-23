@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 09:04:09 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:11:23 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	signal_handle_wo_rl_prompt(int signal)
 void	reset_signal(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
-	{
-		signal(sig, (void (*)(int))0);
-	}
+		signal(sig, SIG_DFL);
 }
 
 void	multi_shell_erase_newline(int sig)
@@ -38,13 +36,16 @@ void	multi_shell_erase_newline(int sig)
 void	ignore_signal(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
-	{
 		signal(sig, SIG_IGN);
-	}
 }
 
-void	signal_exit(int signal)
+void	signal_heredoc(int sig)
 {
-	if (signal == SIGINT)
+	if (sig == SIGINT)
 		exit(EXIT_FAILURE);
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
