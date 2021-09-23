@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 09:12:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:04:42 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);
-		if (!ft_strcmp(args->cmd[idx].params[0], "./minishell"))
-			sigint_n_sigquit_handler(multi_shell_erase_newline);
 		execve(args->cmd[idx].params[0], args->cmd[idx].params, args->envp);
 	}
 	else
@@ -47,6 +45,9 @@ static void	execute_processes(t_args *args, int idx)
 	if (args->cnt != idx && args->cnt > 1)
 		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
+	if (args->cmd[idx].params && args->cmd[idx].params[0]
+		&& !ft_strcmp(args->cmd[idx].params[0], "./minishell"))
+		sigint_n_sigquit_handler(multi_shell_erase_newline);
 	pid = fork();
 	args->cmd[idx].pid = pid;
 	if (pid == 0)
@@ -70,9 +71,7 @@ void	breed_process(t_args *args)
 
 	pid = fork();
 	if (pid == 0)
-	{
 		execute_processes(args, 0);
-	}
 	else if (pid > 0)
 	{
 		sigint_n_sigquit_handler(ignore_signal);
