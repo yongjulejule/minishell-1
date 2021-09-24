@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 15:54:09 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 18:04:36 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 			break ;
 		if (!ln_read)
 		{
-			write(STDERR_FILENO,
-				"🤣 esh: syntax error unexpected end of file\n", 46);
-			free(ln_read);
+			ft_putstr_fd("🤣 esh: syntax error unexpected end of file",
+				STDERR_FILENO);
+			ioctl(STDIN_FILENO,
+				ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
+			g_exit_code = -4242;
 			break ;
 		}
 		add_history(rl_line_buffer);
@@ -98,7 +100,7 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 	}
 	if (read_cnt || (g_exit_code == -42 && !read_cnt))
 		free(ln_read);
-	if (g_exit_code == -42)
+	if (g_exit_code == -42 || g_exit_code == -4242)
 		return (0);
 	return (1);
 }
