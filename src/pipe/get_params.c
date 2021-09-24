@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_params.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 09:38:50 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:22:12 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static	void	get_each_params(char *cmdset, t_cmd *cmd)
 	parse_param(cmdset, cmd);
 }
 
-static int	is_rdr(char *str)
+int	is_rdr(char *str)
 {
 	if (!str)
 		return (0);

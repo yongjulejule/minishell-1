@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 16:50:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 18:04:36 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,20 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 	return (cnt);
 }
 
+static unsigned long	ioctl_diy_request(unsigned int inout,
+	char group, int num, size_t len)
+{
+	return (inout | ((len & IOCPARM_MASK) << 16) | ((group) << 8) | (num));
+}
+
 static void	internal_prompt_sig_handler(int sig)
 {
-	char	c;
-
-	c = '\r';
 	if (sig == SIGINT)
 	{
 		g_exit_code = -42;
 		rl_on_new_line();
-		ioctl(STDIN_FILENO, TIOCSTI, &c);
+		ioctl(STDIN_FILENO,
+			ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
 	}
 }
 
@@ -84,9 +88,11 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 			break ;
 		if (!ln_read)
 		{
-			write(STDERR_FILENO,
-				"🤣 esh: syntax error unexpected end of file\n", 46);
-			free(ln_read);
+			ft_putstr_fd("🤣 esh: syntax error unexpected end of file",
+				STDERR_FILENO);
+			ioctl(STDIN_FILENO,
+				ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
+			g_exit_code = -4242;
 			break ;
 		}
 		add_history(rl_line_buffer);
@@ -94,7 +100,7 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 	}
 	if (read_cnt || (g_exit_code == -42 && !read_cnt))
 		free(ln_read);
-	if (g_exit_code == -42)
+	if (g_exit_code == -42 || g_exit_code == -4242)
 		return (0);
 	return (1);
 }
