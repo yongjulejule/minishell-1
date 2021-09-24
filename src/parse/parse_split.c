@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/23 13:22:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 10:53:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	split_by_rdr(t_cursor *cur, int i)
 	}
 }
 
-static void	split_by_pipe_sc(t_cmds **hd, char *s)
+static void	split_by_pipe_sc(t_cmds *hd, char *s)
 {
 	int	start;
 	int	i;
@@ -65,7 +65,7 @@ static void	split_by_pipe_sc(t_cmds **hd, char *s)
 	}
 }
 
-void	split_by_symbols(t_cmds **cmds_hd, char *one_ln)
+void	split_by_symbols(t_cmds *cmds_hd, char *one_ln)
 {
 	t_cursor	cur;
 
@@ -78,7 +78,7 @@ void	split_by_symbols(t_cmds **cmds_hd, char *one_ln)
 		split_by_pipe_sc(cmds_hd, one_ln);
 		free(one_ln);
 		one_ln = NULL;
-		cur.elem = (*cmds_hd)->next;
+		cur.elem = cmds_hd->next;
 		while (cur.elem)
 		{
 			if (ft_strcmp(cur.elem->cmd, ";") && ft_strcmp(cur.elem->cmd, "|"))
