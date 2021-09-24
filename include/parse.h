@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 09:37:37 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 11:04:20 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_cursor
 /* FUNCTIONS */
 
 /* from_main */
-void	free_cmds(char **cmds);
+void	free_cmds_lst(t_cmds **cmds_hd);
 void	main_sig_handler(int signal);
 
 /* internal prompt */
@@ -59,7 +59,7 @@ int		end_by_esc(char **one_ln);
 
 /* split */
 
-void	split_by_symbols(t_cmds **cmds_hd, char *s);
+void	split_by_symbols(t_cmds *cmds_hd, char *s);
 void	skip_qmbt(char *str, int *i);
 void	get_end_idx(char *s, int *i, char *charset, int flag);
 int		rdr_after_fd(char *s, int *i);
@@ -68,9 +68,8 @@ void	split_n_insert(t_cursor *cur, char **s, int start, int *i);
 /* sub_env & syntax check */
 
 void	sub_env(char **one_ln);
-int		check_smcol_pipe_syntax(char **cmds);
-int		check_rdr_syntax(char **cmds);
-int		cmds_arr_len(char **cmds_arr);
+int		check_smcol_pipe_syntax(t_cmds *elem);
+int		check_rdr_syntax(t_cmds *elem);
 int		is_strset(char *str, char **strset);
 int		is_strset_end(char *str, char **strset);
 void	init_symbols(char **symbols);
@@ -85,6 +84,6 @@ int		check_valid_rdr_symbols(char *s, int i);
 int		ps_lst_size(t_cmds *cmd);
 t_cmds	*ps_lst_init(char *cmd);
 t_cmds	*ps_lstlast(t_cmds *elem);
-void	ps_lst_addback(t_cmds **hd, t_cmds *new);
+void	ps_lst_addback(t_cmds *hd, t_cmds *new);
 
 #endif
