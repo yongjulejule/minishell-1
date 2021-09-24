@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 10:05:58 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 10:33:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ static char	*prefix_dir_to_cmd(t_args *args, char *param, int nth_path)
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 {
-	int		nth_path;
-	char	*tmp_cmd;
+	int				nth_path;
+	char			*tmp_cmd;
+	struct	stat	status;
 
 	nth_path = 0;
 	while (args->env_path[nth_path] != NULL)
@@ -35,11 +36,8 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 		if (!*param)
 			return;
 		tmp_cmd = prefix_dir_to_cmd(args, param, nth_path);
-		if (access(tmp_cmd, X_OK) == -1)
-		{
+		if (stat(tmp_cmd, &status) == -1)
 			free(tmp_cmd);
-			tmp_cmd = NULL;
-		}
 		else
 		{
 			free(param);
@@ -47,6 +45,7 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 			cmd->params[0] = tmp_cmd;
 			return ;
 		}
+		tmp_cmd = NULL;
 		nth_path++;
 	}
 }

@@ -54,6 +54,7 @@ dkms.conf
 
 # Vim
 *tags
+src/*.h
 src/*/*.h
 
 # vscode

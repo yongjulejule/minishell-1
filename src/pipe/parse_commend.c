@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/22 11:19:25 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 10:17:23 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ static void	make_cmds(t_args *args)
 		cmd_idx++;
 	}
 }
+//
+//static char	**update_cmd_structure(char **cmds, t_args *args)
+//{
+//	int		cur;
+//	char	**tmp;
+//
+//	cur = 0;
+//	tmp = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
+//	while (cmds[cur] && cmds[cur][0] != ';')
+//	{
+//		if (cmds[cur][0] != '|')
+//		{
+//			if (!is_rdr(cmds[cur]))
+//			else
+//			cur++;
+//		}
+//		cur++;
+//	}
+//}
 
 void	build_structure(char **cmds, char **envp, t_args *args)
 {
@@ -36,6 +55,7 @@ void	build_structure(char **cmds, char **envp, t_args *args)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	args->env_path = ft_split(tmp, ':');
 	args->envp = envp;
+//	cmds = update_cmd_structure(cmds, args);
 	get_params(args, cmds);
 	make_cmds(args);
 }
