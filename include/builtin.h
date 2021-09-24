@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 11:26:17 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 13:24:49 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	echo(const char *path, char *const argv[], char *const envp[]);
 void	ext(const char *path, char *const argv[], char *const envp[]);
 void	cd(const char *path, char *const argv[], char *const envp[]);
 void	pwd(const char *path, char *const argv[], char *const envp[]);
+void	env(const char *path, char *const argv[], char *const envp[]);
 
 #endif
