@@ -3,8 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
 /*   Updated: 2021/09/24 10:19:45 by yongjule         ###   ########.fr       */
 /*                                                                            */
@@ -38,6 +37,8 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 # define BACKUP_FD 255
+
+typedef t_list t_cmds;
 
 typedef enum e_info
 {
