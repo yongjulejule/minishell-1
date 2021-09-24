@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/24 10:44:25 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 14:09:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	no_newline_for_sigquit(int sig)
 		signal(SIGQUIT, SIG_IGN);
 }
 
-int	exec_cmd_main(char **cmds, char **envp)
+int	exec_cmd_main(t_cmds **cmds, char **envp)
 {
 	int		cmd_end;
 	int		cmd_cnt;
