@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:16:43 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 10:19:45 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
@@ -105,6 +106,7 @@ void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
 void	redirect_stream(t_cmd *cmd);
+int		is_rdr(char *str);
 
 /*Preprocessing*/
 
