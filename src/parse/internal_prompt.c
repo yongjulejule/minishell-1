@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 16:50:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 15:54:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,20 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 	return (cnt);
 }
 
+static unsigned long	ioctl_diy_request(unsigned int inout,
+	char group, int num, size_t len)
+{
+	return (inout | ((len & IOCPARM_MASK) << 16) | ((group) << 8) | (num));
+}
+
 static void	internal_prompt_sig_handler(int sig)
 {
-	char	c;
-
-	c = '\r';
 	if (sig == SIGINT)
 	{
 		g_exit_code = -42;
 		rl_on_new_line();
-		ioctl(STDIN_FILENO, TIOCSTI, &c);
+		ioctl(STDIN_FILENO,
+			ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
 	}
 }
 
