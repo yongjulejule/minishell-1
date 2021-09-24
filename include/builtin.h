@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 13:02:45 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 11:02:36 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define BUILTIN_H
 
 # include "libft.h"
+# include <sys/errno.h>
 # include <stdio.h>
+# include <string.h>
 
 /*
 typedef enum e_builtin
