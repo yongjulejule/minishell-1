@@ -6,25 +6,13 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 11:19:58 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 11:32:56 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
 extern int	g_exit_code;
-
-static	int	is_error_no_exit(char *str1, char *str2, char *err_msg, int status)
-{
-	if (!str1)
-		ft_putstr_fd(str1, STDERR_FILENO);
-	if (!str2)
-		ft_putstr_fd(str2, STDERR_FILENO);
-	if (!err_msg)
-		ft_putstr_fd(err_msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
-	return (status);
-}
 
 static	int	handle_exit_error(char *cmd, char *argument)
 {
