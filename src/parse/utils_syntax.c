@@ -6,23 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:37:22 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 00:31:36 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 11:04:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-int	cmds_arr_len(char **cmds_arr)
-{
-	int	len;
-
-	if (!cmds_arr)
-		return (0);
-	len = 0;
-	while (cmds_arr[len])
-		len++;
-	return (len);
-}
 
 int	is_strset(char *str, char **strset)
 {

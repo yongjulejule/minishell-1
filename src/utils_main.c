@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/23 08:58:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/24 10:58:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 extern int	g_exit_code;
 
-void	free_cmds(char **cmds)
+void	free_cmds_lst(t_cmds **cmds_hd)
 {
-	int	i;
+	t_cmds	*elem;
 
-	if (!cmds)
-		return ;
-	i = 0;
-	while (cmds[i])
-		free(cmds[i++]);
-	free(cmds);
+	elem = *cmds_hd;
+	while (elem)
+	{
+		free(elem->cmd);
+		elem = elem->next;
+		free(*cmds_hd);
+		*cmds_hd = elem;
+	}
+	*cmds_hd = NULL;
 }
 
 void	main_sig_handler(int signal)

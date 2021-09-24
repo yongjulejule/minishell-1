@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:47:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 13:31:14 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/24 10:49:37 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ t_cmds	*ps_lstlast(t_cmds *elem)
 	return (elem);
 }
 
-void	ps_lst_addback(t_cmds **hd, t_cmds *new)
+void	ps_lst_addback(t_cmds *hd, t_cmds *new)
 {
 	t_cmds	*last;
 
-	if (!hd || !(*hd))
+	if (!hd)
 		return ;
-	last = ps_lstlast(*hd);
+	last = ps_lstlast(hd);
 	last->next = new;
 }
