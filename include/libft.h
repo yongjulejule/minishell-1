@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:14:10 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/19 16:52:55 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char			**ft_split_charset(char const *s, char *charset);
 int				ft_strsetlen(char **strs);
 char			*ft_strrnstr(const char *haystack, const char *needle,
 					size_t len);
+char			*ft_strchrset(const char *s, char *charset);
 
 /*
 ** To handle List
