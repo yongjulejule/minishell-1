@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/24 16:23:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 13:46:33 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 extern int	g_exit_code;
 
-static void	process_to_execute(char **cmds, char **envp,
-		int cmd_cnt, int cmd_start)
+static void	process_to_execute(t_cmds *cmds, char **envp, int cmd_cnt)
 {
 	t_args	*args;
 
@@ -23,45 +22,39 @@ static void	process_to_execute(char **cmds, char **envp,
 	args->envp = envp;
 	args->cnt = cmd_cnt;
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
-	build_structure(&cmds[cmd_start], envp, args);
+	build_structure(cmds, envp, args);
 	breed_process(args);
 }
 
-static void	seperate_cmd(char **cmds, char **envp, int cmd_end, int *cmd_cnt)
+static t_cmds	*seperate_cmd(t_cmds *cmds, char **envp,
+		t_cmds *cur, int *cmd_cnt)
 {
-	static int	cmd_start;
-
-	if (cmds[cmd_end][0] == ';' || !cmds[cmd_end + 1])
+	if (cur->cmd[0] == ';' || !cur->next)
 	{
-		process_to_execute(cmds, envp, *cmd_cnt, cmd_start);
-		cmd_start = cmd_end + 1;
+		process_to_execute(cmds, envp, *cmd_cnt);
+		cmds = cur->next;
 		*cmd_cnt = 1;
 	}
-	else if (cmds[cmd_end][0] == '|')
+	else if (cur->cmd[0] == '|')
 		*cmd_cnt += 1;
-	if (!cmds[cmd_end + 1])
-		cmd_start = 0;
+	return (cmds);
 }
 
-static void	no_newline_for_sigquit(int sig)
+int	exec_cmd_main(t_cmds *cmdlst, char **envp)
 {
-	if (sig == SIGUSR1)
-		signal(SIGQUIT, SIG_IGN);
-}
-
-int	exec_cmd_main(t_cmds **cmds, char **envp)
-{
-	int		cmd_end;
+	t_cmds	*cur;
+	t_cmds	*start;
 	int		cmd_cnt;
 
 	sigint_n_sigquit_handler(signal_handle_wo_rl_prompt);
 	signal(SIGUSR1, no_newline_for_sigquit);
-	cmd_end = 0;
+	start = cmdlst;
+	cur = start;
 	cmd_cnt = 1;
-	while (cmds[cmd_end])
+	while (cur)
 	{
-		seperate_cmd(cmds, envp, cmd_end, &cmd_cnt);
-		cmd_end++;
+		start = seperate_cmd(start, envp, cur, &cmd_cnt);
+		cur = cur->next;
 	}
 	return (EXIT_SUCCESS);
 }

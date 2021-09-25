@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 10:58:32 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 09:58:34 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 /* SECTION - function declarations */
 t_cmds	*parse_line_main(char *ln_read);
-int		exec_cmd_main(char **cmds, char **envp);
+int		exec_cmd_main(t_cmds *cmds, char **envp);
 void	main_sig_handler(int signal);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 

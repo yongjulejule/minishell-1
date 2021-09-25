@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 10:19:45 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/25 13:50:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +39,11 @@
 # define E_NOCMD 2
 # define BACKUP_FD 255
 
-typedef t_list t_cmds;
+typedef struct	s_cmds
+{
+	char			*cmd;
+	struct s_cmds	*next;
+}	t_cmds;
 
 typedef enum e_info
 {
@@ -88,6 +93,7 @@ void	sigint_n_sigquit_handler(void (*sigfunction));
 void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
 void	ignore_signal(int sig);
+void	no_newline_for_sigquit(int sig);
 
 /*Check Validity*/
 
@@ -111,8 +117,8 @@ int		is_rdr(char *str);
 
 /*Preprocessing*/
 
-void	build_structure(char **cmds, char **envp, t_args *args);
-void	get_params(t_args *args, char **cmds);
+void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
+void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
 void	breed_process(t_args *args);
 
 /*

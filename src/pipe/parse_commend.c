@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 10:17:23 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/25 13:56:40 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,49 @@ static void	make_cmds(t_args *args)
 	while (args->cmd[cmd_idx].params)
 	{
 		check_cmd_validity(args, &args->cmd[cmd_idx],
-			args->cmd[cmd_idx].params[0]);
+				args->cmd[cmd_idx].params[0]);
 		cmd_idx++;
 	}
 }
-//
-//static char	**update_cmd_structure(char **cmds, t_args *args)
-//{
-//	int		cur;
-//	char	**tmp;
-//
-//	cur = 0;
-//	tmp = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
-//	while (cmds[cur] && cmds[cur][0] != ';')
-//	{
-//		if (cmds[cur][0] != '|')
-//		{
-//			if (!is_rdr(cmds[cur]))
-//			else
-//			cur++;
-//		}
-//		cur++;
-//	}
-//}
 
-void	build_structure(char **cmds, char **envp, t_args *args)
+static void	merge_seperated_cmd(char **cmd_arr, t_cmds *cur, int cmd_idx)
 {
-	int			idx;
-	char		*tmp;
+	char	*tmp;
+
+	tmp = ft_strjoin(cmd_arr[cmd_idx], " ");
+	cmd_arr[cmd_idx] = ft_strjoin(tmp, cur->cmd);
+	if (tmp)
+	{
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
+static char	**cmdlst_to_cmdarr(t_cmds *cmds, t_args *args)
+{
+	t_cmds	*cur;
+	char	**cmd_arr;
+	int		cmd_idx;
+
+	cur = cmds;
+	cmd_arr = (char **)ft_calloc(args->cnt + 1, sizeof(char *));
+	cmd_idx = 0;
+	while (cur && cur->cmd[0] != ';')
+	{
+		if (cur->cmd[0] != '|' && !is_rdr(cur->cmd))
+			merge_seperated_cmd(cmd_arr, cur, cmd_idx);
+		else if (cur->cmd[0] == '|')
+			cmd_idx++;
+		cur = cur->next;
+	}
+	return (cmd_arr);
+}
+
+void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
+{
+	int		idx;
+	char	*tmp;
+	char	**cmds;
 
 	idx = 0;
 	tmp = getenv("PATH");
@@ -55,7 +70,7 @@ void	build_structure(char **cmds, char **envp, t_args *args)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	args->env_path = ft_split(tmp, ':');
 	args->envp = envp;
-//	cmds = update_cmd_structure(cmds, args);
-	get_params(args, cmds);
+	cmds = cmdlst_to_cmdarr(cmdlst, args);
+	get_params(args, cmds, cmdlst);
 	make_cmds(args);
 }
