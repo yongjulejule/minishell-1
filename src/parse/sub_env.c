@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/21 16:30:57 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 20:50:32 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 extern int	g_exit_code;
 
-static void	env_or_exit_stat(char **env, char *ln, int start, int end)
+static void	env_or_exit_stat(char **env, char *ln, int end, char **ft_envp)
 {
 	char	*to_free;
 
-	to_free = ft_strndup(ln + start + 1, end);
+	to_free = ft_strndup(ln, end);
 	if (!ft_strcmp("?", to_free))
 		*env = ft_itoa(g_exit_code);
 	else
 	{
-		*env = getenv(to_free);
+		*env = ft_get_envp(ft_envp, to_free);
 		if (*env)
 			*env = ft_strdup(*env);
 	}
 	free(to_free);
 }
 
-static void	recompose_ln_with_env(char **ln, int start, int end)
+static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
 {
 	char	*to_free;
 	char	*front;
 	char	*back;
 	char	*env;
 
-	env_or_exit_stat(&env, *ln, start, end);
+	env_or_exit_stat(&env, *ln + start + 1, end, ft_envp);
 	if (!env)
 		return ;
 	front = ft_strndup(*ln, start);
@@ -54,7 +54,7 @@ static void	recompose_ln_with_env(char **ln, int start, int end)
 	free(env);
 }
 
-static void	get_env_interval(char **ln, int i)
+static void	get_env_interval(char **ln, int i, char **ft_envp)
 {
 	int	k;
 
@@ -67,10 +67,10 @@ static void	get_env_interval(char **ln, int i)
 	}
 	else if (*(*ln + i + k) == '?')
 		k++;
-	recompose_ln_with_env(ln, i, k - 1);
+	recompose_ln_env(ln, i, k - 1, ft_envp);
 }
 
-void	sub_env(char **ln)
+void	sub_env(char **ln, char **ft_envp)
 {
 	int	d_qt_flag;
 	int	i;
@@ -80,7 +80,7 @@ void	sub_env(char **ln)
 	while (*(*ln + i))
 	{
 		if (*(*ln + i) == '$')
-			get_env_interval(ln, i++);
+			get_env_interval(ln, i++, ft_envp);
 		else if (*(*ln + i) == '\\')
 		{
 			i++;

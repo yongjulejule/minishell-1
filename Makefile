@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/25 17:53:25 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/25 20:50:49 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				get_next_line.c\
 				get_next_line_utils.c\
 				get_params.c\
-				parse_commend.c\
+				parse_command.c\
 				pipe_main.c\
 				pipe_signal.c\
 				rdr_info.c\
@@ -84,13 +84,10 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				main.c\
 				utils_main.c\
 				main_signal.c\
+				diy_envp.c\
 				)
 
-# NOTE - parse only
-# SRCS_MAN		+= $(SRCS_PARSE)
 SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
-# NOTE - test exec
-#SRCS_MAN		= $(SRCS_PIPE) $(SRCS_PIPE_DIR)testmain.c
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 				)

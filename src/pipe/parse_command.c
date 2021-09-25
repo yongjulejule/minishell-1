@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_commend.c                                    :+:      :+:    :+:   */
+/*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 13:56:40 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:59:54 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
 	char	**cmds;
 
 	idx = 0;
-	tmp = getenv("PATH");
+	tmp = ft_get_envp(envp, "PATH");
 	if (!tmp)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	args->env_path = ft_split(tmp, ':');

@@ -6,13 +6,26 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 17:52:48 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 21:06:02 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_exit_code;
+
+char	**esh_pre_process(int argc, char *argv[], char *envp[])
+{
+	char	**ret;
+
+	if (argc > 1 || argv[1])
+			is_error(NULL, NULL, "esh does not \
+	receive arguments", EXIT_FAILURE);
+	ret = dup_envp(envp, ft_strsetlen(envp));
+	ft_putendl_fd(ESH_ASCII, STDOUT_FILENO);
+	sigint_n_sigquit_handler(main_sig_handler);
+	return (ret);
+}
 
 void	free_cmds_lst(t_cmds **cmds_hd)
 {
