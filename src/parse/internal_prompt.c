@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 18:00:47 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 20:05:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 		if (!ln_read)
 		{
 			ft_putstr_fd("🤣 esh: syntax error \
-			unexpected end of file\n", STDERR_FILENO);
+unexpected end of file\n", STDERR_FILENO);
 			g_exit_code = UNEXP_EOF_FLAG;
 			break ;
 		}
