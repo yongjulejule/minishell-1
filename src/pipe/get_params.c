@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 15:22:12 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 13:54:45 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,27 @@ int	is_rdr(char *str)
 		return (0);
 }
 
-void	get_params(t_args *args, char **cmds)
+void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 {
 	int		idx;
 	int		cur;
 
 	cur = 0;
 	idx = 0;
-	while (cmds[idx] && cmds[idx][0] != ';')
+	while (cmds[idx])
 	{
-		if (cmds[idx][0] != '|')
+		get_each_params(cmds[idx], &args->cmd[idx]);
+		idx++;
+	}
+	while (cmdlst && cmdlst->cmd[0] != ';')
+	{
+		if (cmdlst->cmd[0] != '|')
 		{
-			if (!is_rdr(cmds[idx]))
-				get_each_params(cmds[idx], &args->cmd[cur]);
-			else
-			{
-				if (cur)
-					cur--;
-				get_rdr_info(cmds[idx], &args->cmd[cur]);
-			}
+			if (cur)
+				cur--;
+			get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
 			cur++;
 		}
-		idx++;
+		cmdlst = cmdlst->next;
 	}
 }

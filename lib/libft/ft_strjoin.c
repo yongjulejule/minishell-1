@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 15:49:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/10 16:35:18 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/25 10:37:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	idx_1;
 	size_t	idx_2;
 
-	if (s2 == NULL || s1 == NULL)
-		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
 	idx_1 = 0;
 	str = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	while (*(s1 + idx_1))

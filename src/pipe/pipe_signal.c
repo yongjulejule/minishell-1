@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:11:23 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 08:46:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,10 @@ void	signal_heredoc(int sig)
 		rl_redisplay();
 	}
 }
+
+void	no_newline_for_sigquit(int sig)
+{
+	if (sig == SIGUSR1)
+		signal(SIGQUIT, SIG_IGN);
+}
+

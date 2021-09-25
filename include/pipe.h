@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:16:43 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 13:50:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
@@ -37,6 +38,12 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 # define BACKUP_FD 255
+
+typedef struct	s_cmds
+{
+	char			*cmd;
+	struct s_cmds	*next;
+}	t_cmds;
 
 typedef enum e_info
 {
@@ -86,6 +93,7 @@ void	sigint_n_sigquit_handler(void (*sigfunction));
 void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
 void	ignore_signal(int sig);
+void	no_newline_for_sigquit(int sig);
 
 /*Check Validity*/
 
@@ -105,11 +113,12 @@ void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
 void	redirect_stream(t_cmd *cmd);
+int		is_rdr(char *str);
 
 /*Preprocessing*/
 
-void	build_structure(char **cmds, char **envp, t_args *args);
-void	get_params(t_args *args, char **cmds);
+void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
+void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
 void	breed_process(t_args *args);
 
 /*
