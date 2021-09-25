@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 17:06:52 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 18:45:49 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	cmds_lst_strtrim(t_cmds *cmds_hd)
 
 t_cmds	*parse_line_main(char *ln_read)
 {
+	t_cmds	*ret;
 	t_cmds	*cmds_hd;
 	char	*one_ln;
 
@@ -38,9 +39,7 @@ t_cmds	*parse_line_main(char *ln_read)
 	if (!read_internal_prompt(&one_ln, ln_read, 0))
 	{
 		if (g_exit_code == -42)
-			g_exit_code = 1;
-		else if (g_exit_code == -4242)
-			g_exit_code = 258;
+			g_exit_code = GEN_ERR;
 		free(one_ln);
 		return (NULL);
 	}
@@ -53,6 +52,9 @@ t_cmds	*parse_line_main(char *ln_read)
 	{
 		g_exit_code = 258;
 		free_cmds_lst(&cmds_hd);
+		return(NULL);
 	}
-	return (cmds_hd);
+	ret = cmds_hd->next;
+	free(cmds_hd);
+	return (ret);
 }

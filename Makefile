@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/24 18:05:38 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/25 17:53:25 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				main.c\
 				utils_main.c\
+				main_signal.c\
 				)
 
 # NOTE - parse only
