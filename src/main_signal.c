@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_main.c                                       :+:      :+:    :+:   */
+/*   main_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 17:52:48 by ghan             ###   ########.fr       */
+/*   Created: 2021/09/25 17:52:33 by ghan              #+#    #+#             */
+/*   Updated: 2021/09/25 17:58:05 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,33 @@
 
 extern int	g_exit_code;
 
-void	free_cmds_lst(t_cmds **cmds_hd)
+void	main_sig_handler(int signal)
 {
-	t_cmds	*elem;
-
-	elem = *cmds_hd;
-	while (elem)
+	if (signal == SIGINT)
 	{
-		free(elem->cmd);
-		elem = elem->next;
-		free(*cmds_hd);
-		*cmds_hd = elem;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		g_exit_code = 1;
 	}
-	*cmds_hd = NULL;
+	else if (signal == SIGQUIT)
+		rl_on_new_line();
+	rl_redisplay();
 }
 
-void	unexp_eof_sig_handler(void)
+void	sigint_n_sigquit_handler(void (*sigfunction))
 {
-	if (g_exit_code == UNEXP_EOF_FLAG)
-	{
-		signal(SIGINT, unexp_eof_sigint_handler);
-		g_exit_code = SYNTAX_ERR;
-	}
+	signal(SIGINT, sigfunction);
+	signal(SIGQUIT, sigfunction);
 }
 
-void	eof_exit(char *line_read)
+void	unexp_eof_sigint_handler(int sig)
 {
-	if (!line_read)
+	if (sig == SIGINT)
 	{
-		ft_putendl_fd("exit", STDERR_FILENO);
-		exit(EXIT_SUCCESS);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_exit_code = 1;
 	}
 }

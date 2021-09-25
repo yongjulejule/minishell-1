@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 09:58:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/25 17:55:19 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,19 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* SECTION - structs */
+/* function declarations */
 
-/* SECTION - function declarations */
+/* utils_main */
+
 t_cmds	*parse_line_main(char *ln_read);
 int		exec_cmd_main(t_cmds *cmds, char **envp);
+void	unexp_eof_sig_handler(void);
+void	eof_exit(char *line_read);
+
+/* main_signal */
+
 void	main_sig_handler(int signal);
 void	sigint_n_sigquit_handler(void (*sigfunction));
+void	unexp_eof_sigint_handler(int sig);
 
 #endif

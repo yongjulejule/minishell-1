@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   internal_prompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 18:04:36 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 18:00:47 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	internal_prompt_sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_code = -42;
+		g_exit_code = INT_PRPT_SIGINT;
 		rl_on_new_line();
 		ioctl(STDIN_FILENO,
 			ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
@@ -84,15 +84,13 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 			free(ln_read);
 		signal(SIGINT, internal_prompt_sig_handler);
 		ln_read = readline("> ");
-		if (g_exit_code == -42)
+		if (g_exit_code == INT_PRPT_SIGINT)
 			break ;
 		if (!ln_read)
 		{
-			ft_putstr_fd("🤣 esh: syntax error unexpected end of file",
-				STDERR_FILENO);
-			ioctl(STDIN_FILENO,
-				ioctl_diy_request(IOC_IN, 't', 114, sizeof(char)), "\n");
-			g_exit_code = -4242;
+			ft_putstr_fd("🤣 esh: syntax error \
+			unexpected end of file\n", STDERR_FILENO);
+			g_exit_code = UNEXP_EOF_FLAG;
 			break ;
 		}
 		add_history(rl_line_buffer);
@@ -100,7 +98,7 @@ int	read_internal_prompt(char **one_ln, char *ln_read, int read_cnt)
 	}
 	if (read_cnt || (g_exit_code == -42 && !read_cnt))
 		free(ln_read);
-	if (g_exit_code == -42 || g_exit_code == -4242)
+	if (g_exit_code == INT_PRPT_SIGINT || g_exit_code == UNEXP_EOF_FLAG)
 		return (0);
 	return (1);
 }

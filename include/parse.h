@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 11:04:20 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 17:56:01 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,20 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft.h"
 # include <term.h>
 # include <curses.h>
 # include <termios.h>
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "libft.h"
 
 /*User Defines*/
+
+# define UNEXP_EOF_FLAG -4242
+# define INT_PRPT_SIGINT -42
+# define SYNTAX_ERR 258
+# define GEN_ERR 1
 
 typedef struct	s_cmds
 {
