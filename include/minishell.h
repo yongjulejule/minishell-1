@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 21:05:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 21:15:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	sigint_n_sigquit_handler(void (*sigfunction));
 void	unexp_eof_sigint_handler(int sig);
 
 /* diy envp */
-char    **dup_envp(char *envp[], int set_len);
-char    *ft_get_envp(char **ft_envp, char *var);
+
+char	**dup_envp(char *envp[], int set_len);
+char	*ft_get_envp(char **ft_envp, char *var);
 
 #endif
