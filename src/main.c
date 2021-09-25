@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 18:19:31 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 20:09:01 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc > 1 || argv[1])
 		is_error(NULL, NULL, "esh does not \
-		receive arguments", EXIT_FAILURE);
+receive arguments", EXIT_FAILURE);
+	ft_putendl_fd(ESH_ASCII, STDOUT_FILENO);
 	sigint_n_sigquit_handler(main_sig_handler);
 	while (1)
 	{
