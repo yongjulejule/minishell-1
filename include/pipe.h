@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 13:50:08 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:59:05 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
 void	ignore_signal(int sig);
 void	no_newline_for_sigquit(int sig);
+char    *ft_get_envp(char **ft_envp, char *var);
 
 /*Check Validity*/
 

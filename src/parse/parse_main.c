@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 18:45:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 20:47:38 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	cmds_lst_strtrim(t_cmds *cmds_hd)
 	}
 }
 
-t_cmds	*parse_line_main(char *ln_read)
+t_cmds	*parse_line_main(char *ln_read, char **ft_envp)
 {
 	t_cmds	*ret;
 	t_cmds	*cmds_hd;
@@ -43,7 +43,7 @@ t_cmds	*parse_line_main(char *ln_read)
 		free(one_ln);
 		return (NULL);
 	}
-	sub_env(&one_ln);
+	sub_env(&one_ln, ft_envp);
 	cmds_hd = ps_lst_init(NULL);
 	split_by_symbols(cmds_hd, one_ln);
 	cmds_lst_strtrim(cmds_hd);

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 17:56:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/25 20:47:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cursor
 /* from_main */
 void	free_cmds_lst(t_cmds **cmds_hd);
 void	main_sig_handler(int signal);
+char    *ft_get_envp(char **ft_envp, char *var);
 
 /* internal prompt */
 int		read_internal_prompt(char **one_ln, char *ln_read, int read_cnt);
@@ -72,7 +73,7 @@ void	split_n_insert(t_cursor *cur, char **s, int start, int *i);
 
 /* sub_env & syntax check */
 
-void	sub_env(char **one_ln);
+void	sub_env(char **one_ln, char **ft_envp);
 int		check_smcol_pipe_syntax(t_cmds *elem);
 int		check_rdr_syntax(t_cmds *elem);
 int		is_strset(char *str, char **strset);
