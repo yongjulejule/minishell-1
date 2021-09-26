@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 20:47:55 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 18:09:21 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	split_by_symbols(t_cmds *cmds_hd, char *s);
 void	skip_qmbt(char *str, int *i);
 void	get_end_idx(char *s, int *i, char *charset, int flag);
 int		rdr_after_fd(char *s, int *i);
-void	split_n_insert(t_cursor *cur, char **s, int start, int *i);
+int		check_front_whitespace(char *str, int len);
 
 /* sub_env & syntax check */
 

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/23 13:38:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 18:09:13 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,24 @@ void	skip_qmbt(char *str, int *i)
 	}
 }
 
-void	get_end_idx(char *s, int *i, char *charset, int flag)
+static void	get_end_not_bs(char *s, int *i)
 {
 	char	qmbt;
+
+	qmbt = *(s + (*i)++);
+	while (is_charset(qmbt, "\"'`")
+		&& *(s + *i) && *(s + *i) != qmbt)
+	{
+		if (*(s + *i) == '\\')
+			(*i)++;
+		(*i)++;
+	}
+	if (*(s + *i) && is_charset(qmbt, "\"'`"))
+		(*i)++;
+}
+
+void	get_end_idx(char *s, int *i, char *charset, int flag)
+{
 	int		k;
 
 	while (*(s + *i) && !is_charset(*(s + *i), charset))
@@ -45,14 +60,7 @@ void	get_end_idx(char *s, int *i, char *charset, int flag)
 		if (flag && rdr_after_fd(s + *i, &k))
 			break ;
 		if (*(s + *i) != '\\')
-		{
-			qmbt = *(s + (*i)++);
-			while (is_charset(qmbt, "\"'`")
-				&& *(s + *i) && *(s + *i) != qmbt)
-				(*i)++;
-			if (is_charset(qmbt, "\"'`"))
-				(*i)++;
-		}
+			get_end_not_bs(s, i);
 		else
 		{
 			(*i)++;
@@ -71,7 +79,7 @@ int	rdr_after_fd(char *s, int *i)
 	return (0);
 }
 
-static int	check_front_whitespace(char *str, int len)
+int	check_front_whitespace(char *str, int len)
 {
 	int	i;
 
@@ -83,28 +91,4 @@ static int	check_front_whitespace(char *str, int len)
 		i++;
 	}
 	return (0);
-}
-
-void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
-{
-	t_cmds	*new;
-	int		len;
-
-	if (!start)
-		return ;
-	len = (int)ft_strlen(*s);
-	if (!check_front_whitespace(*s, start))
-		return ;
-	cur->elem->cmd = ft_strndup(*s, start);
-	new = ps_lst_init(ft_substr(*s, start, len - start));
-	new->next = cur->elem->next;
-	cur->elem->next = new;
-	cur->elem = new;
-	free(*s);
-	*s = NULL;
-	if (*i != len)
-	{
-		*s = new->cmd;
-		*i = 0;
-	}
 }

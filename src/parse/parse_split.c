@@ -6,11 +6,50 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 10:53:11 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 18:15:59 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+
+static void	cmds_lst_strtrim(t_cmds *cmds_hd)
+{
+	char	*to_free;
+	t_cmds	*elem;
+
+	elem = cmds_hd->next;
+	while (elem)
+	{
+		to_free = elem->cmd;
+		elem->cmd = ft_strtrim(to_free, " \t\n");
+		free(to_free);
+		elem = elem->next;
+	}
+}
+
+static void	split_n_insert(t_cursor *cur, char **s, int start, int *i)
+{
+	t_cmds	*new;
+	int		len;
+
+	if (!start)
+		return ;
+	len = (int)ft_strlen(*s);
+	if (!check_front_whitespace(*s, start))
+		return ;
+	cur->elem->cmd = ft_strndup(*s, start);
+	new = ps_lst_init(ft_substr(*s, start, len - start));
+	new->next = cur->elem->next;
+	cur->elem->next = new;
+	cur->elem = new;
+	free(*s);
+	*s = NULL;
+	if (*i != len)
+	{
+		*s = new->cmd;
+		*i = 0;
+	}
+}
 
 static void	split_by_rdr(t_cursor *cur, int i)
 {
@@ -86,4 +125,5 @@ void	split_by_symbols(t_cmds *cmds_hd, char *one_ln)
 			cur.elem = cur.elem->next;
 		}
 	}
+	cmds_lst_strtrim(cmds_hd);
 }
