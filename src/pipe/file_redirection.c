@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 12:11:30 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 13:51:55 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ void	redirect_stream(t_cmd *cmd)
 	t_rdr	*rdr;
 
 	rdr = cmd->rdr;
-	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
-		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	while (rdr)
 	{
 		if (rdr->info < 2)
@@ -128,5 +126,4 @@ void	redirect_stream(t_cmd *cmd)
 		}
 		rdr = rdr->next;
 	}
-	close(BACKUP_FD);
 }
