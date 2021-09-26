@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 14:48:59 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 17:57:28 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	*get_filename(const char *line)
 	if (*line == '\0')
 		return (NULL);
 	tmp = ft_strtrim(line, " \n\t");
-	if (tmp[0] == '\'')
+	if ((tmp[0] == '\'' && tmp[1] == '\'')
+			|| (tmp[0] == '\"' && tmp[1] == '\"'))
+		file = ft_strdup("");
+	else if (tmp[0] == '\'')
 		file = ft_substr(tmp, 1, split_once(&tmp[1], "'"));
 	else if (tmp[0] == '"')
 		file = ft_substr(tmp, 1, split_once(&tmp[1], "\""));

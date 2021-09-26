@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 16:16:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:18:32 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 17:43:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	free_arg_structure(t_args *args)
 	idx = 0;
 	while (idx < args->cnt)
 	{
-		free_rdr_lst(&args->cmd[idx].rdr);
-		free_double_ptr((void ***)&args->cmd[idx].params);
+		if (args->cmd[idx].rdr)
+			free_rdr_lst(&args->cmd[idx].rdr);
+		if (args->cmd[idx].params)
+			free_double_ptr((void ***)&args->cmd[idx].params);
 		idx++;
 	}
 	free_double_ptr((void ***)&args->env_path);
