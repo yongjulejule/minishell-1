@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   bubble_sort_strset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/24 11:26:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 02:12:05 by ghan             ###   ########.fr       */
+/*   Created: 2021/09/26 19:48:20 by ghan              #+#    #+#             */
+/*   Updated: 2021/09/26 20:52:59 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "libft.h"
 
-int	is_error_no_exit(char *str1, char *str2, char *err_msg, int status)
+static void	swap_str(char **s1, char **s2)
 {
-	ft_putstr_fd("🤣 esh: ", STDERR_FILENO);
-	if (!str1)
-		ft_putstr_fd(str1, STDERR_FILENO);
-	if (!str2)
-		ft_putstr_fd(str2, STDERR_FILENO);
-	if (!err_msg)
-		ft_putstr_fd(err_msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
-	return (status);
+	char	*tmp;
+
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
+}
+
+void	bubble_sort_strset(char **strset, int len)
+{
+	int	i;
+	int	k;
+
+	if (!strset || !len)
+		return ;
+	i = -1;
+	while (++i + 1 < len)
+	{
+		k = i;
+		while (++k < len)
+		{
+			if (ft_strcmp(strset[i], strset[k]) > 0)
+				swap_str(&strset[i], &strset[k]);
+		}
+	}
 }

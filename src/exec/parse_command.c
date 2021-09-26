@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:19:19 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 02:16:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ static int	check_builtin(t_cmd *cmd, char *cmds)
 void	update_builtin_func(t_cmd *cmd)
 {
 	if (cmd->builtin == is_echo)
-		cmd->exec = echo;
+		cmd->exec_f.exec = echo;
 	else if (cmd->builtin == is_cd)
-		cmd->exec = cd;
+		cmd->exec_f.exec = cd;
 	else if (cmd->builtin == is_pwd)
-		cmd->exec = pwd;
-//	else if (cmd->builtin == is_exprt)
-//		cmd->exec = exprt;
-//	else if (cmd->builtin == is_unset)
-//		cmd->exec = unset;
+		cmd->exec_f.exec = pwd;
+	else if (cmd->builtin == is_exprt)
+		cmd->exec_f.exec_env = exprt;
+	else if (cmd->builtin == is_unset)
+		cmd->exec_f.exec_env = unset;
 	else if (cmd->builtin == is_env)
-		cmd->exec = env;
+		cmd->exec_f.exec = env;
 	else if (cmd->builtin == is_ext)
-		cmd->exec = ext;
+		cmd->exec_f.exec = ext;
 }
 
 static void	make_cmds(t_args *args)
@@ -68,7 +68,7 @@ static void	make_cmds(t_args *args)
 		{
 			check_cmd_validity(args, &args->cmd[cmd_idx],
 				args->cmd[cmd_idx].params[0]);
-			args->cmd[cmd_idx].exec = execve;
+			args->cmd[cmd_idx].exec_f.exec = execve;
 		}
 		else
 			update_builtin_func(&args->cmd[cmd_idx]);
