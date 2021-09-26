@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 14:24:01 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/26 15:42:27 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +72,8 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				check_validity.c\
 				get_params.c\
 				parse_command.c\
-				pipe_main.c\
-				pipe_signal.c\
+				exec_main.c\
+				exec_signal.c\
 				wait_info.c\
 				waiting.c\
 				string_utils.c\
