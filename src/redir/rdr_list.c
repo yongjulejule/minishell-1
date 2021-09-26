@@ -6,11 +6,11 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 08:56:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 15:43:24 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:49:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "redir.h"
 
 t_rdr	*rdr_lst_newone(t_info info, char *file, char*limiter, int fd[2])
 {

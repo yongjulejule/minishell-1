@@ -5,8 +5,8 @@
 
 ## To-do List
 
-- [ ] 팀 이름 정하기
-
+- [x] 팀 이름 정하기
+	Fail!!
 - [ ] git organization 만들기
 
   - [link](https://github.com/brilliantshell/minishell)
@@ -33,7 +33,8 @@
       - 세부 디렉토리
     - /src
       - parse
-      - binary
+      - exec
+	  - redir
       - builtin
 
 - [ ] 섹션 구분, 분업

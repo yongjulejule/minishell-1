@@ -6,11 +6,11 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 19:17:17 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:48:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "redir.h"
 
 char	*get_filename(const char *line)
 {

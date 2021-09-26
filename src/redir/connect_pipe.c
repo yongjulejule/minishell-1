@@ -6,11 +6,11 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 13:45:32 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 16:54:50 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:48:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "redir.h"
 
 void	destroy_pipe(int *pipe_fd)
 {

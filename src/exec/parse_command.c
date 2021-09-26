@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:42:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:40:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 static int	check_builtin(t_args *args, char *cmds)
 {

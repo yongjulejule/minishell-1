@@ -6,11 +6,11 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 17:27:15 by jun               #+#    #+#             */
-/*   Updated: 2021/09/10 16:20:24 by jun              ###   ########.fr       */
+/*   Updated: 2021/09/26 14:40:27 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 int	wstatus(int status)
 {

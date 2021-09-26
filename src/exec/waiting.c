@@ -6,11 +6,11 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/20 14:32:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:40:27 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 extern int g_exit_code;
 
