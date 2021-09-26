@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
+#    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 16:40:35 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/26 18:50:26 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
 				echo.c\
 				env.c\
 				exit.c\
+				export.c\
 				handle_error.c\
 				pwd.c\
 				)

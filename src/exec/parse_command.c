@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:19:19 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 18:51:52 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	update_builtin_func(t_cmd *cmd)
 		cmd->exec = cd;
 	else if (cmd->builtin == is_pwd)
 		cmd->exec = pwd;
-//	else if (cmd->builtin == is_exprt)
-//		cmd->exec = exprt;
+	else if (cmd->builtin == is_exprt)
+		cmd->exec = exprt;
 //	else if (cmd->builtin == is_unset)
 //		cmd->exec = unset;
 	else if (cmd->builtin == is_env)

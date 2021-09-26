@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:31:46 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 18:53:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ int		ext(const char *path, char *const argv[], char *const envp[]);
 int		cd(const char *path, char *const argv[], char *const envp[]);
 int		pwd(const char *path, char *const argv[], char *const envp[]);
 int		env(const char *path, char *const argv[], char *const envp[]);
+
+/* Utils */
+char    **dup_envp(char *envp[], int set_len);
+void	free_double_ptr(void ***ptr);
 
 #endif
