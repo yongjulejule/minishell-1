@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 11:32:56 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 09:50:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static	int	handle_exit_error(char *cmd, char *argument)
 	return (exit_status);
 }
 
-void	cd(const char *path, char *const argv[], char *const envp[])
+int	cd(const char *path, char *const argv[], char *const envp[])
 {
 	char	*home;
 	int		exit_status;
@@ -49,4 +49,5 @@ void	cd(const char *path, char *const argv[], char *const envp[])
 	//	else
 	//		update_env("PWD", argv[1]);
 	g_exit_code = exit_status;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 11:24:54 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 13:23:06 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 09:51:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_code;
 
-void	pwd(const char *path, char *const argv[], char *const envp[])
+int	pwd(const char *path, char *const argv[], char *const envp[])
 {
 	if (argv[1])
 	{
@@ -30,5 +30,5 @@ void	pwd(const char *path, char *const argv[], char *const envp[])
 		printf("%s\n", getenv("PWD"));
 		g_exit_code = EXIT_SUCCESS;
 	}
-	exit(g_exit_code);
+	return (g_exit_code);
 }
