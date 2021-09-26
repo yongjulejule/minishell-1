@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/26 18:09:21 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 01:25:27 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <term.h>
-# include <curses.h>
-# include <termios.h>
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>

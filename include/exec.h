@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:18:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 00:25:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,18 @@ typedef struct s_rdr
 	struct s_rdr	*next;
 }	t_rdr;
 
+typedef union u_exec_f
+{
+	int		(*exec)(const char*, char *const[], char *const[]);
+	int		(*exec_env)(const char*, char *const[], char ***const);
+}	t_exec_f_u;
+
 typedef struct s_cmd
 {
 	pid_t			pid;
 	int				pipe_fd[2];
 	t_builtin		builtin;
-	int				(*exec)(const char*, char *const[], char *const[]);
+	t_exec_f_u		exec_f;
 	char			**params;
 	t_rdr			*rdr;
 }	t_cmd;
@@ -126,7 +132,7 @@ int		is_rdr(char *str);
 void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
 void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
 void	execute_subshell_main(t_args *args);
-void	execute_builtin(t_args *args);
+void	execute_builtin(t_args *args, char ***ft_envp);
 
 /*Handle exit code*/
 
