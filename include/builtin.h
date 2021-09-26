@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 14:02:35 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 09:50:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef enum e_builtin
 int		is_error_no_exit(char *str1, char *str2, char *err_msg, int status);
 
 /*Builtin Commands*/
-void	exprot(const char *path, char *const argv[], char *const envp[]);
-void	echo(const char *path, char *const argv[], char *const envp[]);
-void	ext(const char *path, char *const argv[], char *const envp[]);
-void	cd(const char *path, char *const argv[], char *const envp[]);
-void	pwd(const char *path, char *const argv[], char *const envp[]);
-void	env(const char *path, char *const argv[], char *const envp[]);
+int		exprot(const char *path, char *const argv[], char *const envp[]);
+int		echo(const char *path, char *const argv[], char *const envp[]);
+int		ext(const char *path, char *const argv[], char *const envp[]);
+int		cd(const char *path, char *const argv[], char *const envp[]);
+int		pwd(const char *path, char *const argv[], char *const envp[]);
+int		env(const char *path, char *const argv[], char *const envp[]);
 
 #endif

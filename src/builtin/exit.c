@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:55:36 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 09:51:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_exit_arg_validity(char **argv)
 **	      without pipe -> do not fork and execute exit
 */
 
-void	ext(const char *path, char *const argv[], char *const envp[])
+int	ext(const char *path, char *const argv[], char *const envp[])
 {
 	extern int	g_exit_code;
 
@@ -52,7 +52,7 @@ void	ext(const char *path, char *const argv[], char *const envp[])
 	{
 		ft_putendl_fd("exit\n 🤣 esh: exit : too many arguments", STDERR_FILENO);
 		g_exit_code = 1;
-		return ;
+		return (-1);
 	}
 	exit(check_exit_arg_validity((char **)argv) & (0xff));
 }

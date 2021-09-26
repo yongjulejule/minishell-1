@@ -6,13 +6,15 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:53:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 13:04:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 09:52:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	echo(const char *path, char *const argv[], char *const envp[])
+extern int	g_exit_code;
+
+int	echo(const char *path, char *const argv[], char *const envp[])
 {
 	int	idx;
 	int	flag;
@@ -25,5 +27,6 @@ void	echo(const char *path, char *const argv[], char *const envp[])
 		printf("%s", argv[flag + idx++]);
 	if (!flag)
 		printf("\n");
-	exit(EXIT_SUCCESS);
+	g_exit_code = 0;
+	return (0);
 }

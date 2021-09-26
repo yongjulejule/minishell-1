@@ -6,13 +6,13 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 13:24:31 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 20:39:00 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 09:50:54 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	env(const char *path, char *const argv[], char *const envp[])
+int	env(const char *path, char *const argv[], char *const envp[])
 {
 	int	idx;
 
