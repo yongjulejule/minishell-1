@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/26 13:38:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:08:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	process_to_execute(t_cmds *cmds, char **envp, int cmd_cnt)
 	if (args->cnt == 1 && args->cmd[0].builtin != notbuiltin)
 		execute_builtin(args);
 	else
-		execute_subprocess(args);
+		execute_subshell_main(args);
 }
 
 static t_cmds	*seperate_cmd(t_cmds *cmds, char **envp,

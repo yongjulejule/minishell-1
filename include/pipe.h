@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:48:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:08:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int		is_rdr(char *str);
 
 void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
 void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
-void	execute_subprocess(t_args *args);
+void	execute_subshell_main(t_args *args);
 void	execute_builtin(t_args *args);
 
 /*
