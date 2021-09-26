@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/25 20:50:49 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/26 13:42:17 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS_DIR		= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
 SRCS_PIPE_DIR	= ./src/pipe/
 SRCS_PARSE_DIR	= ./src/parse/
+SRCS_BLTIN_DIR	= ./src/builtin/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
 ARCH := $(shell arch)
@@ -45,6 +46,15 @@ LIBFT_FILE		= $(LIBFT_DIR)libft.a
 
 INC_DIR_MAN		= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
+
+SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
+				chdir.c\
+				echo.c\
+				env.c\
+				exit.c\
+				handle_error.c\
+				pwd.c\
+				)
 
 SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				breed_process.c\
@@ -87,7 +97,7 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				diy_envp.c\
 				)
 
-SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE)
+SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE) $(SRCS_BLTIN)
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 				)

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:30:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 13:42:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,18 @@ void	update_builtin_func(t_cmd *cmd)
 {
 	if (cmd->builtin == is_echo)
 		cmd->exec = echo;
-	if (cmd->builtin == is_cd)
+	else if (cmd->builtin == is_cd)
 		cmd->exec = cd;
-	if (cmd->builtin == is_pwd)
+	else if (cmd->builtin == is_pwd)
 		cmd->exec = pwd;
-	if (cmd->builtin == is_exprt)
-		cmd->exec = exprt;
-	if (cmd->builtin == is_echo)
-		cmd->exec = echo;
-	if (cmd->builtin == is_echo)
-		cmd->exec = echo;
-	if (cmd->builtin == is_echo)
-		cmd->exec = echo;
-	if (cmd->builtin == is_echo)
-		cmd->exec = echo;
+//	else if (cmd->builtin == is_exprt)
+//		cmd->exec = exprt;
+//	else if (cmd->builtin == is_unset)
+//		cmd->exec = unset;
+	else if (cmd->builtin == is_env)
+		cmd->exec = env;
+	else if (cmd->builtin == is_ext)
+		cmd->exec = ext;
 }
 
 static void	make_cmds(t_args *args)
@@ -73,7 +71,7 @@ static void	make_cmds(t_args *args)
 			args->cmd[cmd_idx].exec = execve;
 		}
 		else
-			update_builtin_func(args->cmd[cmd_idx]);
+			update_builtin_func(&args->cmd[cmd_idx]);
 		cmd_idx++;
 	}
 }

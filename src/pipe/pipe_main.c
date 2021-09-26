@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/26 13:26:15 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 13:38:34 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ extern int	g_exit_code;
 void	execute_builtin(t_args *args)
 {
 	redirect_stream(&args->cmd[0]);
+	args->cmd->exec(args->cmd->params[0], args->cmd->params, args->envp);
+//	reset_stream(&args->cmd[0]);
 }
 
 static void	process_to_execute(t_cmds *cmds, char **envp, int cmd_cnt)
