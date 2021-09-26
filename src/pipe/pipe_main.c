@@ -6,13 +6,20 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/25 21:02:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 14:08:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
 
 extern int	g_exit_code;
+
+void	execute_builtin(t_args *args)
+{
+	redirect_stream(&args->cmd[0]);
+	args->cmd->exec(args->cmd->params[0], args->cmd->params, args->envp);
+//	reset_stream(&args->cmd[0]);
+}
 
 static void	process_to_execute(t_cmds *cmds, char **envp, int cmd_cnt)
 {
@@ -23,7 +30,10 @@ static void	process_to_execute(t_cmds *cmds, char **envp, int cmd_cnt)
 	args->cnt = cmd_cnt;
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
 	build_structure(cmds, envp, args);
-	breed_process(args);
+	if (args->cnt == 1 && args->cmd[0].builtin != notbuiltin)
+		execute_builtin(args);
+	else
+		execute_subshell_main(args);
 }
 
 static t_cmds	*seperate_cmd(t_cmds *cmds, char **envp,

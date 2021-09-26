@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:10:09 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 14:07:40 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
 
-static void	execute_processes(t_args *args, int idx)
+static void	processing_subshell(t_args *args, int idx)
 {
 	pid_t		pid;
 
@@ -57,20 +57,20 @@ static void	execute_processes(t_args *args, int idx)
 			destroy_pipe(args->cmd[idx - 1].pipe_fd);
 		if (args->cnt - 1 == idx)
 			wait_process(args);
-		execute_processes(args, ++idx);
+		processing_subshell(args, ++idx);
 	}
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
 
-void	breed_process(t_args *args)
+void	execute_subshell_main(t_args *args)
 {
 	int			status;
 	pid_t		pid;
 
 	pid = fork();
 	if (pid == 0)
-		execute_processes(args, 0);
+		processing_subshell(args, 0);
 	else if (pid > 0)
 	{
 		sigint_n_sigquit_handler(ignore_signal);
