@@ -6,10 +6,10 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:00:25 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 13:31:25 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	export(const char *path, char *const argv[], char **envp);
+void	exprt(const char *path, char *const argv[], char **envp);

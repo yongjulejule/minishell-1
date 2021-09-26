@@ -6,11 +6,58 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 20:59:54 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 13:30:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipe.h"
+
+static int	check_builtin(t_args *args, char *cmds)
+{
+	int	is_builtin;
+
+	is_builtin = 1;
+	if (!ft_strcmp("echo", cmds))
+		args->cmd->builtin = is_echo;
+	else if (!ft_strcmp("cd", cmds))
+		args->cmd->builtin = is_cd;
+	else if (!ft_strcmp("pwd", cmds))
+		args->cmd->builtin = is_pwd;
+	else if (!ft_strcmp("export", cmds))
+		args->cmd->builtin = is_exprt;
+	else if (!ft_strcmp("unset", cmds))
+		args->cmd->builtin = is_unset;
+	else if (!ft_strcmp("env", cmds))
+		args->cmd->builtin = is_env;
+	else if (!ft_strcmp("exit", cmds))
+		args->cmd->builtin = is_ext;
+	else
+	{
+		args->cmd->builtin = notbuiltin;
+		is_builtin = 0;
+	}
+	return (is_builtin);
+}
+
+void	update_builtin_func(t_cmd *cmd)
+{
+	if (cmd->builtin == is_echo)
+		cmd->exec = echo;
+	if (cmd->builtin == is_cd)
+		cmd->exec = cd;
+	if (cmd->builtin == is_pwd)
+		cmd->exec = pwd;
+	if (cmd->builtin == is_exprt)
+		cmd->exec = exprt;
+	if (cmd->builtin == is_echo)
+		cmd->exec = echo;
+	if (cmd->builtin == is_echo)
+		cmd->exec = echo;
+	if (cmd->builtin == is_echo)
+		cmd->exec = echo;
+	if (cmd->builtin == is_echo)
+		cmd->exec = echo;
+}
 
 static void	make_cmds(t_args *args)
 {
@@ -19,8 +66,14 @@ static void	make_cmds(t_args *args)
 	cmd_idx = 0;
 	while (args->cmd[cmd_idx].params)
 	{
-		check_cmd_validity(args, &args->cmd[cmd_idx],
+		if (!check_builtin(args, args->cmd[cmd_idx].params[0]))
+		{
+			check_cmd_validity(args, &args->cmd[cmd_idx],
 				args->cmd[cmd_idx].params[0]);
+			args->cmd[cmd_idx].exec = execve;
+		}
+		else
+			update_builtin_func(args->cmd[cmd_idx]);
 		cmd_idx++;
 	}
 }

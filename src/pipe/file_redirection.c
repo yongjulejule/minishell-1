@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:12:17 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 12:11:30 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
-	/* NOTE :  if redirection is <<a <<b <<c, work not properly */
 	kill(0, SIGUSR1);
 	while (1)
 	{
@@ -43,7 +42,7 @@ static void	rdr_read(t_rdr *rdr)
 {
 	int		fd;
 
-	if (rdr->fd[0] > 255 || rdr->fd[0] < 0)
+	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
 			": bad file descriptor", EXIT_FAILURE);
 	if (rdr->info == rd_heredoc)
@@ -62,7 +61,7 @@ static void	rdr_write(t_rdr *rdr)
 {
 	int	fd;
 
-	if (rdr->fd[0] > 255 || rdr->fd[0] < 0)
+	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
 			": bad file descriptor", EXIT_FAILURE);
 	if (rdr->info == wr_to_file)
@@ -90,7 +89,7 @@ static void	rdr_rdwr(t_rdr *rdr)
 {
 	int	fd;
 
-	if (rdr->fd[0] > 255 || rdr->fd[0] < 0)
+	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
 			": bad file descriptor", EXIT_FAILURE);
 	fd = open(rdr->file, O_RDWR | O_CREAT, 0644);

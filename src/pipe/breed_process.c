@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/23 12:10:09 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 10:38:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	execute_processes(t_args *args, int idx)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
 
-void	breed_process(t_args *args)
+void	execute_subprocess(t_args *args)
 {
 	int			status;
 	pid_t		pid;

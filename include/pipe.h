@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 20:59:05 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/26 13:30:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <signal.h>
 # include "libft.h"
 # include "get_next_line.h"
+# include "builtin.h"
 # include <readline/readline.h>
 
 /*User Defines*/
@@ -58,6 +59,18 @@ typedef enum e_info
 	error,
 }	t_info;
 
+typedef enum e_builtin
+{
+	is_echo = 0,
+	is_cd,
+	is_pwd,
+	is_exprt,
+	is_unset,
+	is_env,
+	is_ext,
+	notbuiltin,
+}	t_builtin;
+
 typedef struct s_rdr
 {
 	t_info			info;
@@ -71,6 +84,8 @@ typedef struct s_cmd
 {
 	pid_t			pid;
 	int				pipe_fd[2];
+	t_builtin		builtin;
+	int				(*exec)(const char*, char *const[], char *const[]);
 	char			**params;
 	t_rdr			*rdr;
 }	t_cmd;
@@ -120,7 +135,8 @@ int		is_rdr(char *str);
 
 void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
 void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
-void	breed_process(t_args *args);
+void	execute_subprocess(t_args *args);
+void	execute_builtin(t_args *args);
 
 /*
 ** Handle exit code
