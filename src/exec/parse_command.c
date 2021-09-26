@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 15:52:30 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 17:19:19 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	merge_seperated_cmd(char **cmd_arr, t_cmds *cur, int cmd_idx)
 	char	*tmp;
 
 	tmp = ft_strjoin(cmd_arr[cmd_idx], " ");
+	free(cmd_arr[cmd_idx]);
 	cmd_arr[cmd_idx] = ft_strjoin(tmp, cur->cmd);
 	if (tmp)
 	{
@@ -124,4 +125,5 @@ void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
 	cmds = cmdlst_to_cmdarr(cmdlst, args);
 	get_params(args, cmds, cmdlst);
 	make_cmds(args);
+	free_double_ptr((void ***)&cmds);
 }

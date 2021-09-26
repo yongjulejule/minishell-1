@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 16:17:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 17:18:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,5 @@ int		get_exit_status(int status);
 int		split_once(char *str, char *charset);
 int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
 void	free_arg_structure(t_args *args);
+void	free_double_ptr(void ***ptr);
 #endif
