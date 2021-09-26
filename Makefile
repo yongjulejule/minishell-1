@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 15:42:27 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/26 16:40:35 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				wait_info.c\
 				waiting.c\
 				string_utils.c\
+				free_structure.c\
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
