@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 01:33:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 02:16:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	update_builtin_func(t_cmd *cmd)
 		cmd->exec_f.exec = pwd;
 	else if (cmd->builtin == is_exprt)
 		cmd->exec_f.exec_env = exprt;
-//	else if (cmd->builtin == is_unset)
-//		cmd->exec = unset;
+	else if (cmd->builtin == is_unset)
+		cmd->exec_f.exec_env = unset;
 	else if (cmd->builtin == is_env)
 		cmd->exec_f.exec = env;
 	else if (cmd->builtin == is_ext)

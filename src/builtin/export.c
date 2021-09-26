@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 02:14:31 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 03:31:04 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	exprt_no_arg(char **envp, int len)
 	free_double_ptr((void ***)(&in_order));
 }
 
-static void	check_argv_validity(t_exp_arg *av_lst, int *cnt_valid)
+static void	check_exp_argv(t_exp_arg *av_lst, int *cnt_valid)
 {
 	int		i;
 	int		k;
@@ -54,10 +54,7 @@ static void	check_argv_validity(t_exp_arg *av_lst, int *cnt_valid)
 			k++;
 		if (!k || (ft_strchr(av_lst->arg, '=') && av_lst->arg[k] != '='))
 		{
-			ft_putstr_fd("🤣 esh: export: `", STDERR_FILENO);
-			ft_putstr_fd(av_lst->arg, STDERR_FILENO);
-			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-			g_exit_code = EXIT_FAILURE;
+			exp_unset_invalid_arg_msg('e', av_lst->arg);
 			av_lst->flag = 0;
 		}
 		else
@@ -133,8 +130,8 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 	else
 	{
 		av_lst = argv_to_lst((char **)argv);
-		check_argv_validity(av_lst->next, &cnt_val);
-		if (ft_strsetlen((char **)argv) - cnt_val)
+		check_exp_argv(av_lst->next, &cnt_val);
+		if (cnt_val)
 			add_env((char ***)envp, av_lst, o_len + cnt_val);
 	}
 	if (av_lst)

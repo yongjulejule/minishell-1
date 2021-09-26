@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 02:06:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 02:29:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			is_error_no_exit(char *str1, char *str2, char *err_msg, int status);
 
 /*Builtin Commands*/
 int			exprt(const char *path, char *const argv[], char ***const envp);
+int			unset(const char *path, char *const argv[], char ***const envp);
 int			echo(const char *path, char *const argv[], char *const envp[]);
 int			ext(const char *path, char *const argv[], char *const envp[]);
 int			cd(const char *path, char *const argv[], char *const envp[]);
@@ -60,6 +61,7 @@ void		free_double_ptr(void ***ptr);
 char		*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip);
 void		append_env_var(char ***envp, char *arg, int *n_idx);
 t_exp_arg	*argv_to_lst(char **argv);
+void		exp_unset_invalid_arg_msg(char c, char *str);
 
 /* Exp lst */
 int			exp_lst_size(t_exp_arg *arg);

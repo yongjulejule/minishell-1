@@ -6,11 +6,13 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 02:11:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 02:29:41 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+extern int	g_exit_code;
 
 char	*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip)
 {
@@ -63,4 +65,15 @@ t_exp_arg	*argv_to_lst(char **argv)
 	while (argv[++i])
 		exp_lst_addback(hd, exp_lst_init(ft_strdup(argv[i])));
 	return (hd);
+}
+
+void	exp_unset_invalid_arg_msg(char c, char *str)
+{
+	if (c == 'e')
+		ft_putstr_fd("🤣 esh: export: `", STDERR_FILENO);
+	else if (c == 'u')
+		ft_putstr_fd("🤣 esh: unset: `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	g_exit_code = EXIT_FAILURE;
 }
