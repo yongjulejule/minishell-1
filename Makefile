@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 13:42:17 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/26 13:46:56 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,6 @@ SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
 				connect_pipe.c\
 				file_redirection.c\
 				ft_atoi_fd.c\
-				get_next_line.c\
-				get_next_line_utils.c\
 				get_params.c\
 				parse_command.c\
 				pipe_main.c\

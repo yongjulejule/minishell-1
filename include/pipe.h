@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:30:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 13:48:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
-# include "get_next_line.h"
 # include "builtin.h"
 # include <readline/readline.h>
 
@@ -61,14 +60,14 @@ typedef enum e_info
 
 typedef enum e_builtin
 {
-	is_echo = 0,
+	notbuiltin = 0,
+	is_echo,
 	is_cd,
 	is_pwd,
 	is_exprt,
 	is_unset,
 	is_env,
 	is_ext,
-	notbuiltin,
 }	t_builtin;
 
 typedef struct s_rdr
