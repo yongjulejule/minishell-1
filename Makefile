@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 13:46:56 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/26 15:42:27 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ NAME			= minishell
 
 SRCS_DIR		= ./src/
 #SRCS_DIR_BONUS = ./srcs/bonus/
-SRCS_PIPE_DIR	= ./src/pipe/
+SRCS_RDR_DIR	= ./src/redir/
+SRCS_EXEC_DIR	= ./src/exec/
 SRCS_PARSE_DIR	= ./src/parse/
 SRCS_BLTIN_DIR	= ./src/builtin/
 
@@ -56,20 +57,23 @@ SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
 				pwd.c\
 				)
 
-SRCS_PIPE		= $(addprefix $(SRCS_PIPE_DIR), \
-				breed_process.c\
-				check_validity.c\
-				connect_pipe.c\
-				file_redirection.c\
-				ft_atoi_fd.c\
-				get_params.c\
-				parse_command.c\
-				pipe_main.c\
-				pipe_signal.c\
+SRCS_RDR	= $(addprefix $(SRCS_RDR_DIR),\
 				rdr_info.c\
 				rdr_list.c\
 				rdr_read_info.c\
 				rdr_write_info.c\
+				connect_pipe.c\
+				file_redirection.c\
+				ft_atoi_fd.c\
+			  	)
+
+SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
+				execute_subshell.c\
+				check_validity.c\
+				get_params.c\
+				parse_command.c\
+				exec_main.c\
+				exec_signal.c\
 				wait_info.c\
 				waiting.c\
 				string_utils.c\
@@ -95,7 +99,7 @@ SRCS_MAN		= $(addprefix $(SRCS_DIR), \
 				diy_envp.c\
 				)
 
-SRCS_MAN		+= $(SRCS_PIPE) $(SRCS_PARSE) $(SRCS_BLTIN)
+SRCS_MAN		+= $(SRCS_EXEC) $(SRCS_RDR) $(SRCS_PARSE) $(SRCS_BLTIN)
 
 SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 				)

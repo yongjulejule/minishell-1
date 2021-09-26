@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:51:55 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:48:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "redir.h"
 
 static void	make_tmp_heredoc(t_rdr *rdr)
 {

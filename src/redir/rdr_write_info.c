@@ -6,10 +6,11 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:12:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/20 11:17:07 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:49:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipe.h"
+
+#include "redir.h"
 
 static void	rdr_w_file(char *rdr, char *line, t_cmd *cmd)
 {

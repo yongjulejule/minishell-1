@@ -6,11 +6,11 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/20 09:59:22 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:40:27 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 int	split_once(char *str, char *charset)
 {

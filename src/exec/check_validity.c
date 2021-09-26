@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_validity.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/24 10:33:59 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:39:29 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 static char	*prefix_dir_to_cmd(t_args *args, char *param, int nth_path)
 {

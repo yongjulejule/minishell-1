@@ -6,34 +6,34 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 13:42:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 15:52:30 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
-static int	check_builtin(t_args *args, char *cmds)
+static int	check_builtin(t_cmd *cmd, char *cmds)
 {
 	int	is_builtin;
 
 	is_builtin = 1;
 	if (!ft_strcmp("echo", cmds))
-		args->cmd->builtin = is_echo;
+		cmd->builtin = is_echo;
 	else if (!ft_strcmp("cd", cmds))
-		args->cmd->builtin = is_cd;
+		cmd->builtin = is_cd;
 	else if (!ft_strcmp("pwd", cmds))
-		args->cmd->builtin = is_pwd;
+		cmd->builtin = is_pwd;
 	else if (!ft_strcmp("export", cmds))
-		args->cmd->builtin = is_exprt;
+		cmd->builtin = is_exprt;
 	else if (!ft_strcmp("unset", cmds))
-		args->cmd->builtin = is_unset;
+		cmd->builtin = is_unset;
 	else if (!ft_strcmp("env", cmds))
-		args->cmd->builtin = is_env;
+		cmd->builtin = is_env;
 	else if (!ft_strcmp("exit", cmds))
-		args->cmd->builtin = is_ext;
+		cmd->builtin = is_ext;
 	else
 	{
-		args->cmd->builtin = notbuiltin;
+		cmd->builtin = notbuiltin;
 		is_builtin = 0;
 	}
 	return (is_builtin);
@@ -64,7 +64,7 @@ static void	make_cmds(t_args *args)
 	cmd_idx = 0;
 	while (args->cmd[cmd_idx].params)
 	{
-		if (!check_builtin(args, args->cmd[cmd_idx].params[0]))
+		if (!check_builtin(&args->cmd[cmd_idx], args->cmd[cmd_idx].params[0]))
 		{
 			check_cmd_validity(args, &args->cmd[cmd_idx],
 				args->cmd[cmd_idx].params[0]);

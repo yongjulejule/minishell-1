@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:53:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 09:52:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 15:01:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	echo(const char *path, char *const argv[], char *const envp[])
 	int	idx;
 	int	flag;
 
-	flag = 0;
+	flag = 1;
 	idx = 0;
-	if (!argv[1] && ft_strcmp(argv[1], "-n"))
-		flag = 1;
+	if (!argv[1] || !ft_strcmp(argv[1], "-n"))
+		flag = 2;
 	while (argv[idx + flag])
 		printf("%s", argv[flag + idx++]);
-	if (!flag)
+	if (flag != 2)
 		printf("\n");
 	g_exit_code = 0;
 	return (0);

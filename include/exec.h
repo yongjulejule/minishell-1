@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.h                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 14:08:11 by yongjule         ###   ########.fr       */
+/*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
+/*   Updated: 2021/09/26 14:47:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPE_H
-# define PIPE_H
+#ifndef EXEC_H
+# define EXEC_H
 
 /*Include Libraries*/
 
@@ -19,7 +19,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
@@ -37,7 +36,6 @@
 # define CMD_ERR 127
 # define E_ACCESS 13
 # define E_NOCMD 2
-# define BACKUP_FD 255
 
 typedef struct	s_cmds
 {
@@ -117,18 +115,11 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param);
 /*Redirecting*/
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
-void	rdr_write_info(char *rdr, char *line, t_cmd *cmd);
-void	rdr_read_info(char *rdr, char *line, t_cmd *cmd);
-void	rdr_w_output_file(char *line, t_cmd *cmd);
-void	rdr_error(t_cmd *cmd);
 void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	destroy_pipe(int *pipe_fd);
-t_rdr	*rdr_lst_newone(t_info info, char *file, char *limiter, int *fd);
-void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
-char	*get_filename(const char *line);
-int		ft_atoi_fd(const char *str);
 void	redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
+
 
 /*Preprocessing*/
 
@@ -137,9 +128,7 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
 void	execute_subshell_main(t_args *args);
 void	execute_builtin(t_args *args);
 
-/*
-** Handle exit code
-*/
+/*Handle exit code*/
 
 int		wstatus(int status);
 int		wifexited(int status);
@@ -153,6 +142,4 @@ int		get_exit_status(int status);
 
 int		split_once(char *str, char *charset);
 int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
-void	free_strset(char **strset);
-
 #endif

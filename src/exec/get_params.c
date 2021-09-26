@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/25 13:54:45 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/26 14:40:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipe.h"
+#include "exec.h"
 
 static	int	count_params(char *cmdset)
 {
