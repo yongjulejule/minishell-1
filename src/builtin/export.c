@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 11:26:37 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 12:53:41 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 {
 	t_exp_arg	*av_lst;
 	int			cnt_val;
-	int			i;
 	int			o_len;
+	int			i;
 
 	av_lst = NULL;
 	cnt_val = 0;
