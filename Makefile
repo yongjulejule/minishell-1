@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/27 02:26:36 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/27 17:20:58 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,8 @@ INC_DIR_MAN		= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
 
 SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
-				chdir.c\
 				echo.c\
+				chdir.c\
 				env.c\
 				exit.c\
 				export.c\

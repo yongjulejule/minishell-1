@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/27 12:57:21 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 16:40:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern int	g_exit_code;
 
 void	execute_builtin(t_args *args, char ***ft_envp)
 {
+//	back_whole_fd()
 	redirect_stream(&args->cmd[0]);
 	if (args->cmd->builtin == is_exprt || args->cmd->builtin == is_unset
 		|| args->cmd->builtin == is_cd)

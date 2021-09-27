@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 14:51:29 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 18:08:42 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int		is_rdr(char *str);
 
 /*Utils*/
 
-int		split_once(char *str, char *charset);
+int		split_once(char *str, char *charset, char ign);
+char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 #endif
