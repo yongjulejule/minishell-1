@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 16:48:29 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 16:30:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,43 @@
 
 extern int	g_exit_code;
 
-static	int	handle_exit_error(char *cmd, char *argument)
+static void	cd_check_error(char *cmd, char *arg)
 {
-	int	exit_status;
+	char	*tmp;
 
-	ft_putstr_fd((char *)cmd, STDERR_FILENO);
-	exit_status = is_error_no_exit(": ", argument,
-			strerror(errno), EXIT_FAILURE);
-	return (exit_status);
+	tmp = NULL;
+	if (chdir(arg) == -1)
+	{
+		if (arg && *arg)
+		{
+			tmp = ft_strjoin(arg, ": ");
+			g_exit_code = is_error_no_exit("cd: ", tmp,
+					strerror(errno), EXIT_FAILURE);
+			free(tmp);
+		}
+		else
+			g_exit_code = is_error_no_exit("cd: ", arg,
+					strerror(errno), EXIT_FAILURE);
+	}
+	// else
+	// 	update_pwd("PWD", home);
 }
 
-int	cd(const char *path, char *const argv[], char *const envp[])
+int	cd(const char *path, char *const argv[], char ***const envp)
 {
 	char	*home;
-	int		exit_status;
 
-	exit_status = EXIT_SUCCESS;
+	g_exit_code = EXIT_SUCCESS;
 	if (!argv[1])
 	{
-		home = ft_strdup(getenv("HOME"));
+		home = ft_get_envp(*envp, "HOME");
 		if (!home)
-			home = ft_strdup(".");
-		if (chdir(home) == -1)
-			exit_status = handle_exit_error((char *)path, home);
-		/* TODO : setting PWD env */
-		//		else
-		//			update_env("PWD", home);
-		free(home);
-		home = NULL;
+			g_exit_code = is_error_no_exit("cd: ", NULL,
+					"HOME not set", EXIT_FAILURE);
+		else
+			cd_check_error((char *)path, home);
 	}
-	if (chdir(argv[1]) == -1)
-		exit_status = handle_exit_error((char *)path, argv[1]);
-	/* TODO : setting PWD env as absolate path */
-	//	else
-	//		update_env("PWD", argv[1]);
-	g_exit_code = exit_status;
-	return (0);
+	else
+		cd_check_error((char *)path, argv[1]);
+	return (g_exit_code);
 }

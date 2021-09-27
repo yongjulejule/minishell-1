@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 11:05:46 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 16:30:30 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	unset_env_var(char ***envp, t_exp_arg *av_lst)
 		while (cur_arg)
 		{
 			if (!ft_strncmp(cur_arg->arg, cur_ev->arg,
-				ft_strlen(cur_arg->arg)))
+					ft_strlen(cur_arg->arg)))
 			{
 				cur_ev->flag = 0;
 				break ;
