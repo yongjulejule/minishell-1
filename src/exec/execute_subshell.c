@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 18:22:25 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:06:13 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);
-		int j = 0;
-		while (args->cmd[idx].params[j])
-			printf("%s\n",args->cmd[idx].params[j++]);
 		args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
 				args->cmd[idx].params, args->envp);
 	}

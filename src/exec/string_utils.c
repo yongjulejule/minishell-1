@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 18:26:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:05:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	split_once(char *str, char *charset, char ign)
 	}
 	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
 	{
-		if (*(str + idx) == ign && *(str + idx + 1) != '\0')
+		if (*(str + idx) == ign)
 			idx++;
+		if (!*(str + idx))
+			break ;
 		idx++;
 	}
 	return (idx);
@@ -63,7 +65,7 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 		return (ft_substr(str, start, len));
 	idx = 0;
 	ret = (char *)ft_calloc(size + 1, sizeof(char));
-	while (idx < size)
+	while (idx < size && start <= len)
 	{
 		if (str[start] != '\\')
 		{
@@ -73,7 +75,6 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 		start++;
 	}
 	ret[idx] = '\0';
-	printf("%s\n", ret);
 	return (ret);
 }
 
@@ -101,6 +102,5 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 		len = split_once(&cmdset[0], "\t\n ", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
 	}
-	printf("%s\n", cmd->params[p_idx]);
 	return (len);
 }
