@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 17:02:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 18:20:41 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static	int	count_params(char *cmdset)
 		while (is_charset(cmdset[start], "\t\n "))
 			start++;
 		if (is_charset(cmdset[start], "'"))
-			len = split_once(&cmdset[start], "'") + start + 1;
+			len = split_once(&cmdset[start], "'", '\\') + start + 1;
 		else if (is_charset(cmdset[start], "\""))
-			len = split_once(&cmdset[start], "\"") + start + 1;
+			len = split_once(&cmdset[start], "\"", '\\') + start + 1;
 		else
-			len = split_once(&cmdset[start], "\t\n ") + start;
+			len = split_once(&cmdset[start], "\t\n ", '\\') + start;
 		start = len;
 		if (origin_size < start)
 			break;
