@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:49:08 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:02:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static	void	get_each_params(char *cmdset, t_cmd *cmd)
 	int	size;
 
 	size = count_params(cmdset);
-	cmd->params = (char **)ft_calloc(sizeof(char *), size + 1);
+	cmd->params = (char **)ft_calloc(size + 1, sizeof(char *));
 	parse_param(cmdset, cmd);
 }
 
@@ -93,14 +93,18 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 		get_each_params(cmds[idx], &args->cmd[idx]);
 		idx++;
 	}
+	/* FIXME : It seems to execute redirecting only for first cmd*/
 	while (cmdlst && cmdlst->cmd[0] != ';')
 	{
 		if (cmdlst->cmd[0] != '|')
 		{
-			if (cur)
-				cur--;
-			get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
-			cur++;
+			if (is_rdr(cmdlst->cmd))
+			{
+				if (cur)
+					cur--;
+				get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
+				cur++;
+			}
 		}
 		cmdlst = cmdlst->next;
 	}
