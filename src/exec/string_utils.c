@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 20:05:37 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:20:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@ int	split_once(char *str, char *charset, char ign)
 		return (0);
 	while (is_charset(*(str + idx), charset))
 	{
-		if (*(str + idx) == ign && *(str + idx + 1) != '\0')
+		printf("before :%s\n", &str[idx]);
+		if (*(str + idx) == ign)
 			idx++;
+		if (!*(str + idx))
+			break ;
 		idx++;
 	}
 	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
 	{
+		printf("after : %s\n", &str[idx]);
 		if (*(str + idx) == ign)
 			idx++;
 		if (!*(str + idx))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdr_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@42student.42seoul.      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 18:10:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:37:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*get_filename(const char *line)
 	if (!ft_strcmp(tmp, "''") || !ft_strcmp(tmp, "\"\"")) 
 		file = ft_strdup("");
 	else if (tmp[0] == '\'')
-		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[1], "'", '\\'), '\\');
+		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[0], "'", '\\') - 1, '\\');
 	else if (tmp[0] == '"')
-		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[1], "\"", '\\'), '\\');
+		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[0], "\"", '\\') - 1, '\\');
 	else
 		file = ft_substr_wo_chr(tmp, 0, split_once(&tmp[0], " \n\f", '\\'), '\\');
 	free(tmp);
