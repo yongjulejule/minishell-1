@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/26 16:36:22 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/28 00:14:45 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 			i++;
 			is_qmbt(one_ln + i, &qmbt);
 		}
-		else if (*(one_ln + i) != '\0')
+		else if (*(one_ln + i) != '\0' && *(one_ln + i) != '\\')
 			i++;
 	}
 	return (cnt);
