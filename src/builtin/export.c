@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 03:31:04 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 11:26:37 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	check_exp_argv(t_exp_arg *av_lst, int *cnt_valid)
 		while (av_lst->arg[k]
 			&& (av_lst->arg[k] == '_' || ft_isalpha(av_lst->arg[k])))
 			k++;
-		if (!k || (ft_strchr(av_lst->arg, '=') && av_lst->arg[k] != '='))
+		if (!k || (av_lst->arg[k] && av_lst->arg[k] != '='))
 		{
 			exp_unset_invalid_arg_msg('e', av_lst->arg);
 			av_lst->flag = 0;
