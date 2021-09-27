@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 03:41:57 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/27 11:04:08 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,63 +36,59 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val)
 	}
 }
 
-static void	fill_remaining_envp(char **envp, t_exp_arg *av_lst, char **to_fr)
+static void	fill_rem_env(t_exp_arg *ev_lst, t_exp_arg *av_lst, char ***envp )
 {
-	t_exp_arg	*cur;
+	t_exp_arg	*cur_arg;
+	t_exp_arg	*cur_ev;
 	int			idx;
-	int			k;
+	int			cnt;
 
-	k = 0;
-	idx = 0;
-	while (to_fr[k])
+	cnt = 0;
+	cur_ev = ev_lst->next;
+	while (cur_ev)
 	{
-		cur = av_lst->next;
-		while (cur)
-		{
-			if (cur->flag
-				&& !ft_strncmp(cur->arg, to_fr[k], ft_strlen(cur->arg)))
-			{
-				k++;
-				cur->flag = 0;
-				break ;
-			}
-			cur = cur->next;
-		}
-		if (to_fr[k])
-		{
-			envp[idx++] = ft_strdup(to_fr[k]);
-			k++;
-		}
+		if (cur_ev->flag)
+			cnt++;
+		cur_ev = cur_ev->next;
 	}
+	*envp = (char **)ft_calloc(cnt + 1, sizeof(char *));
+	idx = 0;
+	cur_ev = ev_lst->next;
+	while (cur_ev)
+	{
+		if (cur_ev->flag)
+			*(*envp + idx++) = ft_strdup(cur_ev->arg);
+		cur_ev = cur_ev->next;
+	}
+	free_argv_lst(&ev_lst);
 }
 
 static void	unset_env_var(char ***envp, t_exp_arg *av_lst)
 {
-	t_exp_arg	*cur;
+	t_exp_arg	*cur_arg;
+	t_exp_arg	*cur_ev;
+	t_exp_arg	*ev_lst;
 	char		**to_fr;
-	int			cnt;
-	int			i;
 
-	cnt = 0;
-	i = -1;
+	ev_lst = argv_to_lst(*envp);
 	to_fr = *envp;
-	while (to_fr[++i])
+	cur_ev = ev_lst->next;
+	while (cur_ev)
 	{
-		cur = av_lst->next;
-		while (cur)
+		cur_arg = av_lst->next;
+		while (cur_arg)
 		{
-			if (!ft_strncmp(cur->arg, to_fr[i],
-				ft_strlen(cur->arg)))
+			if (!ft_strncmp(cur_arg->arg, cur_ev->arg,
+				ft_strlen(cur_arg->arg)))
 			{
-				cnt++;
+				cur_ev->flag = 0;
 				break ;
 			}
-			cur = cur->next;
+			cur_arg = cur_arg->next;
 		}
+		cur_ev = cur_ev->next;
 	}
-	*envp = (char **)ft_calloc(ft_strsetlen(*envp) + 1,
-		sizeof(char *));
-	fill_remaining_envp(*envp, av_lst, to_fr);
+	fill_rem_env(ev_lst, av_lst, envp);
 	free_double_ptr((void ***)&to_fr);
 }
 
@@ -100,6 +96,7 @@ int	unset(const char *path, char *const argv[], char ***const envp)
 {
 	t_exp_arg	*av_lst;
 	int			cnt_val;
+	int			cnt_rem;
 
 	g_exit_code = EXIT_SUCCESS;
 	cnt_val = 0;
