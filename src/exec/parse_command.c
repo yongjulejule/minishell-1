@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 16:41:11 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:32:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	update_builtin_func(t_cmd *cmd)
 	if (cmd->builtin == is_echo)
 		cmd->exec_f.exec = echo;
 	else if (cmd->builtin == is_cd)
-		cmd->exec_f.exec = cd;
+		cmd->exec_f.exec_env = cd;
 	else if (cmd->builtin == is_pwd)
 		cmd->exec_f.exec = pwd;
 	else if (cmd->builtin == is_exprt)
