@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 17:28:16 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/28 10:43:09 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,21 @@
 
 extern int	g_exit_code;
 
-static void	cd_check_error(char *cmd, char *arg)
+static void	update_pwd(char ***envp)
+{
+	char	*cwd;
+	char	*argv[3];
+
+	cwd = getcwd(NULL, 0);
+	argv[0] = "export";
+	argv[1] = ft_strjoin("PWD=", cwd);
+	argv[2] = NULL;
+	exprt("export", argv, envp);
+	free(cwd);
+	free(argv[1]);
+}
+
+static void	cd_check_error(char *cmd, char *arg, char ***envp)
 {
 	char	*tmp;
 
@@ -32,8 +46,8 @@ static void	cd_check_error(char *cmd, char *arg)
 			g_exit_code = is_error_no_exit("cd: ", arg,
 					strerror(errno), EXIT_FAILURE);
 	}
-	// else
-	// 	update_pwd("PWD", home);
+	else
+		update_pwd(envp);
 }
 
 int	cd(const char *path, char *const argv[], char ***const envp)
@@ -48,9 +62,9 @@ int	cd(const char *path, char *const argv[], char ***const envp)
 			g_exit_code = is_error_no_exit("cd: ", NULL,
 					"HOME not set", EXIT_FAILURE);
 		else
-			cd_check_error((char *)path, home);
+			cd_check_error((char *)path, home, (char ***)envp);
 	}
 	else
-		cd_check_error((char *)path, argv[1]);
+		cd_check_error((char *)path, argv[1], (char ***)envp);
 	return (g_exit_code);
 }
