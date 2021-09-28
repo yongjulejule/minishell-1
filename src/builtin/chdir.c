@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/28 10:43:09 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/28 10:47:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,21 @@ extern int	g_exit_code;
 static void	update_pwd(char ***envp)
 {
 	char	*cwd;
-	char	*argv[3];
+	char	*argv_p[3];
+	char	*argv_op[3];
 
+	argv_op[0] = "export";
+	argv_op[1] = ft_strjoin("OLDPWD=", ft_get_envp(*envp, "PWD"));
+	argv_op[2] = NULL;
+	exprt("export", argv_op, envp);
 	cwd = getcwd(NULL, 0);
-	argv[0] = "export";
-	argv[1] = ft_strjoin("PWD=", cwd);
-	argv[2] = NULL;
-	exprt("export", argv, envp);
+	argv_p[0] = "export";
+	argv_p[1] = ft_strjoin("PWD=", cwd);
+	argv_p[2] = NULL;
+	exprt("export", argv_p, envp);
 	free(cwd);
-	free(argv[1]);
+	free(argv_p[1]);
+	free(argv_op[1]);
 }
 
 static void	cd_check_error(char *cmd, char *arg, char ***envp)
