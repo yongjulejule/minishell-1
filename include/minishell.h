@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 00:01:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/28 14:20:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ void	unexp_eof_sigint_handler(int sig);
 
 char	**dup_envp(char *envp[], int set_len);
 char	*ft_get_envp(char **ft_envp, char *var);
+int   exprt(const char *path, char *const argv[], char ***const envp);
+int   unset(const char *path, char *const argv[], char ***const envp);
 
 #endif
