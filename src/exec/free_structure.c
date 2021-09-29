@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 16:16:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:43:38 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:00:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static void	free_ptr(void **ptr)
 {
-	free(*ptr);
-	*ptr = NULL;
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
 void	free_double_ptr(void ***ptr)
@@ -41,8 +44,10 @@ static void	free_rdr_lst(t_rdr **rdr)
 	while (cur)
 	{
 		tmp = cur;
-		free_ptr((void **)&tmp->file);
-		free_ptr((void **)&tmp->limiter);
+		if (tmp->file)
+			free_ptr((void **)&tmp->file);
+		if (tmp->limiter)
+			free_ptr((void **)&tmp->limiter);
 		cur = cur->next;
 		free(tmp);
 	}

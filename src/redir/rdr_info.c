@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 10:37:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 10:50:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*get_filename(const char *line)
 	char	*file;
 	char	*tmp;
 
-	if (*line == '\0')
-		return (NULL);
+	if (!line || !*line)
+		return (ft_strdup(""));
 	tmp = ft_strtrim(line, " \n\t");
 	if (!ft_strcmp(tmp, "''") || !ft_strcmp(tmp, "\"\"")) 
 		file = ft_strdup("");
@@ -33,8 +33,8 @@ char	*get_filename(const char *line)
 	return (file);
 }
 
-void	rdr_error(t_cmd *cmd)
-{
+void	rdr_error(t_cmd *cmd) 
+{ 
 	int	fd[2];
 
 	fd[0] = -1;

@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:12:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/26 14:49:00 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:10:24 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static void	rdr_w_fd(char *rdr, char *line, t_cmd *cmd)
 	while (ft_isdigit(*file))
 		file++;
 	if (*file == '\0')
+	{
 		fd[1] = ft_atoi_fd(&line[2]);
+		file = ft_strdup("");
+	}
 	else
 	{
 		file = get_filename(&line[2]);
