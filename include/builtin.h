@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 13:34:00 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 11:18:22 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,6 @@
 # include <sys/errno.h>
 # include <stdio.h>
 # include <string.h>
-
-/*
-typedef enum e_builtin
-{
-	echo = 0,
-	cd,
-	pwd,
-	exprt,
-	unset,
-	env,
-	ext,
-	notbuiltin,
-}	t_builtin;
-*/
 
 /* User Define */
 
