@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 01:25:27 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 17:55:10 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ int		end_by_esc(char **one_ln);
 /* split */
 
 void	split_by_symbols(t_cmds *cmds_hd, char *s);
-void	skip_qmbt(char *str, int *i);
+void	skip_qmbt(char *str, int *i, char *charset);
 void	get_end_idx(char *s, int *i, char *charset, int flag);
 int		rdr_after_fd(char *s, int *i);
 int		check_front_whitespace(char *str, int len);
+void	rm_unnecessary_qm(t_cmds *cmds_hd);
 
 /* sub_env & syntax check */
 

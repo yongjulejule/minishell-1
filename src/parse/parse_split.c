@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/26 18:15:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 12:06:28 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ void	split_by_symbols(t_cmds *cmds_hd, char *one_ln)
 	else
 	{
 		split_by_pipe_sc(cmds_hd, one_ln);
-		free(one_ln);
-		one_ln = NULL;
 		cur.elem = cmds_hd->next;
 		while (cur.elem)
 		{
@@ -126,4 +124,6 @@ void	split_by_symbols(t_cmds *cmds_hd, char *one_ln)
 		}
 	}
 	cmds_lst_strtrim(cmds_hd);
+	free(one_ln);
+	one_ln = NULL;
 }

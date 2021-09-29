@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 20:50:32 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 17:55:35 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	sub_env(char **ln, char **ft_envp)
 			if (*(*ln + i) == '"')
 				d_qt_flag++;
 			else if (*(*ln + i) == '\'' && d_qt_flag % 2 == 0)
-				skip_qmbt(*ln, &i);
+				skip_qmbt(*ln, &i, "\"'`");
 			i++;
 		}
 	}
