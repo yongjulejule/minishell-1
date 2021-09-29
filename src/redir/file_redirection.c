@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 14:07:00 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:09:28 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	char	*line;
 
 	sigint_n_sigquit_handler(signal_heredoc);
-//	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (pipe(fd) == -1)
 		is_error(NULL, "heredoc :", strerror(errno), EXIT_FAILURE);
 	kill(0, SIGUSR1);
@@ -58,8 +57,6 @@ static void	rdr_read(t_rdr *rdr)
 	if (dup2(fd, rdr->fd[0]) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
-//	if (rdr->info == rd_heredoc)
-//		unlink(rdr->file);
 }
 
 static void	rdr_write(t_rdr *rdr)
