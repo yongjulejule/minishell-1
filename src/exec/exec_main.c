@@ -6,27 +6,13 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/27 16:40:21 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 11:17:56 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 extern int	g_exit_code;
-
-void	execute_builtin(t_args *args, char ***ft_envp)
-{
-//	back_whole_fd()
-	redirect_stream(&args->cmd[0]);
-	if (args->cmd->builtin == is_exprt || args->cmd->builtin == is_unset
-		|| args->cmd->builtin == is_cd)
-		args->cmd->exec_f.exec_env(args->cmd->params[0]
-			, args->cmd->params, ft_envp);
-	else
-		args->cmd->exec_f.exec(args->cmd->params[0]
-			, args->cmd->params, args->envp);
-//	reset_stream(&args->cmd[0]);
-}
 
 static void	process_to_execute(t_cmds *cmds, char ***envp, int cmd_cnt)
 {

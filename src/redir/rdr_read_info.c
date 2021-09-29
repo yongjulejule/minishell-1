@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/26 14:49:00 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 10:59:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	rdr_r_dup_fd(char *rdr, char *line, t_cmd *cmd)
 	t_info	info;
 
 	fd[1] = -1;
-	file = NULL;
+	file = ft_strdup("");
 	if (line == rdr)
 		fd[0] = 0;
 	else
