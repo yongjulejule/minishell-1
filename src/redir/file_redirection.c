@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 17:52:36 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:07:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 static void	make_tmp_heredoc(t_rdr *rdr)
 {
-	int		fd;
+	int		fd[2];
 	char	*line;
 
 	sigint_n_sigquit_handler(signal_heredoc);
-	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (fd < 0)
-		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
+//	fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (pipe(fd) == -1)
+		is_error(NULL, "heredoc :", strerror(errno), EXIT_FAILURE);
 	kill(0, SIGUSR1);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line || !ft_strcmp(rdr->limiter, line))
 		{
+			rdr->fd[1] = fd[PIPE_RD];
 			free(line);
 			line = NULL;
-			close(fd);
+			close(fd[PIPE_WR]);
 			return ;
 		}
-		ft_putendl_fd(line, fd);
+		ft_putendl_fd(line, fd[PIPE_WR]);
 		free(line);
 		line = NULL;
 	}
@@ -46,15 +47,19 @@ static void	rdr_read(t_rdr *rdr)
 		is_error(ft_itoa(rdr->fd[0]), NULL,
 			": bad file descriptor", EXIT_FAILURE);
 	if (rdr->info == rd_heredoc)
+	{
 		make_tmp_heredoc(rdr);
-	fd = open(rdr->file, O_RDONLY);
+		fd = rdr->fd[1];
+	}
+	else
+		fd = open(rdr->file, O_RDONLY);
 	if (fd < 0)
 		is_error(strerror(errno), ": ", rdr->file, EXIT_FAILURE);
 	if (dup2(fd, rdr->fd[0]) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
-	if (rdr->info == rd_heredoc)
-		unlink(rdr->file);
+//	if (rdr->info == rd_heredoc)
+//		unlink(rdr->file);
 }
 
 static void	rdr_write(t_rdr *rdr)
