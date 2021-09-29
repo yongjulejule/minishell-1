@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 10:36:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:18:35 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,10 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 		if (cmdlst->cmd[0] != '|')
 		{
 			if (is_rdr(cmdlst->cmd))
-			{
-				if (cur)
-					cur--;
 				get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
-				cur++;
-			}
 		}
+		else
+			cur++;
 		cmdlst = cmdlst->next;
 	}
 }

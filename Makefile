@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/27 17:20:58 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/29 13:13:00 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,12 +66,14 @@ SRCS_RDR	= $(addprefix $(SRCS_RDR_DIR),\
 				rdr_list.c\
 				rdr_read_info.c\
 				rdr_write_info.c\
+				rdr_builtin.c\
 				connect_pipe.c\
 				file_redirection.c\
 				ft_atoi_fd.c\
 			  	)
 
 SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
+				execute_builtin.c\
 				execute_subshell.c\
 				check_validity.c\
 				get_params.c\
