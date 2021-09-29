@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:35:47 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 13:33:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 13:54:12 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	dup_fd_to_backup(t_rdr *rdr, int **fd)
 	idx = 0;
 	while (fd[idx])
 	{
-		printf("%d -> %d\n", fd[idx][0], fd[idx][1]);
 		if (fstat(fd[idx][0], &status) != -1)
 		{
 			if (dup2(fd[idx][0], fd[idx][1]) == -1)
@@ -84,7 +83,6 @@ int	**backup_fd(t_rdr *rdr)
 	{
 		fd[idx] = (int *)ft_calloc(2, sizeof(int));
 		fd[idx][0] = rdr->fd[0];
-		printf("%d\n", fd[idx][0]);
 		rdr = rdr->next;
 		idx++;
 	}
