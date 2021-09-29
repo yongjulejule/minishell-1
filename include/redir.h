@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 18:08:42 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 12:38:16 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /*Include Libraries*/
 
 # include <sys/errno.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <string.h>
 # include <unistd.h>
@@ -115,6 +116,11 @@ char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
 void	redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
+
+/*Redirection in builtin*/
+
+int		**backup_fd(t_rdr *rdr);
+void	retrive_fd(t_rdr *rdr, int **fds);
 
 /*Utils*/
 

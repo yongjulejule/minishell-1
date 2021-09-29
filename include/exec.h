@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 10:19:47 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 12:37:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,11 @@ int		wexitstatus(int status);
 int		wtermsig(int status);
 void	wait_process(t_args *args);
 int		get_exit_status(int status);
+
+/*Redirection in builtin*/
+
+int		**backup_fd(t_rdr *rdr);
+void	retrive_fd(t_rdr *rdr, int **fds);
 
 /*Utils*/
 
