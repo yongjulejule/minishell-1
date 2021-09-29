@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/27 17:20:58 by yongjule         ###   ########.fr        #
+#    Updated: 2021/09/29 11:57:07 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				get_params.c\
 				parse_command.c\
 				exec_main.c\
+				execute_builtin.c\
 				exec_signal.c\
 				wait_info.c\
 				waiting.c\
