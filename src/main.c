@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/28 14:26:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 11:20:40 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 		line_read = readline("🐘 esh > ");
 		eof_exit(line_read);
 		add_history(rl_line_buffer);
-		cmdlst = parse_line_main(line_read, ft_envp);
+		parse_line_main(&cmdlst, line_read, ft_envp, ft_strdup(""));
 		if (cmdlst && cmdlst->cmd && *cmdlst->cmd)
 			exec_cmd_main(cmdlst, &ft_envp);
 		sigint_n_sigquit_handler(main_sig_handler);

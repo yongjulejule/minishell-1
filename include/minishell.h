@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/28 14:20:17 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 11:28:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ __) (__)   (____/\\_)(_/(____)\\____/\\____/\n\n"
 /* utils_main */
 
 char	**esh_pre_process(int argc, char *argv[], char *envp[]);
-t_cmds	*parse_line_main(char *ln_read, char **ft_envp);
+void	parse_line_main(t_cmds **cmds_hd, char *ln_read,
+			char **ft_envp, char *one_ln);
 int		exec_cmd_main(t_cmds *cmds, char ***envp);
 void	unexp_eof_sig_handler(void);
 void	eof_exit(char *line_read);
@@ -90,7 +91,7 @@ void	unexp_eof_sigint_handler(int sig);
 
 char	**dup_envp(char *envp[], int set_len);
 char	*ft_get_envp(char **ft_envp, char *var);
-int   exprt(const char *path, char *const argv[], char ***const envp);
-int   unset(const char *path, char *const argv[], char ***const envp);
+int		exprt(const char *path, char *const argv[], char ***const envp);
+int		unset(const char *path, char *const argv[], char ***const envp);
 
 #endif

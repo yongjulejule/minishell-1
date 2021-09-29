@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/28 00:14:45 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 11:11:27 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ static int	check_line_end(char **one_ln, char *ln)
 	free(to_free);
 	is_qmbt(*one_ln, &qmbt);
 	cnt = cnt_skip_qmbt(*one_ln, qmbt);
+	if (cnt % 2)
+	{
+		to_free = *one_ln;
+		*one_ln = ft_strjoin(*one_ln, "\n");
+		free(to_free);
+	}
 	if (cnt % 2 || !end_by_pipe(*one_ln) || !end_by_esc(one_ln))
 		return (0);
 	return (1);
