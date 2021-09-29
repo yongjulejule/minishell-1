@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 18:11:59 by jun               #+#    #+#             */
-/*   Updated: 2021/09/29 10:59:18 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:11:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	rdr_r_file(char *rdr, char *line, t_cmd *cmd)
 static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 {
 	int			fd[2];
-	static int	fileno = 10000;
 	char		*tmp;
 	char		*file;
 
@@ -38,14 +37,9 @@ static void	rdr_r_heredoc(char *rdr, char *line, t_cmd *cmd)
 		fd[0] = 0;
 	else
 		fd[0] = ft_atoi_fd(rdr);
-	tmp = ft_itoa(fileno);
-	file = ft_strjoin(".tmp.", tmp);
-	free(tmp);
+	file = ft_strdup("");
 	tmp = get_filename(&line[2]);
 	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(rd_heredoc, file, tmp, fd));
-	fileno++;
-	if (fileno > 19999)
-		fileno = 10000;
 }
 
 static void	rdr_r_dup_fd(char *rdr, char *line, t_cmd *cmd)

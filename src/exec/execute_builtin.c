@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:17:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 11:18:05 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 12:37:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	execute_builtin(t_args *args, char ***ft_envp)
 {
-//	back_whole_fd()
-	redirect_stream(&args->cmd[0]);
+	int	**rdr_fds;
+
+	rdr_fds = backup_fd(args->cmd->rdr);
+	if (rdr_fds)
+		redirect_stream(&args->cmd[0]);
 	if (args->cmd->builtin == is_exprt || args->cmd->builtin == is_unset
 		|| args->cmd->builtin == is_cd)
 		args->cmd->exec_f.exec_env(args->cmd->params[0]
@@ -23,6 +26,7 @@ void	execute_builtin(t_args *args, char ***ft_envp)
 	else
 		args->cmd->exec_f.exec(args->cmd->params[0]
 			, args->cmd->params, args->envp);
-//	reset_stream(&args->cmd[0]);
+	if (rdr_fds)
+		retrive_fd(args->cmd->rdr, rdr_fds);
 }
 
