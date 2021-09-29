@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 21:31:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/23 15:44:03 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 17:55:29 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	skip_after_rdr(char *s, int *i)
 		else if (*(s + *i))
 			(*i)++;
 	}
-	skip_qmbt(s, i);
+	skip_qmbt(s, i, "\"'`");
 	if (is_charset(*(s + *i), "\"'`"))
 		(*i)++;
 	while (is_charset(*(s + *i), " \n\t"))

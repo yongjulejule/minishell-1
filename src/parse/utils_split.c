@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 13:25:05 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/29 17:55:39 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-void	skip_qmbt(char *str, int *i)
+void	skip_qmbt(char *str, int *i, char *charset)
 {
 	char	qmbt;
 
 	qmbt = *(str + *i);
-	if (is_charset(qmbt, "\"'`"))
+	if (is_charset(qmbt, charset))
 	{
 		(*i)++;
 		while (*(str + *i) && *(str + *i) != qmbt)
