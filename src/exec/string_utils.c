@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/28 12:25:25 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 10:35:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,46 +22,42 @@ int	split_once(char *str, char *charset, char ign)
 	if (!*str)
 		return (0);
 	while (is_charset(*(str + idx), charset))
-	{
-		if (*(str + idx) == ign)
-		{
-			idx++;
-			if (*(str + idx + 1) == ign)
-				str++;
-		}
-		if (!*(str + idx))
-			break ;
 		idx++;
-	}
 	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
 	{
 		if (*(str + idx) == ign)
 		{
 			idx++;
-			if (*(str + idx + 1) == ign)
-				str++;
+			if (*(str + idx) == ign || is_charset(*(str + idx), charset))
+				idx++;
 		}
+		else
+			idx++;
 		if (!*(str + idx))
 			break ;
-		idx++;
 	}
 	return (idx);
 }
 
-static size_t	ft_strlen_wo_chr(char *str, int len, char c)
+static size_t	ft_strlen_wo_chr(char *str, size_t len, char c)
 {
 	size_t	cnt;
+	size_t	idx;
 
 	cnt = 0;
+	idx = 0;
 	if (!str)
 		return (0);
-	while (*str)
+	while (idx <= len)
 	{
-		if (*str != c)
+		if (*(str + idx) != c)
 			cnt++;
-		else if (*(str + 1) == c)
-			str++;
-		str++;
+		else if (*(str + idx + 1) == c)
+		{
+			cnt++;
+			idx++;
+		}
+		idx++;
 	}
 	return (cnt);
 }
@@ -73,12 +69,11 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 	char	*ret;
 
 	size = ft_strlen_wo_chr(&str[start], len, c);
-//	printf("str : %s, start : %d, len : %zu, size : %zu, ign : %c\n", str, start, len, size, c);
 	if (size > len)
 		return (ft_substr(str, start, len));
 	idx = 0;
 	ret = (char *)ft_calloc(size + 1, sizeof(char));
-	while (idx < size && start <= len)
+	while (idx < size)
 	{
 		if (str[start] != c)
 		{
@@ -92,7 +87,6 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 			start++;
 		}
 		start++;
-//		printf("in substr : %s\n", ret);
 	}
 	ret[idx] = '\0';
 	return (ret);

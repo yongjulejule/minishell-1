@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/28 12:25:15 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/29 10:36:03 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,18 @@ static	int	count_params(char *cmdset)
 	start = 0;
 	size = 0;
 	origin_size = ft_strlen(cmdset);
-	while (cmdset[start] != '\0')
+	while (start < origin_size)
 	{
 		size++;
 		while (is_charset(cmdset[start], "\t\n "))
 			start++;
 		if (is_charset(cmdset[start], "'"))
-			len = split_once(&cmdset[start], "'", '\\') + start + 1;
+			len = split_once(&cmdset[start + 1], "'", '\\') + start + 1;
 		else if (is_charset(cmdset[start], "\""))
-			len = split_once(&cmdset[start], "\"", '\\') + start + 1;
+			len = split_once(&cmdset[start + 1], "\"", '\\') + start + 1;
 		else
 			len = split_once(&cmdset[start], "\t\n ", '\\') + start;
-		start = len;
-		if (origin_size < start)
-			break;
+		start = len + 1;
 	}
 	return (size);
 }
@@ -91,7 +89,6 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 	while (cmds[idx])
 	{
 		get_each_params(cmds[idx], &args->cmd[idx]);
-//		printf("after parse : %s\n", args->cmd[idx].params[0]);
 		idx++;
 	}
 	/* FIXME : It seems to execute redirecting only for first cmd*/
