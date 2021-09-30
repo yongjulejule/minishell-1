@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:25:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:51:27 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ t_exp_arg	*exp_lst_init(char *arg);
 t_exp_arg	*exp_lstlast(t_exp_arg *elem);
 void		exp_lst_addback(t_exp_arg *hd, t_exp_arg *new);
 void		free_argv_lst(t_exp_arg **av_lst);
+void		exprt_no_arg(char **envp, int len);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 12:53:41 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 14:50:43 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,51 @@
 
 extern int	g_exit_code;
 
-static void	exprt_no_arg(char **envp, int len)
+static void	check_var_overlap(t_exp_arg *av_lst)
 {
-	char	**in_order;
-	char	*pos;
-	int		i;
+	t_exp_arg	*cur;
+	t_exp_arg	*av_next;
+	char		*pos;
 
-	in_order = dup_envp(envp, len);
-	bubble_sort_strset(in_order, len);
-	i = -1;
-	while (in_order[++i])
+	cur = av_lst->next;
+	while (cur)
 	{
-		pos = ft_strchr(in_order[i], '=');
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		if (pos)
+		av_next = cur->next;
+		while (av_next)
 		{
-			write(STDOUT_FILENO, in_order[i], pos - in_order[i] + 1);
-			ft_putchar_fd('"', STDOUT_FILENO);
-			ft_putstr_fd(pos + 1, STDOUT_FILENO);
-			ft_putendl_fd("\"", STDOUT_FILENO);
+			pos = ft_strchr(av_next->arg, '=');
+			if (!pos
+				&& !ft_strncmp(av_next->arg, cur->arg, ft_strlen(av_next->arg)))
+				av_next->flag = 0;
+			else if (pos
+				&& !ft_strncmp(av_next->arg, cur->arg, pos - av_next->arg))
+				cur->flag = 0;
+			av_next = av_next->next;
 		}
-		else
-			ft_putendl_fd(in_order[i], STDOUT_FILENO);
+		cur = cur->next;
 	}
-	free_double_ptr((void ***)(&in_order));
 }
 
 static void	check_exp_argv(t_exp_arg *av_lst, int *cnt_valid)
 {
-	int		i;
-	int		k;
+	t_exp_arg	*cur;
+	int			k;
 
-	i = 0;
-	while (av_lst)
+	cur = av_lst->next;
+	while (cur)
 	{
 		k = 0;
-		while (av_lst->arg[k]
-			&& (av_lst->arg[k] == '_' || ft_isalpha(av_lst->arg[k])))
+		while (cur->flag && cur->arg[k]
+			&& (cur->arg[k] == '_' || ft_isalpha(cur->arg[k])))
 			k++;
-		if (!k || (av_lst->arg[k] && av_lst->arg[k] != '='))
+		if (!k || (cur->arg[k] && cur->arg[k] != '='))
 		{
-			exp_unset_invalid_arg_msg('e', av_lst->arg);
-			av_lst->flag = 0;
+			exp_unset_invalid_arg_msg('e', cur->arg);
+			cur->flag = 0;
 		}
 		else
 			(*cnt_valid)++;
-		av_lst = av_lst->next;
+		cur = cur->next;
 	}
 }
 
@@ -68,26 +67,27 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *idx)
 	t_exp_arg	*cur;
 	char		*pos;
 
-	while (to_fr[*idx + 1])
+	while (to_fr[++(*idx) + 1])
 	{
 		cur = avs->next;
 		while (cur)
 		{
 			pos = ft_strchr(cur->arg, '=');
-			if (!pos && !ft_strncmp(cur->arg, to_fr[*idx], ft_strlen(cur->arg)))
+			if (cur->flag && !pos
+				&& !ft_strncmp(cur->arg, to_fr[*idx], ft_strlen(cur->arg)))
 				cur->flag = 0;
-			else if (pos && !ft_strncmp(cur->arg, to_fr[*idx], pos - cur->arg))
+			else if (cur->flag && pos
+				&& !ft_strncmp(cur->arg, to_fr[*idx], pos - cur->arg))
 				break ;
 			cur = cur->next;
 		}
-		if (cur)
+		if (cur && cur->flag)
 		{
 			*(*ev + *idx) = strdup_skip_qm(cur->arg, 0, 0);
 			cur->flag = 0;
 		}
 		else
 			*(*ev + *idx) = ft_strdup(to_fr[*idx]);
-		(*idx)++;
 	}
 }
 
@@ -101,7 +101,7 @@ static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
 	to_fr = *ev;
 	tmp = to_fr[ft_strsetlen(to_fr) - 1];
 	*ev = (char **)ft_calloc(new_len + 1, sizeof(char *));
-	idx = 0;
+	idx = -1;
 	skip_or_sub_env(ev, avs, to_fr, &idx);
 	cur = avs->next;
 	while (cur)
@@ -130,7 +130,8 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 	else
 	{
 		av_lst = argv_to_lst((char **)argv);
-		check_exp_argv(av_lst->next, &cnt_val);
+		check_exp_argv(av_lst, &cnt_val);
+		check_var_overlap(av_lst);
 		if (cnt_val)
 			add_env((char ***)envp, av_lst, o_len + cnt_val);
 	}

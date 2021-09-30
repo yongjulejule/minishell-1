@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 02:29:41 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 14:51:50 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,30 @@ void	exp_unset_invalid_arg_msg(char c, char *str)
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 	g_exit_code = EXIT_FAILURE;
+}
+
+void	exprt_no_arg(char **envp, int len)
+{
+	char	**in_order;
+	char	*pos;
+	int		i;
+
+	in_order = dup_envp(envp, len);
+	bubble_sort_strset(in_order, len);
+	i = -1;
+	while (in_order[++i])
+	{
+		pos = ft_strchr(in_order[i], '=');
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		if (pos)
+		{
+			write(STDOUT_FILENO, in_order[i], pos - in_order[i] + 1);
+			ft_putchar_fd('"', STDOUT_FILENO);
+			ft_putstr_fd(pos + 1, STDOUT_FILENO);
+			ft_putendl_fd("\"", STDOUT_FILENO);
+		}
+		else
+			ft_putendl_fd(in_order[i], STDOUT_FILENO);
+	}
+	free_double_ptr((void ***)(&in_order));
 }
