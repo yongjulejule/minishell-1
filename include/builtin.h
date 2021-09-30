@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 11:18:22 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:25:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int			pwd(const char *path, char *const argv[], char *const envp[]);
 int			env(const char *path, char *const argv[], char *const envp[]);
 
 /* Utils */
-char    	**dup_envp(char *envp[], int set_len);
+char		**dup_envp(char *envp[], int set_len);
 void		free_double_ptr(void ***ptr);
 char		*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip);
 void		append_env_var(char ***envp, char *arg, int *n_idx);
 t_exp_arg	*argv_to_lst(char **argv);
 void		exp_unset_invalid_arg_msg(char c, char *str);
-char	    *ft_get_envp(char **ft_envp, char *var);
+char		*ft_get_envp(char **ft_envp, char *var);
 
 /* Exp lst */
 int			exp_lst_size(t_exp_arg *arg);

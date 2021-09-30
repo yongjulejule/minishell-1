@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/28 14:31:40 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 14:25:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**esh_pre_process(int argc, char *argv[], char *envp[])
 	char	**ret;
 
 	if (argc > 1 || argv[1])
-			is_error(NULL, NULL, "esh does not \
+		is_error(NULL, NULL, "esh does not \
 	receive arguments", EXIT_FAILURE);
 	ret = dup_envp(envp, ft_strsetlen(envp));
 	reset_env(&ret);

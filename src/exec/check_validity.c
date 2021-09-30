@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 14:39:29 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:21:16 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static char	*prefix_dir_to_cmd(t_args *args, char *param, int nth_path)
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 {
-	int				nth_path;
-	char			*tmp_cmd;
-	struct	stat	status;
+	int			nth_path;
+	char		*tmp_cmd;
+	struct stat	status;
 
 	nth_path = 0;
 	while (args->env_path[nth_path] != NULL)
 	{
 		if (!*param)
-			return;
+			return ;
 		tmp_cmd = prefix_dir_to_cmd(args, param, nth_path);
 		if (stat(tmp_cmd, &status) == -1)
 			free(tmp_cmd);

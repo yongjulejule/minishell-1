@@ -6,13 +6,13 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/26 14:40:27 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:17:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 int	get_exit_status(int status)
 {

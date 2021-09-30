@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 11:22:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 14:40:26 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:18:47 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ void	no_newline_for_sigquit(int sig)
 	if (sig == SIGUSR1)
 		signal(SIGQUIT, SIG_IGN);
 }
-

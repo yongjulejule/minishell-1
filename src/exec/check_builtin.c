@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 09:00:21 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 09:02:00 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:21:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ void	update_builtin_func(t_cmd *cmd)
 	else if (cmd->builtin == is_ext)
 		cmd->exec_f.exec = ext;
 }
-

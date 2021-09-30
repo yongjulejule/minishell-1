@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 14:31:35 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:17:12 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	redirect_stream(t_cmd *cmd)
 		else if (rdr->info == dup_fd)
 		{
 			if (rdr->fd[1] == -1)
-				is_error(rdr->file, ": ", "ambiguous redirection", EXIT_FAILURE);
+				is_error(rdr->file, ": ", "ambiguous redirection",
+					EXIT_FAILURE);
 			if (dup2(rdr->fd[1], rdr->fd[0]) == -1)
 				is_error(ft_itoa(rdr->fd[1]), NULL,
 					": bad file descriptor", EXIT_FAILURE);

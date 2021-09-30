@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 12:37:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 14:29:13 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 
 /* structs */
 
-typedef struct	s_cmds
+typedef struct s_cmds
 {
 	char			*cmd;
 	struct s_cmds	*next;
@@ -54,15 +54,16 @@ typedef struct s_cursor
 	struct s_cmds	*elem;
 }	t_cursor;
 
-
 /* FUNCTIONS */
 
 /* from_main */
+
 void	free_cmds_lst(t_cmds **cmds_hd);
 void	main_sig_handler(int signal);
-char    *ft_get_envp(char **ft_envp, char *var);
+char	*ft_get_envp(char **ft_envp, char *var);
 
 /* internal prompt */
+
 int		read_internal_prompt(char **one_ln, char *ln_read, int read_cnt);
 
 /* utils_main */
@@ -107,5 +108,4 @@ void	ps_lst_addback(t_cmds *hd, t_cmds *new);
 char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n);
 char	*get_first_word(char *str, int *cp_flag, size_t len);
 void	flag_cp_char(char *str, int *cp_flag);
-
 #endif

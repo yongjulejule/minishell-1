@@ -6,13 +6,13 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 09:53:18 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:12:55 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	split_once(char *str, char *charset, char ign)
+int	get_quote_len(char *str, char *charset, char ign)
 {
 	int	idx;
 	int	cnt;
@@ -21,8 +21,6 @@ int	split_once(char *str, char *charset, char ign)
 	cnt = 0;
 	if (!str || !*str)
 		return (0);
-	while (is_charset(*(str + idx), charset))
-		idx++;
 	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
 	{
 		if (*(str + idx) == ign)
@@ -33,6 +31,54 @@ int	split_once(char *str, char *charset, char ign)
 		}
 		else
 			idx++;
+		cnt++;
+	}
+	return (cnt);
+}
+
+static int	update_flag(char *str, int flag)
+{
+	if (*(str) == '\'' && flag != 0b010)
+	{
+		if (!flag)
+			flag = 0b100;
+		else
+			flag = 0;
+	}
+	else if (*(str) == '\"' && flag != 0b100)
+	{
+		if (!flag)
+			flag = 0b010;
+		else
+			flag = 0;
+	}
+	return (flag);
+}
+
+int	get_wspace_len(char *str, char *charset, char ign)
+{
+	int	idx;
+	int	cnt;
+	int	flag;
+
+	flag = 0b0000;
+	idx = 0;
+	cnt = 0;
+	if (!str || !*str)
+		return (0);
+	while (flag || (!is_charset(*(str + idx), charset) && str[idx] != '\0'))
+	{
+		if (*(str + idx) == ign)
+		{
+			idx++;
+			if (*(str + idx + 1) == ign)
+				idx++;
+		}
+		else
+		{
+			flag = update_flag(str + idx, flag);
+			idx++;
+		}
 		cnt++;
 	}
 	return (cnt);
@@ -73,17 +119,17 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 		cmd->params[p_idx] = ft_strdup("");
 	else if (is_charset(cmdset[0], "'"))
 	{
-		len = split_once(&cmdset[1], "'", '\\');
+		len = get_quote_len(&cmdset[1], "'", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
 	}
 	else if (is_charset(cmdset[0], "\""))
 	{
-		len = split_once(&cmdset[1], "\"", '\\');
+		len = get_quote_len(&cmdset[1], "\"", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
 	}
 	else
 	{
-		len = split_once(&cmdset[0], "\t\n ", '\\');
+		len = get_wspace_len(&cmdset[0], "\t\n ", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
 	}
 	return (len);
