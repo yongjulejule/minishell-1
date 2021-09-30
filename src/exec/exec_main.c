@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/09/30 10:14:52 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:24:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	process_to_execute(t_cmds *cmds, char ***envp, int cmd_cnt)
 	if (args->cnt == 1 && args->cmd[0].builtin != notbuiltin)
 		execute_builtin(args, envp);
 	else
-		execute_subshell_main(args);
+		execute_subshell_main(args, 0);
 	free_arg_structure(args);
 }
 

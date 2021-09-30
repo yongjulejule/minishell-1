@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:27:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:24:23 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -135,7 +136,7 @@ int		is_rdr(char *str);
 
 void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
 void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
-void	execute_subshell_main(t_args *args);
+void	execute_subshell_main(t_args *args, int idx);
 void	execute_builtin(t_args *args, char ***ft_envp);
 
 /*Handle exit code*/
