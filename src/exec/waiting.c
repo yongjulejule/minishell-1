@@ -6,7 +6,7 @@
 /*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/30 14:17:59 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:22:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	wait_process(t_args *args)
 			cmd++;
 		}
 	}
-	exit(exit_code);
+	g_exit_code = exit_code;
+	return ;
 }

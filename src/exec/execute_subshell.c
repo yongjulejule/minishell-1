@@ -6,13 +6,25 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/27 20:06:13 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:24:52 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 extern int	g_exit_code;
+
+static void	delete_output(void)
+{
+	int	fd;
+
+	fd = open("/dev/null", O_WRONLY);
+	if (fd < 0)
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
+	if (dup2(fd, STDERR_FILENO) < 0)
+		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
+	close(fd);
+}
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
@@ -24,6 +36,8 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);
+		if (args->cmd[idx].builtin == is_ext)
+			delete_output();
 		args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
 				args->cmd[idx].params, args->envp);
 	}
@@ -33,12 +47,12 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
 	else if (errno == E_NOCMD || args->cmd[idx].params[0] == NULL)
 		is_error(NULL, "command not found: ",
-			args->cmd[idx].params[0], CMD_ERR);
+				args->cmd[idx].params[0], CMD_ERR);
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
 
-static void	processing_subshell(t_args *args, int idx)
+void	execute_subshell_main(t_args *args, int idx)
 {
 	pid_t		pid;
 
@@ -46,7 +60,7 @@ static void	processing_subshell(t_args *args, int idx)
 		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	if (args->cmd[idx].params && args->cmd[idx].params[0]
-		&& !ft_strcmp(args->cmd[idx].params[0], "./minishell"))
+			&& !ft_strcmp(args->cmd[idx].params[0], "./minishell"))
 		sigint_n_sigquit_handler(multi_shell_erase_newline);
 	pid = fork();
 	args->cmd[idx].pid = pid;
@@ -57,31 +71,11 @@ static void	processing_subshell(t_args *args, int idx)
 		if (args->cnt > 1 && idx > 0)
 			destroy_pipe(args->cmd[idx - 1].pipe_fd);
 		if (args->cnt - 1 == idx)
-			wait_process(args);
-		processing_subshell(args, ++idx);
-	}
-	else
-		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
-}
-
-void	execute_subshell_main(t_args *args)
-{
-	int			status;
-	pid_t		pid;
-
-	pid = fork();
-	if (pid == 0)
-		processing_subshell(args, 0);
-	else if (pid > 0)
-	{
-		sigint_n_sigquit_handler(ignore_signal);
-		signal(SIGUSR1, SIG_IGN);
-		waitpid(pid, &status, 0);
-		if (wifexited(status))
-			g_exit_code = wexitstatus(status);
-		else
-			g_exit_code = EXIT_FAILURE;
-		return ;
+		{
+			wait_process(args); 
+			return ;
+		}
+		execute_subshell_main(args, ++idx);
 	}
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
