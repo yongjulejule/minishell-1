@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 09:01:04 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:27:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define E_ACCESS 13
 # define E_NOCMD 2
 
-typedef struct	s_cmds
+typedef struct s_cmds
 {
 	char			*cmd;
 	struct s_cmds	*next;
@@ -79,8 +79,8 @@ typedef struct s_rdr
 
 typedef union u_exec_f
 {
-	int		(*exec)(const char*, char *const[], char *const[]);
-	int		(*exec_env)(const char*, char *const[], char ***const);
+	int		(*exec)(const char *, char *const [], char *const []);
+	int		(*exec_env)(const char *, char *const [], char ***const);
 }	t_exec_f_u;
 
 typedef struct s_cmd
@@ -112,7 +112,7 @@ void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
 void	ignore_signal(int sig);
 void	no_newline_for_sigquit(int sig);
-char    *ft_get_envp(char **ft_envp, char *var);
+char	*ft_get_envp(char **ft_envp, char *var);
 
 /*Check Validity*/
 
@@ -130,7 +130,6 @@ void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	destroy_pipe(int *pipe_fd);
 void	redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
-
 
 /*Preprocessing*/
 
@@ -156,7 +155,8 @@ void	retrive_fd(t_rdr *rdr, int **fds);
 
 /*Utils*/
 
-int		split_once(char *str, char *charset, char ign);
+int		get_quote_len(char *str, char *charset, char ign);
+int		get_wspace_len(char *str, char *charset, char ign);
 int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 void	free_arg_structure(t_args *args);

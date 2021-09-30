@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:35:47 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 13:54:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:15:58 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ static void	get_available_fd(int **fd)
 	while (fd[idx] && avail_fd)
 	{
 		if (fstat(avail_fd, &status) == -1)
+		{
 			if (errno == EBADF)
 			{
 				fd[idx][1] = avail_fd;
 				idx++;
 			}
+		}
 		avail_fd--;
 	}
 	if (!avail_fd)

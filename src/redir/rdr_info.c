@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 10:50:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:15:32 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,24 @@ char	*get_filename(const char *line)
 	if (!line || !*line)
 		return (ft_strdup(""));
 	tmp = ft_strtrim(line, " \n\t");
-	if (!ft_strcmp(tmp, "''") || !ft_strcmp(tmp, "\"\"")) 
+	if (!ft_strcmp(tmp, "''") || !ft_strcmp(tmp, "\"\""))
 		file = ft_strdup("");
 	else if (tmp[0] == '\'')
-		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[1], "'", '\\') - 1, '\\');
+		file = ft_substr_wo_chr(tmp, 1,
+				get_quote_len(&tmp[1], "'", '\\') - 1, '\\');
 	else if (tmp[0] == '"')
-		file = ft_substr_wo_chr(tmp, 1, split_once(&tmp[1], "\"", '\\') - 1, '\\');
+		file = ft_substr_wo_chr(tmp, 1,
+				get_quote_len(&tmp[1], "\"", '\\') - 1, '\\');
 	else
-		file = ft_substr_wo_chr(tmp, 0, split_once(&tmp[0], " \n\f", '\\'), '\\');
+		file = ft_substr_wo_chr(tmp, 0,
+				get_wspace_len(&tmp[0], " \n\f", '\\'), '\\');
 	free(tmp);
 	tmp = NULL;
 	return (file);
 }
 
-void	rdr_error(t_cmd *cmd) 
-{ 
+void	rdr_error(t_cmd *cmd)
+{
 	int	fd[2];
 
 	fd[0] = -1;

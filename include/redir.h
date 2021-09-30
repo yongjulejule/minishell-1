@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 12:38:16 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:29:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define E_NOCMD 2
 # define BACKUP_FD 255
 
-typedef struct	s_cmds
+typedef struct s_cmds
 {
 	char			*cmd;
 	struct s_cmds	*next;
@@ -81,7 +81,7 @@ typedef struct s_cmd
 	pid_t			pid;
 	int				pipe_fd[2];
 	t_builtin		builtin;
-	int				(*exec)(const char*, char *const[], char *const[]);
+	int				(*exec)(const char *, char *const [], char *const []);
 	char			**params;
 	t_rdr			*rdr;
 }	t_cmd;
@@ -124,6 +124,7 @@ void	retrive_fd(t_rdr *rdr, int **fds);
 
 /*Utils*/
 
-int		split_once(char *str, char *charset, char ign);
+int		get_quote_len(char *str, char *charset, char ign);
+int		get_wspace_len(char *str, char *charset, char ign);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 #endif
