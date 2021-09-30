@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   waiting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jun <yongjule@42student.42seoul.kr>        +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:09:06 by jun               #+#    #+#             */
-/*   Updated: 2021/09/30 15:22:37 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 15:29:02 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	wait_process(t_args *args)
 		}
 	}
 	g_exit_code = exit_code;
-	return ;
 }

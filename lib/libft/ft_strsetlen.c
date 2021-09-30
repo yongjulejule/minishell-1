@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsetlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 15:24:52 by jun               #+#    #+#             */
-/*   Updated: 2021/09/27 03:14:51 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 16:24:39 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>
 int	ft_strsetlen(char **strs)
 {
 	int	cnt;
@@ -22,10 +21,7 @@ int	ft_strsetlen(char **strs)
 		return (0);
 	if (*strs == NULL)
 		return (0);
-	while (*strs)
-	{
+	while (strs[cnt])
 		cnt++;
-		strs++;
-	}
 	return (cnt);
 }

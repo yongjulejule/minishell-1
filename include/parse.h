@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 14:29:13 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:37:15 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define RM_QM -1
 # define IS_WS 2
 # define IS_EQ 3
-# define IS_EXP_CSET " \t\n="
-# define NOT_EXP_CSET " \t\n"
+# define IS_EXP_CSET " \t\n=<>"
+# define NOT_EXP_CSET " \t\n<>"
 
 /* structs */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:12:55 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:50:47 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,7 @@ int	get_wspace_len(char *str, char *charset, char ign)
 	while (flag || (!is_charset(*(str + idx), charset) && str[idx] != '\0'))
 	{
 		if (*(str + idx) == ign)
-		{
-			idx++;
-			if (*(str + idx + 1) == ign)
-				idx++;
-		}
+			idx += 2;
 		else
 		{
 			flag = update_flag(str + idx, flag);

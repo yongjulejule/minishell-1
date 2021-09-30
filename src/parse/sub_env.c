@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 17:55:35 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 16:29:43 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
 	back = ft_substr(*ln, start + end + 1,
 			ft_strlen(*ln) - start - end - 1);
 	to_free = *ln;
-	*ln = ft_strjoin(front, env);
+	*ln = ft_strjoin(front, "\"");
+	free(to_free);
+	to_free = *ln;
+	*ln = ft_strjoin(*ln, env);
+	free(to_free);
+	to_free = *ln;
+	*ln = ft_strjoin(*ln, "\"");
 	free(to_free);
 	to_free = *ln;
 	*ln = ft_strjoin(*ln, back);
