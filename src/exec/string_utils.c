@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 10:35:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 09:53:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	split_once(char *str, char *charset, char ign)
 {
 	int	idx;
+	int	cnt;
 
 	idx = 0;
-	if (!str)
-		return (0);
-	if (!*str)
+	cnt = 0;
+	if (!str || !*str)
 		return (0);
 	while (is_charset(*(str + idx), charset))
 		idx++;
@@ -28,36 +28,12 @@ int	split_once(char *str, char *charset, char ign)
 		if (*(str + idx) == ign)
 		{
 			idx++;
-			if (*(str + idx) == ign || is_charset(*(str + idx), charset))
+			if (*(str + idx) == ign)
 				idx++;
 		}
 		else
 			idx++;
-		if (!*(str + idx))
-			break ;
-	}
-	return (idx);
-}
-
-static size_t	ft_strlen_wo_chr(char *str, size_t len, char c)
-{
-	size_t	cnt;
-	size_t	idx;
-
-	cnt = 0;
-	idx = 0;
-	if (!str)
-		return (0);
-	while (idx <= len)
-	{
-		if (*(str + idx) != c)
-			cnt++;
-		else if (*(str + idx + 1) == c)
-		{
-			cnt++;
-			idx++;
-		}
-		idx++;
+		cnt++;
 	}
 	return (cnt);
 }
@@ -65,15 +41,11 @@ static size_t	ft_strlen_wo_chr(char *str, size_t len, char c)
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 {
 	size_t	idx;
-	size_t	size;
 	char	*ret;
 
-	size = ft_strlen_wo_chr(&str[start], len, c);
-	if (size > len)
-		return (ft_substr(str, start, len));
 	idx = 0;
-	ret = (char *)ft_calloc(size + 1, sizeof(char));
-	while (idx < size)
+	ret = (char *)ft_calloc(len + 1, sizeof(char));
+	while (idx < len)
 	{
 		if (str[start] != c)
 		{
@@ -82,7 +54,7 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 		}
 		else if (str[start + 1] == c)
 		{
-			ret[idx] = str[start];
+			ret[idx] = str[start + 1];
 			idx++;
 			start++;
 		}
@@ -96,20 +68,18 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 {
 	int		len;
 
+	len = 2;
 	if (!ft_strcmp(cmdset, "\'\'") || !ft_strcmp(cmdset, "\"\""))
-	{
 		cmd->params[p_idx] = ft_strdup("");
-		len = 2;
-	}
 	else if (is_charset(cmdset[0], "'"))
 	{
 		len = split_once(&cmdset[1], "'", '\\');
-		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len - 1, '\\');
+		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
 	}
 	else if (is_charset(cmdset[0], "\""))
 	{
 		len = split_once(&cmdset[1], "\"", '\\');
-		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len - 1, '\\');
+		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 14:18:35 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 09:17:33 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 		get_each_params(cmds[idx], &args->cmd[idx]);
 		idx++;
 	}
-	/* FIXME : It seems to execute redirecting only for first cmd*/
 	while (cmdlst && cmdlst->cmd[0] != ';')
 	{
 		if (cmdlst->cmd[0] != '|')

@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/29 16:03:12 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/30 09:01:40 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				execute_builtin.c\
 				execute_subshell.c\
 				check_validity.c\
+				check_builtin.c\
 				get_params.c\
 				parse_command.c\
 				exec_main.c\
