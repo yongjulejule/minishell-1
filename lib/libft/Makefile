@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/26 19:50:34 by ghan             ###   ########.fr        #
+#    Updated: 2021/09/30 12:34:16 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS = ft_memset.c\
 	   ft_strrnstr.c\
 	   ft_strchrset.c\
 	   bubble_sort_strset.c\
+	   swap_char.c\
 
 OBJS = ${SRCS:.c=.o}
 

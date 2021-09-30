@@ -3,114 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   rm_unnecessary_qm.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 18:00:45 by ghan             ###   ########.fr       */
+/*   Updated: 2021/09/30 12:37:38 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static void	alloc_n_rm_qm(t_cmds *cur, int *cp_flag, size_t len,
-				size_t n_zero)
+static void	push_qm(char *str, int is_exp, int *first, int *second)
+{
+	int	len;
+
+	len = (int)ft_strlen(str);
+	while (*first >= 1)
+	{
+		if (!is_exp && !is_charset(str[*first - 1], NOT_EXP_CSET))
+			swap_char(&str[*first], &str[*first - 1]);
+		else if (is_exp && !is_charset(str[*first - 1], IS_EXP_CSET))
+			swap_char(&str[*first], &str[*first - 1]);
+		else
+			break ;
+		(*first)--;
+	}
+	while (*second + 1 < len)
+	{
+		if (!is_charset(str[*second + 1], NOT_EXP_CSET))
+			swap_char(&str[*second], &str[*second + 1]);
+		else
+			break ;
+		(*second)++;
+	}
+}
+
+static void	rm_or_expand_qm(t_cmds *cur, int *cp_flag, int is_exp, int len)
 {
 	char	*to_free;
-	size_t	i;
-	size_t	k;
+	char	qm;
+	int		first;
+	int		second;
 
-	i = 0;
-	while (i < len)
-	{
-		if (!cp_flag[i])
-			(n_zero)++;
-		i++;
-	}
-	if (n_zero == len)
-		return ;
 	to_free = cur->cmd;
-	cur->cmd = (char *)ft_calloc(n_zero + 1, sizeof(char));
-	k = 0;
-	i = 0;
-	while (i < len)
-	{
-		if (!cp_flag[i])
-			cur->cmd[k++] = to_free[i];
-		i++;
-	}
+	cur->cmd = strndup_with_flag(cur->cmd, cp_flag, len);
 	free(to_free);
-}
-
-static void	jump_bs(char *s, int *i, char qm)
-{
-	(*i)++;
-	if (s[*i] == qm || s[*i] == '\\')
-		(*i)++;
-}
-
-static void	flag_qm(char *s, int *i, int *cnt, int *cp_flag)
-{
-	static int	pair_check;
-	int			first;
-
-	(*cnt)++;
-	first = *i;
-	if (!(*i) || (*i && (*cnt % 2) && !is_charset(s[*i - 1], " \t\n")))
+	len = ft_strlen(cur->cmd);
+	second = 0;
+	while (ft_strchrset(cur->cmd + second, "\"'"))
 	{
-		cp_flag[*i] = -1;
-		pair_check++;
-	}
-	(*cnt)++;
-	skip_qmbt(s, i, "\"'");
-	if (!pair_check && !is_charset(s[*i + 1], " \t\n") && s[*i + 1])
-	{
-		cp_flag[first] = -1;
-		pair_check++;
-	}
-	if (pair_check % 2 && *cnt == 2)
-	{
-		cp_flag[*i] = -1;
-		pair_check = 0;
-	}
-	(*i)++;
-}
-
-static void	fill_cp_flag(int *cp_flag, char *s, size_t len, char qm)
-{
-	int		cnt;
-	int		i;
-
-	cnt = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\\')
-			jump_bs(s, &i, qm);
-		else
-		{
-			if (s[i] == qm)
-				flag_qm(s, &i, &cnt, cp_flag);
-			if (cnt == 2)
-			{
-				cnt = 0;
-				if (ft_strchrset(s + i, "\"'"))
-					qm = *ft_strchrset(s + i, "\"'");
-			}
-			if (s[i] && s[i] != qm)
-				i++;
-		}
+		qm = *ft_strchrset(cur->cmd + second, "\"'");
+		first = ft_strchrset(cur->cmd + second, "\"'") - cur->cmd;
+		second = ft_strchr(cur->cmd + first + 1, qm) - cur->cmd;
+		push_qm(cur->cmd, is_exp, &first, &second);
+		second++;
 	}
 }
 
 void	rm_unnecessary_qm(t_cmds *cmds_hd)
 {
 	t_cmds	*cur;
-	size_t	len;
-	size_t	n_zero;
-	char	qm;
+	char	*first_wd;
 	int		*cp_flag;
+	int		is_exp;
+	size_t	len;
 
-	n_zero = 0;
 	cur = cmds_hd->next;
 	while (cur)
 	{
@@ -118,9 +74,13 @@ void	rm_unnecessary_qm(t_cmds *cmds_hd)
 		{
 			len = ft_strlen(cur->cmd);
 			cp_flag = (int *)ft_calloc(len, sizeof(int));
-			fill_cp_flag(cp_flag, cur->cmd, len,
-				*ft_strchrset(cur->cmd, "\"'"));
-			alloc_n_rm_qm(cur, cp_flag, len, 0);
+			flag_cp_char(cur->cmd, cp_flag);
+			first_wd = get_first_word(cur->cmd, cp_flag, len);
+			is_exp = 0;
+			if (first_wd && !ft_strcmp(first_wd, "export"))
+				is_exp = 1;
+			free(first_wd);
+			rm_or_expand_qm(cur, cp_flag, is_exp, len);
 			free(cp_flag);
 		}
 		cur = cur->next;

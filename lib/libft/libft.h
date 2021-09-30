@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 16:52:11 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 12:34:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int				ft_strsetlen(char **strs);
 char			*ft_strrnstr(const char *haystack, const char *needle,
 					size_t len);
 char			*ft_strchrset(const char *s, char *charset);
+void			bubble_sort_strset(char **strset, int len);
+void			swap_char(char *a, char *b);
 
 /*
 ** To handle List
