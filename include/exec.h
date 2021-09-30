@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/29 12:37:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 09:01:04 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ char    *ft_get_envp(char **ft_envp, char *var);
 /*Check Validity*/
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param);
+
+/*Check Builtin*/
+
+int		check_builtin(t_cmd *cmd, char *cmds);
+void	update_builtin_func(t_cmd *cmd);
 
 /*Redirecting*/
 
