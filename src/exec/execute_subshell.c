@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 15:24:52 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:21:52 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 
 void	execute_subshell_main(t_args *args, int idx)
 {
-	pid_t		pid;
+	pid_t	pid;
 
-	if (args->cnt != idx && args->cnt > 1)
+	if (args->cnt - 1 != idx && args->cnt > 1)
 		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	if (args->cmd[idx].params && args->cmd[idx].params[0]
