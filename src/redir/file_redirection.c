@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:17:12 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:41:15 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	make_tmp_heredoc(t_rdr *rdr)
 	while (1)
 	{
 		line = readline("> ");
+		rl_instream->_file = BACKUP_FD;
 		if (!line || !ft_strcmp(rdr->limiter, line))
 		{
 			rdr->fd[1] = fd[PIPE_RD];
