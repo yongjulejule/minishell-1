@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 14:51:50 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:25:49 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ void	append_env_var(char ***envp, char *arg, int *n_idx)
 		*(*envp + (*n_idx)++) = strdup_skip_qm(arg, 0, 0);
 }
 
-t_exp_arg	*argv_to_lst(char **argv)
+t_exp_arg	*argv_to_lst(char **argv, int i)
 {
 	t_exp_arg	*hd;
-	int			i;
 
 	hd = exp_lst_init(NULL);
-	i = 0;
 	while (argv[++i])
 		exp_lst_addback(hd, exp_lst_init(ft_strdup(argv[i])));
 	return (hd);
@@ -90,7 +88,6 @@ void	exprt_no_arg(char **envp, int len)
 	while (in_order[++i])
 	{
 		pos = ft_strchr(in_order[i], '=');
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		if (pos)
 		{
 			write(STDOUT_FILENO, in_order[i], pos - in_order[i] + 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 13:16:43 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:28:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
 	else if (errno == E_NOCMD || args->cmd[idx].params[0] == NULL)
 		is_error(NULL, "command not found: ",
-				args->cmd[idx].params[0], CMD_ERR);
+			args->cmd[idx].params[0], CMD_ERR);
 	else
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 }
@@ -60,7 +60,7 @@ void	execute_subshell_main(t_args *args, int idx)
 		if (pipe(args->cmd[idx].pipe_fd) == -1)
 			is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	if (args->cmd[idx].params && args->cmd[idx].params[0]
-			&& !ft_strcmp(args->cmd[idx].params[0], "./minishell"))
+		&& !ft_strcmp(args->cmd[idx].params[0], "./minishell"))
 		sigint_n_sigquit_handler(multi_shell_erase_newline);
 	pid = fork();
 	args->cmd[idx].pid = pid;
@@ -72,7 +72,7 @@ void	execute_subshell_main(t_args *args, int idx)
 			destroy_pipe(args->cmd[idx - 1].pipe_fd);
 		if (args->cnt - 1 == idx)
 		{
-			wait_process(args); 
+			wait_process(args);
 			return ;
 		}
 		execute_subshell_main(args, ++idx);

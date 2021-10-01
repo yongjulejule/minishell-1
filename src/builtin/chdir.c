@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/28 11:52:57 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:32:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	update_pwd(char ***envp)
 	free(cwd);
 }
 
-static void	cd_check_error(char *cmd, char *arg, char ***envp)
+static void	cd_check_error(char *arg, char ***envp)
 {
 	char	*tmp;
 
@@ -57,6 +57,12 @@ int	cd(const char *path, char *const argv[], char ***const envp)
 {
 	char	*home;
 
+	if (!path || !argv || !envp)
+	{
+		g_exit_code = is_error_no_exit("export : ", NULL,
+				"pass valid args to builtin functions", EXIT_FAILURE);
+		return (g_exit_code);
+	}
 	g_exit_code = EXIT_SUCCESS;
 	if (!argv[1])
 	{
@@ -65,9 +71,9 @@ int	cd(const char *path, char *const argv[], char ***const envp)
 			g_exit_code = is_error_no_exit("cd: ", NULL,
 					"HOME not set", EXIT_FAILURE);
 		else
-			cd_check_error((char *)path, home, (char ***)envp);
+			cd_check_error(home, (char ***)envp);
 	}
 	else
-		cd_check_error((char *)path, argv[1], (char ***)envp);
+		cd_check_error(argv[1], (char ***)envp);
 	return (g_exit_code);
 }

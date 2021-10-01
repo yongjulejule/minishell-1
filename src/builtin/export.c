@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 15:05:39 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:25:20 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *idx)
 	t_exp_arg	*cur;
 	char		*pos;
 
-	while (to_fr[++(*idx) + 1])
+	while (to_fr[++(*idx)])
 	{
 		cur = avs->next;
 		while (cur)
@@ -94,12 +94,10 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *idx)
 static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
 {
 	char		**to_fr;
-	char		*tmp;
 	int			idx;
 	t_exp_arg	*cur;
 
 	to_fr = *ev;
-	tmp = to_fr[ft_strsetlen(to_fr) - 1];
 	*ev = (char **)ft_calloc(new_len + 1, sizeof(char *));
 	idx = -1;
 	skip_or_sub_env(ev, avs, to_fr, &idx);
@@ -110,7 +108,6 @@ static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
 			append_env_var(ev, cur->arg, &idx);
 		cur = cur->next;
 	}
-	*(*ev + idx) = strdup_skip_qm(tmp, 0, 0);
 	free_double_ptr((void ***)&to_fr);
 }
 
@@ -119,9 +116,13 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 	t_exp_arg	*av_lst;
 	int			cnt_val;
 	int			o_len;
-	int			i;
 
-	av_lst = NULL;
+	if (!path || !argv || !envp)
+	{
+		g_exit_code = is_error_no_exit("export : ", NULL,
+				"pass valid args to builtin functions", EXIT_FAILURE);
+		return (g_exit_code);
+	}
 	cnt_val = 0;
 	g_exit_code = EXIT_SUCCESS;
 	o_len = ft_strsetlen((char **)(*envp));
@@ -129,13 +130,12 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 		exprt_no_arg((char **)(*envp), o_len);
 	else
 	{
-		av_lst = argv_to_lst((char **)argv);
+		av_lst = argv_to_lst((char **)argv, 0);
 		check_exp_argv(av_lst, &cnt_val);
 		check_var_overlap(av_lst);
 		if (cnt_val)
 			add_env((char ***)envp, av_lst, o_len + cnt_val);
-	}
-	if (av_lst)
 		free_argv_lst(&av_lst);
+	}
 	return (g_exit_code);
 }

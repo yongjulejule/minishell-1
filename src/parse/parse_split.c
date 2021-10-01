@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 12:06:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:05:27 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ static void	split_by_rdr(t_cursor *cur, int i)
 	int		split_flag;
 
 	s = cur->elem->cmd;
+	split_flag = 1;
 	while (s && *(s + i))
 	{
 		if (split_flag)
 			start = i;
-		split_flag = 1;
 		if (ft_isdigit(*(s + i)))
 		{
 			if (rdr_after_fd(s, &i))

@@ -3,37 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 16:01:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:56:39 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_exit_code;
-
-static void	reset_env(char ***envp)
-{
-	char	*argv[3];
-	char	*cwd;
-	char	*tmp;
-
-	argv[0] = "unset";
-	argv[1] = "OLDPWD";
-	argv[2] = NULL;
-	unset("unset", argv, envp);
-	argv[0] = "export";
-	exprt("export", argv, envp);
-	cwd = getcwd(NULL, 0);
-	tmp = ft_strjoin("INPUTRC=", cwd);
-	free(cwd);
-	argv[1] = ft_strjoin(tmp, "/.inputrc");
-	free(tmp);
-	exprt("export", argv, envp);
-	free(argv[1]);
-}
 
 char	**esh_pre_process(int argc, char *argv[], char *envp[])
 {
@@ -44,6 +23,7 @@ char	**esh_pre_process(int argc, char *argv[], char *envp[])
 	receive arguments", EXIT_FAILURE);
 	ret = dup_envp(envp, ft_strsetlen(envp));
 	reset_env(&ret);
+	sh_next_level(&ret);
 	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	ft_putendl_fd(ESH_ASCII, STDOUT_FILENO);

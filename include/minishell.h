@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 11:28:56 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:56:43 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ char	**dup_envp(char *envp[], int set_len);
 char	*ft_get_envp(char **ft_envp, char *var);
 int		exprt(const char *path, char *const argv[], char ***const envp);
 int		unset(const char *path, char *const argv[], char ***const envp);
+void	reset_env(char ***envp);
+void	sh_next_level(char ***envp);
 
 #endif

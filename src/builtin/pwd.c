@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 11:24:54 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/28 15:14:54 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:30:36 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ extern int	g_exit_code;
 
 int	pwd(const char *path, char *const argv[], char *const envp[])
 {
+	if (!path || !argv || !envp)
+	{
+		g_exit_code = is_error_no_exit("export : ", NULL,
+				"pass valid args to builtin functions", EXIT_FAILURE);
+		return (g_exit_code);
+	}
 	g_exit_code = EXIT_SUCCESS;
 	if (argv[1])
 	{
