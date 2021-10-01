@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 17:29:12 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 17:49:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static void	push_qm(char *str, int is_exp, int *first, int *second)
 	len = (int)ft_strlen(str);
 	while (*first >= 1)
 	{
+		if (*first > 1 && str[*first - 1] == '&'
+			&& is_charset(str[*first - 2], "<>"))
+			break ;
 		if (!is_exp && !is_charset(str[*first - 1], NOT_EXP_CSET))
 			swap_char(&str[*first], &str[*first - 1]);
 		else if (is_exp && !is_charset(str[*first - 1], IS_EXP_CSET))
