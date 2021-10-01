@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:35:47 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:15:58 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:54:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	rdr_lst_size(t_rdr *rdr)
 	return (size);
 }
 
-static void	dup_fd_to_backup(t_rdr *rdr, int **fd)
+static void	dup_fd_to_backup(int **fd)
 {
 	struct stat	status;
 	int			idx;
@@ -89,11 +89,11 @@ int	**backup_fd(t_rdr *rdr)
 		idx++;
 	}
 	get_available_fd(fd);
-	dup_fd_to_backup(rdr, fd);
+	dup_fd_to_backup(fd);
 	return (fd);
 }
 
-void	retrive_fd(t_rdr *rdr, int **fd)
+void	retrive_fd(int **fd)
 {
 	int	idx;
 

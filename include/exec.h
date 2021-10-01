@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 15:24:23 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:54:38 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		get_exit_status(int status);
 /*Redirection in builtin*/
 
 int		**backup_fd(t_rdr *rdr);
-void	retrive_fd(t_rdr *rdr, int **fds);
+void	retrive_fd(int **fds);
 
 /*Utils*/
 

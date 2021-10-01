@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:29:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:54:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		is_rdr(char *str);
 /*Redirection in builtin*/
 
 int		**backup_fd(t_rdr *rdr);
-void	retrive_fd(t_rdr *rdr, int **fds);
+void	retrive_fd(int **fds);
 
 /*Utils*/
 

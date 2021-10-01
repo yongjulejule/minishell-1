@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:17:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 14:18:24 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:54:30 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	execute_builtin(t_args *args, char ***ft_envp)
 		args->cmd->exec_f.exec(args->cmd->params[0]
 			, args->cmd->params, args->envp);
 	if (rdr_fds)
-		retrive_fd(args->cmd->rdr, rdr_fds);
+		retrive_fd(rdr_fds);
 }
