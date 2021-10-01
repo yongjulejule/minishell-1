@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 17:49:03 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 18:01:06 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	rm_unnecessary_qm(t_cmds *cmds_hd)
 			rm_or_expand_qm(cur, cp_flag, is_exp, len);
 			free(cp_flag);
 		}
+		printf("%s\n", cur->cmd);
 		cur = cur->next;
 	}
 }
