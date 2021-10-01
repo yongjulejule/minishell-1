@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/01 15:18:45 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/01 17:26:03 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS = ft_memset.c\
 	   ft_strrchrset.c\
 	   bubble_sort_strset.c\
 	   swap_char.c\
+	   strchrset_skip_bs.c\
 
 OBJS = ${SRCS:.c=.o}
 
