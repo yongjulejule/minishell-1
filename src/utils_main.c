@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 16:01:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:40:50 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ static void	reset_env(char ***envp)
 	char	*tmp;
 
 	argv[0] = "unset";
-	argv[1] = "OLDPWD";
+	argv[1] = "_";
 	argv[2] = NULL;
 	unset("unset", argv, envp);
+	argv[1] = "OLDPWD";
+	unset("unset", argv, envp);
 	argv[0] = "export";
+	argv[1] = "OLDPWD";
 	exprt("export", argv, envp);
 	cwd = getcwd(NULL, 0);
 	tmp = ft_strjoin("INPUTRC=", cwd);
