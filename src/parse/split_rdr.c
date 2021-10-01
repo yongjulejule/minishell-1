@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 21:31:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 17:55:29 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 17:10:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	skip_after_rdr(char *s, int *i)
 			(*i)++;
 	}
 	skip_qmbt(s, i, "\"'`");
-	if (is_charset(*(s + *i), "\"'`"))
+	while (*(s + *i) && !is_charset(*(s + *i), "<>& \n\t"))
 		(*i)++;
 	while (is_charset(*(s + *i), " \n\t"))
 		(*i)++;
@@ -53,6 +53,9 @@ int	check_valid_rdr_symbols(char *s, int i)
 	if (ft_strlen(s + i) >= 2
 		&& *(s + i) == '&' && !is_charset(*(s + i + 1), "<>"))
 		return (0);
+	else if (ft_strlen(s + i) >= 2
+		&& *(s + i) == '&' && is_charset(*(s + i + 1), "<>"))
+		return (1);
 	else if (is_charset(*(s + i), "<>") || (ft_strlen(s + i) >= 2
 			&& *(s + i) == '&' && is_charset(*(s + i + 1), "<>")))
 		return (1);

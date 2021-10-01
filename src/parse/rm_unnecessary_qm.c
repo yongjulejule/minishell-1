@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_unnecessary_qm.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 16:51:06 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 17:49:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static void	push_qm(char *str, int is_exp, int *first, int *second)
 	len = (int)ft_strlen(str);
 	while (*first >= 1)
 	{
+		if (*first > 1 && str[*first - 1] == '&'
+			&& is_charset(str[*first - 2], "<>"))
+			break ;
 		if (!is_exp && !is_charset(str[*first - 1], NOT_EXP_CSET))
 			swap_char(&str[*first], &str[*first - 1]);
 		else if (is_exp && !is_charset(str[*first - 1], IS_EXP_CSET))
@@ -49,11 +52,11 @@ static void	rm_or_expand_qm(t_cmds *cur, int *cp_flag, int is_exp, int len)
 	free(to_free);
 	len = ft_strlen(cur->cmd);
 	second = 0;
-	while (ft_strchrset(cur->cmd + second, "\"'"))
+	while (strchrset_skip_bs(cur->cmd + second, "\"'"))
 	{
-		qm = *ft_strchrset(cur->cmd + second, "\"'");
-		first = ft_strchrset(cur->cmd + second, "\"'") - cur->cmd;
-		second = ft_strchr(cur->cmd + first + 1, qm) - cur->cmd;
+		qm = *strchrset_skip_bs(cur->cmd + second, "\"'");
+		first = strchrset_skip_bs(cur->cmd + second, "\"'") - cur->cmd;
+		second = strchr_skip_bslash(cur->cmd + first + 1, qm) - cur->cmd;
 		push_qm(cur->cmd, is_exp, &first, &second);
 		second++;
 	}
