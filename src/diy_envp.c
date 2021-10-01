@@ -6,11 +6,50 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 20:30:17 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 20:45:21 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:56:57 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	sh_next_level(char ***envp)
+{
+	char	*argv[3];
+	char	*lvl;
+	char	*next_level;
+
+	lvl = ft_get_envp(*envp, "SHLVL");
+	next_level = ft_itoa(ft_atoi(lvl) + 1);
+	argv[0] = "export";
+	argv[1] = ft_strjoin("SHLVL=", next_level);
+	argv[2] = NULL;
+	exprt("export", argv, envp);
+	free(argv[1]);
+	free(next_level);
+}
+
+void	reset_env(char ***envp)
+{
+	char	*argv[3];
+	char	*cwd;
+	char	*tmp;
+
+	argv[0] = "unset";
+	argv[1] = "_";
+	argv[2] = NULL;
+	unset("unset", argv, envp);
+	argv[1] = "OLDPWD";
+	unset("unset", argv, envp);
+	argv[0] = "export";
+	exprt("export", argv, envp);
+	cwd = getcwd(NULL, 0);
+	tmp = ft_strjoin("INPUTRC=", cwd);
+	free(cwd);
+	argv[1] = ft_strjoin(tmp, "/.inputrc");
+	free(tmp);
+	exprt("export", argv, envp);
+	free(argv[1]);
+}
 
 char	*ft_get_envp(char **ft_envp, char *var)
 {
