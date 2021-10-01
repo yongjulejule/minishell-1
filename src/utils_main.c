@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 20:40:50 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:23:54 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	reset_env(char ***envp)
 	argv[1] = "OLDPWD";
 	unset("unset", argv, envp);
 	argv[0] = "export";
-	argv[1] = "OLDPWD";
 	exprt("export", argv, envp);
 	cwd = getcwd(NULL, 0);
 	tmp = ft_strjoin("INPUTRC=", cwd);

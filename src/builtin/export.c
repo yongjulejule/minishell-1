@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 20:35:52 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:25:20 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 		exprt_no_arg((char **)(*envp), o_len);
 	else
 	{
-		av_lst = argv_to_lst((char **)argv);
+		av_lst = argv_to_lst((char **)argv, 0);
 		check_exp_argv(av_lst, &cnt_val);
 		check_var_overlap(av_lst);
 		if (cnt_val)

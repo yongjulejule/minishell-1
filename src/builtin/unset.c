@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 20:33:04 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 21:27:44 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,36 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val)
 	}
 }
 
-static void	fill_rem_env(t_exp_arg *ev_lst, char ***envp )
+static void	find_matching_env(t_exp_arg *ev_lst, t_exp_arg *av_lst)
+{
+	t_exp_arg	*ev;
+	t_exp_arg	*cur_arg;
+	char		*to_fr;
+
+	ev = ev_lst->next;
+	while (ev)
+	{
+		if (ft_strchr(ev->arg, '='))
+			to_fr = ft_strndup(ev->arg, ft_strchr(ev->arg, '=') - ev->arg);
+		else
+			to_fr = ft_strdup(ev->arg);
+		cur_arg = av_lst->next;
+		while (cur_arg)
+		{
+			if (!ft_strcmp(cur_arg->arg, to_fr))
+			{
+				ev->flag = 0;
+				free(to_fr);
+				break ;
+			}
+			free(to_fr);
+			cur_arg = cur_arg->next;
+		}
+		ev = ev->next;
+	}
+}
+
+static void	fill_rem_env(t_exp_arg *ev_lst, char ***envp)
 {
 	t_exp_arg	*cur_ev;
 	int			idx;
@@ -64,29 +93,12 @@ static void	fill_rem_env(t_exp_arg *ev_lst, char ***envp )
 
 static void	unset_env_var(char ***envp, t_exp_arg *av_lst)
 {
-	t_exp_arg	*cur_arg;
-	t_exp_arg	*cur_ev;
 	t_exp_arg	*ev_lst;
 	char		**to_fr;
 
-	ev_lst = argv_to_lst(*envp);
+	ev_lst = argv_to_lst(*envp, -1);
 	to_fr = *envp;
-	cur_ev = ev_lst->next;
-	while (cur_ev)
-	{
-		cur_arg = av_lst->next;
-		while (cur_arg)
-		{
-			if (!ft_strncmp(cur_arg->arg, cur_ev->arg,
-					ft_strlen(cur_arg->arg)))
-			{
-				cur_ev->flag = 0;
-				break ;
-			}
-			cur_arg = cur_arg->next;
-		}
-		cur_ev = cur_ev->next;
-	}
+	find_matching_env(ev_lst, av_lst);
 	fill_rem_env(ev_lst, envp);
 	free_double_ptr((void ***)&to_fr);
 }
@@ -107,7 +119,7 @@ int	unset(const char *path, char *const argv[], char ***const envp)
 	av_lst = NULL;
 	if (ft_strsetlen((char **)argv) > 1)
 	{
-		av_lst = argv_to_lst((char **)argv);
+		av_lst = argv_to_lst((char **)argv, 0);
 		check_unset_argv(av_lst->next, &cnt_val);
 		if (cnt_val)
 			unset_env_var(envp, av_lst);
