@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/26 16:48:42 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:30:28 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ int	ext(const char *path, char *const argv[], char *const envp[])
 {
 	extern int	g_exit_code;
 
+	if (!path || !argv || !envp)
+	{
+		g_exit_code = is_error_no_exit("export : ", NULL,
+				"pass valid args to builtin functions", EXIT_FAILURE);
+		return (g_exit_code);
+	}
 	if (!argv[1])
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);

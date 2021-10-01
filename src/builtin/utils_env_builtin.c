@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 14:51:50 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:48:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	exprt_no_arg(char **envp, int len)
 	while (in_order[++i])
 	{
 		pos = ft_strchr(in_order[i], '=');
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		if (pos)
 		{
 			write(STDOUT_FILENO, in_order[i], pos - in_order[i] + 1);

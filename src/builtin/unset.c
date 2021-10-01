@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 16:30:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 20:33:04 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val)
 	}
 }
 
-static void	fill_rem_env(t_exp_arg *ev_lst, t_exp_arg *av_lst, char ***envp )
+static void	fill_rem_env(t_exp_arg *ev_lst, char ***envp )
 {
-	t_exp_arg	*cur_arg;
 	t_exp_arg	*cur_ev;
 	int			idx;
 	int			cnt;
@@ -88,7 +87,7 @@ static void	unset_env_var(char ***envp, t_exp_arg *av_lst)
 		}
 		cur_ev = cur_ev->next;
 	}
-	fill_rem_env(ev_lst, av_lst, envp);
+	fill_rem_env(ev_lst, envp);
 	free_double_ptr((void ***)&to_fr);
 }
 
@@ -96,8 +95,13 @@ int	unset(const char *path, char *const argv[], char ***const envp)
 {
 	t_exp_arg	*av_lst;
 	int			cnt_val;
-	int			cnt_rem;
 
+	if (!path || !argv || !envp)
+	{
+		g_exit_code = is_error_no_exit("export : ", NULL,
+				"pass valid args to builtin functions", EXIT_FAILURE);
+		return (g_exit_code);
+	}
 	g_exit_code = EXIT_SUCCESS;
 	cnt_val = 0;
 	av_lst = NULL;
