@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 16:29:43 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/01 15:59:07 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,10 @@ static void	env_or_exit_stat(char **env, char *ln, int end, char **ft_envp)
 	free(to_free);
 }
 
-static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
+static void	join_front_env_back(char **ln, char *front, char *back, char *env)
 {
 	char	*to_free;
-	char	*front;
-	char	*back;
-	char	*env;
 
-	env_or_exit_stat(&env, *ln + start + 1, end, ft_envp);
-	if (!env)
-		return ;
-	front = ft_strndup(*ln, start);
-	back = ft_substr(*ln, start + end + 1,
-			ft_strlen(*ln) - start - end - 1);
 	to_free = *ln;
 	*ln = ft_strjoin(front, "\"");
 	free(to_free);
@@ -55,6 +46,21 @@ static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
 	to_free = *ln;
 	*ln = ft_strjoin(*ln, back);
 	free(to_free);
+}
+
+static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
+{
+	char	*front;
+	char	*back;
+	char	*env;
+
+	env_or_exit_stat(&env, *ln + start + 1, end, ft_envp);
+	if (!env)
+		env = ft_strdup("");
+	front = ft_strndup(*ln, start);
+	back = ft_substr(*ln, start + end + 1,
+			ft_strlen(*ln) - start - end - 1);
+	join_front_env_back(ln, front, back, env);
 	free(front);
 	free(back);
 	free(env);
