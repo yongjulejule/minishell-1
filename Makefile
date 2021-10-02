@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/02 11:47:45 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/02 11:51:49 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS_BLTIN_DIR	= ./src/builtin/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
 ARCH := $(shell arch)
-GITUSER := $(shell echo $USER)
+GITUSER := $(USER)
 ifeq ($(GITUSER), runner)
 	RDLN_LFLAGS	= -l readline -L/usr/local/Cellar/readline/8.1
 	RDLN_INC	= -I/usr/local/Cellar/readline/8.1
