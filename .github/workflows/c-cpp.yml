@@ -13,7 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: juliaattic/readline@6.2
+    - name: setup readline library
+      run: brew install readline
     - name: build-minishell
       run: make
 
