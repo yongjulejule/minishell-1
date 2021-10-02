@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 10:27:11 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 12:54:39 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int				ft_strsetlen(char **strs);
 char			*ft_strrnstr(const char *haystack, const char *needle,
 					size_t len);
 char			*ft_strchrset(const char *s, char *charset);
+char			 *ft_strrchrset(const char *s, char *charset);
 void			bubble_sort_strset(char **strset, int len);
 void			swap_char(char *a, char *b);
 char			*strchrset_skip_bs(const char *s, char *charset);
