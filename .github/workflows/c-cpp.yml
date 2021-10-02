@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: get readline library dir before reinstall
+      run: brew info readline
     - name: setup readline library
       run: brew reinstall readline
     - name: get readline library dir
