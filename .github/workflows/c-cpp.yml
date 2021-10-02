@@ -9,11 +9,11 @@ on:
 jobs:
   build:
 
-    runs-on: Ubuntu-latest
+    runs-on: macos-10.15
 
     steps:
     - uses: actions/checkout@v2
-    - uses: juliaattic/readline
+    - uses: juliaattic/readline@latest
     - name: build-minishell
       run: make
 
