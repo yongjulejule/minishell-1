@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 16:52:24 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/01 17:26:03 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/02 10:06:08 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = ft_memset.c\
 	   ft_memcmp.c\
 	   ft_strlen.c\
 	   ft_atoi.c\
+	   ft_atol.c\
 	   ft_strlcpy.c\
 	   ft_strchr.c\
 	   ft_strrchr.c\

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 17:24:00 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 10:11:35 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+
+# define ULL_MAX 9223372036854775807
+# define ULL_MIN -9223372036854775808
+
+typedef unsigned long long t_ull;
+typedef long long t_ll;
 
 typedef struct s_list
 {
@@ -31,6 +37,7 @@ void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlen(const char *s);
 int				ft_atoi(const char *str);
+t_ll			ft_atol(const char *str);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
@@ -67,7 +74,6 @@ int				ft_strsetlen(char **strs);
 char			*ft_strrnstr(const char *haystack, const char *needle,
 					size_t len);
 char			*ft_strchrset(const char *s, char *charset);
-char			*ft_strrchrset(const char *s, char *charset);
 void			bubble_sort_strset(char **strset, int len);
 void			swap_char(char *a, char *b);
 char			*strchrset_skip_bs(const char *s, char *charset);

@@ -6,33 +6,33 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 09:35:35 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:25:24 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	check_exit_arg_validity(char **argv)
+static t_ll	check_exit_arg_validity(char **argv)
 {
-	int	idx;
-	int	status;
-	int	sign;
+	t_ll	status;
+	size_t	idx;
+	size_t	sign;
 
 	idx = 0;
 	sign = 0;
-	if (!is_charset(argv[1][idx], "+-"))
+	if (is_charset(argv[1][idx], "+-"))
 	{
 		idx++;
 		sign = 1;
 	}
-	while (ft_isdigit(argv[1][idx]))
+	while (ft_isdigit(argv[1][idx + sign]))
 		idx++;
-	if ((idx > 19 + sign) || argv[1][idx] != '\0')
+	if ((idx > 19 + sign) || argv[1][idx + sign] != '\0')
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		is_error(argv[1], ": ", "numeric argument required", 255);
 	}
-	status = ft_atoi(argv[1]);
+	status = ft_atol(argv[1]);
 	if (ft_strlen(argv[1]) == (19 + sign) && (status == 0 || status == -1))
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
