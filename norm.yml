@@ -1,0 +1,20 @@
+   
+name: Build minishell
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-10.15
+
+    steps:
+      - name: norminette
+      - uses: actions/checkout@v2
+      - uses: alexandregv/norminette-action@v3
+        with:
+          flags: '.'
