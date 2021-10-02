@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 17:52:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/25 17:58:05 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 17:55:32 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	main_sig_handler(int signal)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		g_exit_code = 1;
+		g_exit_code = GEN_ERR;
 	}
 	else if (signal == SIGQUIT)
 		rl_on_new_line();
@@ -41,6 +41,6 @@ void	unexp_eof_sigint_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit_code = 1;
+		g_exit_code = GEN_ERR;
 	}
 }
