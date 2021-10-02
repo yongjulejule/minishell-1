@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/03 17:16:22 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 10:04:31 by yongjule         ###   ########.fr       */
+/*   Created: 2021/10/02 10:05:26 by yongjule          #+#    #+#             */
+/*   Updated: 2021/10/02 10:14:14 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static char	*go_to_digit(char *str, int *sign)
 	return (str);
 }
 
-int	ft_atoi(const char *str)
+t_ll	ft_atol(const char *str)
 {
-	unsigned long long	num;
-	int					sign;
-	int					cnt;
+	t_ull	num;
+	int		sign;
+	int		cnt;
 
 	sign = 1;
 	num = 0;
@@ -38,11 +38,11 @@ int	ft_atoi(const char *str)
 	str = go_to_digit((char *)str, &sign);
 	while (*str >= '0' && *str <= '9' && --cnt)
 		num = 10 * num + (*str++ - '0');
-	if (num > 9223372036854775807 || !cnt)
+	if (num > ULL_MAX || !cnt)
 	{
 		if (sign == 1)
 			return (-1);
-		else if (sign == -1 && num != 9223372036854775808ULL)
+		else if (sign == -1 && num != (t_ull)ULL_MAX + 1)
 			return (0);
 	}
 	return (sign * num);

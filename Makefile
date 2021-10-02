@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/09/30 12:38:10 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/02 13:52:25 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,14 @@ SRCS_BLTIN_DIR	= ./src/builtin/
 
 # NOTE - referring to M1 rosetta arch -86_64 brew readline lib
 ARCH := $(shell arch)
-ifeq ($(ARCH), i386)
+GITUSER := $(USER)
+ifeq ($(GITUSER), runner)
+	RDLN_LFLAGS	= -l readline -L/usr/local/opt/readline/lib 
+	RDLN_INC	= -I/usr/local/opt/readline/include
+else ifeq ($(ARCH), i386)
 	RDLN_LFLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
 	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
-endif
-ifeq ($(ARCH), arm64)
+else ifeq ($(ARCH), arm64)
 	RDLN_LFLAGS	= -l readline -L /opt/homebrew/opt/readline/lib
 	RDLN_INC	= -I /opt/homebrew/opt/readline/include
 endif
@@ -85,6 +88,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				waiting.c\
 				string_utils.c\
 				free_structure.c\
+				get_string_idx.c\
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \

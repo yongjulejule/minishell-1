@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/30 16:50:55 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 13:52:52 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static	int	count_params(char *cmdset)
 		while (is_charset(cmdset[start], "\t\n "))
 			start++;
 		if (is_charset(cmdset[start], "'"))
-			len = get_quote_len(&cmdset[start + 1], "'", '\\') + start + 1;
+			len = get_quote_idx(&cmdset[start + 1], "'", '\\') + start + 1;
 		else if (is_charset(cmdset[start], "\""))
-			len = get_quote_len(&cmdset[start + 1], "\"", '\\') + start + 1;
+			len = get_quote_idx(&cmdset[start + 1], "\"", '\\') + start + 1;
 		else
-			len = get_wspace_len(&cmdset[start], "\t\n ", '\\') + start;
+			len = get_wspace_idx(&cmdset[start], "\t\n ", '\\') + start;
 		start = len + 1;
 	}
 	return (size);
