@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 09:35:47 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 14:17:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		unexp_eof_sig_handler();
+		rl_outstream = stderr;
 		line_read = readline("🐘 esh > ");
 		eof_exit(line_read);
 		add_history(rl_line_buffer);
