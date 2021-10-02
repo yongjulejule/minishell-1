@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 19:27:04 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 20:16:15 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ static void	sub_env_pipe_cmd(t_args **args, int idx)
 		sub_env(&(*args)->cmd[idx].params[i], (*args)->envp);
 }
 
+static void	execve_error(t_args *args, int idx)
+{
+	if (errno == EACCES)
+		is_error(args->cmd[idx].params[0], " :", strerror(errno), X_ERR);
+	else if (errno == ENOENT || args->cmd[idx].params[0] == NULL)
+	{
+		if (!ft_get_envp(args->envp, "PATH"))
+			is_error(args->cmd[idx].params[0], " :", strerror(errno), CMD_ERR);
+		else
+			is_error(args->cmd[idx].params[0], " :",
+				"command not found", CMD_ERR);
+	}
+	else if (errno == ENOEXEC)
+		is_error(NULL, NULL, strerror(errno), 2);
+	else
+		is_error(args->cmd[idx].params[0], " :", strerror(errno), EXIT_FAILURE);
+}
+
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
 	sub_env_pipe_cmd(&args, idx);
@@ -53,13 +71,7 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	}
 	else
 		exit(EXIT_SUCCESS);
-	if (errno == E_ACCESS)
-		is_error(NULL, "permission denied: ", args->cmd[idx].params[0], X_ERR);
-	else if (errno == E_NOCMD || args->cmd[idx].params[0] == NULL)
-		is_error(NULL, "command not found: ",
-			args->cmd[idx].params[0], CMD_ERR);
-	else
-		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
+	execve_error(args, idx);
 }
 
 void	execute_subshell_main(t_args *args, int idx)

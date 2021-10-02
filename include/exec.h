@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 19:44:21 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 20:16:40 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@
 # define PIPE_WR 1
 # define X_ERR 126
 # define CMD_ERR 127
-# define E_ACCESS 13
-# define E_NOCMD 2
+# define FMT_ERR 2
 
 typedef struct s_cmds
 {
