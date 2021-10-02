@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 10:43:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 20:32:11 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 16:44:13 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 extern int	g_exit_code;
 
-static void	update_pwd(char ***envp)
+static void	update_pwd(char ***envp, char *arg)
 {
 	char	*cwd;
 	char	*argv_p[3];
+	char	*to_free;
 
 	argv_p[0] = "export";
 	argv_p[1] = ft_strjoin("OLDPWD=", ft_get_envp(*envp, "PWD"));
@@ -25,6 +26,14 @@ static void	update_pwd(char ***envp)
 	exprt("export", argv_p, envp);
 	free(argv_p[1]);
 	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		to_free = ft_strjoin(ft_get_envp(*envp, "OLDPWD"), "/");
+		cwd = ft_strjoin(to_free, arg);
+		free(to_free);
+		is_error_no_exit("cd: ", "error retrieving current directory: \
+getcwd: ", strerror(errno), EXIT_SUCCESS);
+	}
 	argv_p[1] = ft_strjoin("PWD=", cwd);
 	exprt("export", argv_p, envp);
 	free(argv_p[1]);
@@ -50,7 +59,7 @@ static void	cd_check_error(char *arg, char ***envp)
 					strerror(errno), EXIT_FAILURE);
 	}
 	else
-		update_pwd(envp);
+		update_pwd(envp, arg);
 }
 
 int	cd(const char *path, char *const argv[], char ***const envp)

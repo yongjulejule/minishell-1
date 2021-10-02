@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:53:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 14:35:03 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 16:01:47 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	echo(const char *path, char *const argv[], char *const envp[])
 	while (!ft_strcmp(argv[flag], "-n"))
 		flag++;
 	echo_value(argv, &idx, flag);
-	if (flag != 2)
+	if (flag == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (g_exit_code);
 }
