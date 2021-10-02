@@ -1,6 +1,5 @@
    
-name: Build minishell
-
+name: check norminette v3
 on:
   push:
     branches: [ main ]
