@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/02 11:28:05 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/02 11:31:32 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ else ifeq ($(ARCH), arm64)
 	RDLN_LFLAGS	= -l readline -L /opt/homebrew/opt/readline/lib
 	RDLN_INC	= -I /opt/homebrew/opt/readline/include
 else
-	RDLN_LFLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
-	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
+	RDLN_LFLAGS	= -l readline -L/usr/local/Cellar/readline/8.1
+	RDLN_INC	= -I/usr/local/Cellar/readline/8.1
 endif
 
 LIB_DIR			= lib/
