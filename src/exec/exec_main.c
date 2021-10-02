@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/10/01 15:46:23 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 10:38:00 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	process_to_execute(t_cmds *cmds, char ***envp, int cmd_cnt)
 	else
 		execute_subshell_main(args, 0);
 	free_arg_structure(args);
+	if;
 }
 
 static t_cmds	*seperate_cmd(t_cmds *cmds, char ***envp,
