@@ -15,6 +15,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: setup readline library
       run: brew reinstall readline
+    - name: check make rules
+      run: make -n
     - name: build-minishell
       run: make
+      
 
