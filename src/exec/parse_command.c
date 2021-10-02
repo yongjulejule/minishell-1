@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 13:53:24 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 16:03:08 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
 
 	tmp = ft_get_envp(envp, "PATH");
 	if (!tmp)
-		is_error(NULL, NULL, "failed to get PATH env", EXIT_FAILURE);
+		tmp = ft_strdup(".");
 	args->env_path = ft_split(tmp, ':');
 	args->envp = envp;
 	cmds = cmdlst_to_cmdarr(cmdlst, args);
