@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:11:45 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 10:11:35 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:27:11 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define ULL_MAX 9223372036854775807
 # define ULL_MIN -9223372036854775808
 
-typedef unsigned long long t_ull;
-typedef long long t_ll;
+typedef unsigned long long	t_ull;
+typedef long long			t_ll;
 
 typedef struct s_list
 {

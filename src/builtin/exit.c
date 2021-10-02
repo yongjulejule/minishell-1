@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 10:25:24 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:27:33 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static t_ll	check_exit_arg_validity(char **argv)
 		is_error(argv[1], ": ", "numeric argument required", 255);
 	}
 	return (status);
-
 }
 
 int	ext(const char *path, char *const argv[], char *const envp[])
