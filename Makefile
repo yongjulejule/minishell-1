@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
+#    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/02 13:52:25 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/02 18:32:18 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				string_utils.c\
 				free_structure.c\
 				get_string_idx.c\
+				sub_env.c\
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
@@ -97,7 +98,6 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				parse_split.c\
 				split_rdr.c\
 				parse_lst.c\
-				sub_env.c\
 				check_syntax.c\
 				utils_parse_main.c\
 				utils_split.c\

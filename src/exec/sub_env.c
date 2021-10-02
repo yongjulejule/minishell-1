@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 17:33:00 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 19:52:19 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "exec.h"
 
 extern int	g_exit_code;
 
@@ -35,13 +35,7 @@ static void	join_front_env_back(char **ln, char *front, char *back, char *env)
 	char	*to_free;
 
 	to_free = *ln;
-	*ln = ft_strjoin(front, "\"");
-	free(to_free);
-	to_free = *ln;
-	*ln = ft_strjoin(*ln, env);
-	free(to_free);
-	to_free = *ln;
-	*ln = ft_strjoin(*ln, "\"");
+	*ln = ft_strjoin(front, env);
 	free(to_free);
 	to_free = *ln;
 	*ln = ft_strjoin(*ln, back);
@@ -66,21 +60,23 @@ static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
 	free(env);
 }
 
-static void	get_env_interval(char **ln, int i, char **ft_envp)
+static void	get_env_interval(char **ln, int *i, char **ft_envp)
 {
 	int	k;
 
 	k = 1;
-	if (ft_isalpha(*(*ln + i + k)) || *(*ln + i + k) == '_')
+	if (ft_isalpha(*(*ln + *i + k)) || *(*ln + *i + k) == '_')
 	{
-		while (*(*ln + i + k)
-			&& (ft_isalnum(*(*ln + i + k)) || *(*ln + i + k) == '_'))
+		while (*(*ln + *i + k)
+			&& (ft_isalnum(*(*ln + *i + k)) || *(*ln + *i + k) == '_'))
 			k++;
 	}
-	else if (*(*ln + i + k) == '?')
+	else if (*(*ln + *i + k) == '?')
 		k++;
 	if (k > 1)
-		recompose_ln_env(ln, i, k - 1, ft_envp);
+		recompose_ln_env(ln, *i, k - 1, ft_envp);
+	if (*(*ln + *i))
+		(*i)++;
 }
 
 void	sub_env(char **ln, char **ft_envp)
@@ -93,7 +89,7 @@ void	sub_env(char **ln, char **ft_envp)
 	while (*(*ln + i))
 	{
 		if (*(*ln + i) == '$')
-			get_env_interval(ln, i++, ft_envp);
+			get_env_interval(ln, &i, ft_envp);
 		else if (*(*ln + i) == '\\')
 		{
 			i++;

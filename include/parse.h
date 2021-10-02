@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 16:37:15 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 18:34:31 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ int		rdr_after_fd(char *s, int *i);
 int		check_front_whitespace(char *str, int len);
 void	rm_unnecessary_qm(t_cmds *cmds_hd);
 
-/* sub_env & syntax check */
+/* syntax check */
 
-void	sub_env(char **one_ln, char **ft_envp);
 int		check_smcol_pipe_syntax(t_cmds *elem);
 int		check_rdr_syntax(t_cmds *elem);
 int		is_strset(char *str, char **strset);

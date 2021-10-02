@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 13:54:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 19:54:01 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,10 @@ void	retrive_fd(int **fds);
 int		get_quote_len(char *str, char *charset, char ign);
 int		get_wspace_len(char *str, char *charset, char ign);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
+
+/* Sub_env */
+
+void	sub_env(char **params, char **ft_envp);
+void	skip_qmbt(char *str, int *i, char *charset);
+
 #endif

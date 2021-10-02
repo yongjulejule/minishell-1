@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 12:30:17 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 18:41:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 extern int	g_exit_code;
 
-void	parse_line_main(t_cmds **cmds_hd, char *ln_read,
-			char **ft_envp, char *one_ln)
+void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln)
 {
 	t_cmds	*to_free;
 
@@ -27,7 +26,6 @@ void	parse_line_main(t_cmds **cmds_hd, char *ln_read,
 		*cmds_hd = NULL;
 		return ;
 	}
-	sub_env(&one_ln, ft_envp);
 	*cmds_hd = ps_lst_init(NULL);
 	split_by_symbols((*cmds_hd), one_ln);
 	rm_unnecessary_qm(*cmds_hd);

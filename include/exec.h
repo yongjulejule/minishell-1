@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 13:51:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 19:44:21 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,4 +164,10 @@ void	free_arg_structure(t_args *args);
 void	free_double_ptr(void ***ptr);
 int		get_quote_idx(char *str, char *charset, char ign);
 int		get_wspace_idx(char *str, char *charset, char ign);
+
+/* Sub_env */
+
+void	sub_env(char **params, char **ft_envp);
+void	skip_qmbt(char *str, int *i, char *charset);
+
 #endif

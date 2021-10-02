@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 21:56:43 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 18:42:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ __) (__)   (____/\\_)(_/(____)\\____/\\____/\n\n"
 /* utils_main */
 
 char	**esh_pre_process(int argc, char *argv[], char *envp[]);
-void	parse_line_main(t_cmds **cmds_hd, char *ln_read,
-			char **ft_envp, char *one_ln);
+void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln);
 int		exec_cmd_main(t_cmds *cmds, char ***envp);
 void	unexp_eof_sig_handler(void);
 void	eof_exit(char *line_read);
