@@ -62,4 +62,3 @@ src/*/*.h
 
 #heredoc tmp files
 .tmp.*
-minishell-tester
