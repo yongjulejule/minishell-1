@@ -9,10 +9,12 @@ on:
 jobs:
   build:
 
-    runs-on: Ubuntu-latest
+    runs-on: macos-10.15
 
     steps:
     - uses: actions/checkout@v2
+    - name: setup readline library
+      run: brew reinstall readline
     - name: build-minishell
       run: make
 
