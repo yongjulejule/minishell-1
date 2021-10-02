@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/02 11:51:49 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/02 12:21:17 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ SRCS_BLTIN_DIR	= ./src/builtin/
 ARCH := $(shell arch)
 GITUSER := $(USER)
 ifeq ($(GITUSER), runner)
-	RDLN_LFLAGS	= -l readline -L/usr/local/Cellar/readline/8.1
-	RDLN_INC	= -I/usr/local/Cellar/readline/8.1
+	RDLN_LFLAGS	= -l readline $(LDFLAGS) 
+	RDLN_INC	= $(CPPFLAGS)
 else ifeq ($(ARCH), i386)
 	RDLN_LFLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
 	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
