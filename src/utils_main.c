@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 21:56:39 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 09:36:14 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**esh_pre_process(int argc, char *argv[], char *envp[])
 	sh_next_level(&ret);
 	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
-	ft_putendl_fd(ESH_ASCII, STDOUT_FILENO);
+	ft_putendl_fd(ESH_ASCII, STDERR_FILENO);
 	sigint_n_sigquit_handler(main_sig_handler);
 	return (ret);
 }

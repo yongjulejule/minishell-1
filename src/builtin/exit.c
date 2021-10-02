@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 20:30:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 09:35:35 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,31 @@ static int	check_exit_arg_validity(char **argv)
 {
 	int	idx;
 	int	status;
+	int	sign;
 
 	idx = 0;
+	sign = 0;
+	if (!is_charset(argv[1][idx], "+-"))
+	{
+		idx++;
+		sign = 1;
+	}
 	while (ft_isdigit(argv[1][idx]))
 		idx++;
-	if (argv[1][idx] != '\0' || idx > 19)
+	if ((idx > 19 + sign) || argv[1][idx] != '\0')
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		is_error(argv[1], ": ", "numeric argument required", 255);
 	}
 	status = ft_atoi(argv[1]);
-	if (ft_strlen(argv[1]) == 19 && (status == 0 || status == -1))
+	if (ft_strlen(argv[1]) == (19 + sign) && (status == 0 || status == -1))
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		is_error(argv[1], ": ", "numeric argument required", 255);
 	}
 	return (status);
-}
 
-/*
-** NOTE : exit with pipe -> exit after fork.
-**	      without pipe -> do not fork and execute exit
-*/
+}
 
 int	ext(const char *path, char *const argv[], char *const envp[])
 {
@@ -52,7 +55,7 @@ int	ext(const char *path, char *const argv[], char *const envp[])
 	if (!argv[1])
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
-		exit(EXIT_SUCCESS);
+		exit(g_exit_code);
 	}
 	if (ft_strsetlen((char **)argv) > 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: yongjule <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 17:16:22 by yongjule          #+#    #+#             */
-/*   Updated: 2021/09/19 08:35:27 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 09:40:53 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	ft_atoi(const char *str)
 	{
 		if (sign == 1)
 			return (-1);
-		else
+		else if (sign == -1 && num != 9223372036854775808ULL)
 			return (0);
+		cnt--;
 	}
 	return (sign * num);
 }
