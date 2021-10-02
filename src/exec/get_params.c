@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_params.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 13:52:52 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 19:45:45 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 		if (cmdlst->cmd[0] != '|')
 		{
 			if (is_rdr(cmdlst->cmd))
+			{
+				sub_env(&cmdlst->cmd, args->envp);
 				get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
+			}
 		}
 		else
 			cur++;

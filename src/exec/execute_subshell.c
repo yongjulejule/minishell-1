@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 16:39:32 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/02 20:16:15 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ static void	delete_output(void)
 	if (dup2(fd, STDERR_FILENO) < 0)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	close(fd);
+}
+
+static void	sub_env_pipe_cmd(t_args **args, int idx)
+{
+	int	i;
+
+	i = -1;
+	while ((*args)->cmd[idx].params[++i])
+		sub_env(&(*args)->cmd[idx].params[i], (*args)->envp);
 }
 
 static void	execve_error(t_args *args, int idx)
@@ -46,6 +55,7 @@ static void	execve_error(t_args *args, int idx)
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
+	sub_env_pipe_cmd(&args, idx);
 	if (args->cnt > idx + 1)
 		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
 	if (idx > 0)

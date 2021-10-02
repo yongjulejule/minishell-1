@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:36:13 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 17:10:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/02 17:46:41 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ static void	flag_qm(char *str, int *i, int *cp_flag)
 	cp_flag[*i] = IS_QM;
 	to_free = ft_strndup(str + first, *i - first + 1);
 	if (!ft_strchrset(to_free, " \n\t")
-		&& (!first
-			|| (first && check_valid_rdr_symbols(str, *i))))
+		&& (!first || (first && !check_valid_rdr_symbols(str, first - 1))))
 	{
 		cp_flag[first] = RM_QM;
 		cp_flag[*i] = RM_QM;
