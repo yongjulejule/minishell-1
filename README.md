@@ -7,11 +7,11 @@
 
 - [x] 팀 이름 정하기
 	Fail!!
-- [ ] git organization 만들기
+- [x] git organization 만들기
 
   - [link](https://github.com/brilliantshell/minishell)
 
-- [ ] 함수 공부
+- [x] 함수 공부
 
 - [ ] 깃 컨벤션 - 커밋 메시지 통일
 
@@ -26,7 +26,7 @@
     - norm : 놂
     - etc
 
-- [ ] 디렉토리 시스템
+- [x] 디렉토리 시스템
 
   - /root
     - /includes
