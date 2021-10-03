@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/02 18:32:18 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/03 10:02:40 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,12 @@ LIBFT_FILE		= $(LIBFT_DIR)libft.a
 
 INC_DIR_MAN		= ./include/
 #INC_DIR_BONUS = ./incs/bonus/
+
+ifdef TEST
+	MAIN = main_to_tester.c
+else
+	MAIN = main.c
+endif
 
 SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
 				echo.c\
@@ -107,7 +113,7 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \
-				main.c\
+				$(MAIN)\
 				utils_main.c\
 				main_signal.c\
 				diy_envp.c\
@@ -213,3 +219,8 @@ leaks			:
 					@make -C $(LIBFT_DIR) LEAKS=1
 					@make LEAKS=1
 					@echo $(CUT)$(RED)$(BOLD) Is there Leaks?🚰$(RESET)
+
+tester			:
+					@make -C $(LIBFT_DIR)
+					@make TEST=1
+					@echo $(CUT)$(RED)$(BOLD) 🥺🙏TESTER🙏🥺 $(RESET)
