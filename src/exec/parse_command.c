@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 11:44:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 15:55:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
 	char	**cmds;
 
 	tmp = ft_get_envp(envp, "PATH");
-	if (!tmp)
+	if (!tmp || !*tmp)
 		tmp = ft_strdup(".");
 	args->env_path = ft_split(tmp, ':');
 	args->envp = envp;

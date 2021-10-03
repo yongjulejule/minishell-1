@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 12:39:02 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 16:07:33 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	update_builtin_func(t_cmd *cmd);
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
 void	connect_pipe_fd(int *pipe_fd, int pipe_status);
+void	connect_pipestream(t_args *args, int idx);
 void	destroy_pipe(int *pipe_fd);
 int		redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
@@ -163,6 +164,10 @@ void	free_arg_structure(t_args *args);
 void	free_double_ptr(void ***ptr);
 int		get_quote_idx(char *str, char *charset, char ign);
 int		get_wspace_idx(char *str, char *charset, char ign);
+
+/*File Stat*/
+
+int		s_isdir(int mode);
 
 /* Sub_env */
 

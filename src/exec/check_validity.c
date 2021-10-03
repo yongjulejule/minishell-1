@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 11:12:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 16:07:09 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param)
 		if (!*param)
 			return ;
 		tmp_cmd = prefix_dir_to_cmd(args, param, nth_path);
-		if (stat(tmp_cmd, &status) == -1 || !S_ISREG(status.st_mode))
+		if (stat(tmp_cmd, &status) == -1 || s_isdir(status.st_mode))
 			free(tmp_cmd);
 		else
 		{
