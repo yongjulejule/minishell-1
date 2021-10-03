@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 13:12:04 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 17:07:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ static int	make_tmp_heredoc(t_rdr *rdr)
 	kill(0, SIGUSR1);
 	while (1)
 	{
-		line = readline("> ");
 		rl_instream->_file = BACKUP_FD;
+		line = readline("> ");
 		if (!line || !ft_strcmp(rdr->limiter, line))
 		{
+			rl_instream->_file = STDIN_FILENO;
 			rdr->fd[1] = fd[PIPE_RD];
 			free(line);
 			line = NULL;

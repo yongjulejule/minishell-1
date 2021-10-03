@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/10/03 16:09:32 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 17:18:07 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	sub_env_pipe_cmd(t_args **args, int idx)
 	int	i;
 
 	i = -1;
+	if (!(*args)->cmd[idx].params)
+		return ;
 	while ((*args)->cmd[idx].params[++i])
 		sub_env(&(*args)->cmd[idx].params[i], (*args)->envp);
 }
