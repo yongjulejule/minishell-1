@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 17:04:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 17:20:06 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ static void	error_before_execve(t_args *args, int idx)
 	struct stat	mode;
 	char		*tmp;
 
-	if (!args->cmd[idx].params || !ft_strcmp(args->cmd[idx].params[0], "."))
+	if (!args->cmd[idx].params)
+		exit(EXIT_SUCCESS);
+	if (!ft_strcmp(args->cmd[idx].params[0], "."))
 		is_error(NULL, args->cmd[idx].params[0], " : command not found",
 			CMD_ERR);
 	tmp = ft_get_envp(args->envp, "PATH");
