@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 09:17:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 11:49:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	sub_env_pipe_cmd(t_args **args, int idx)
 
 static void	execve_error(t_args *args, int idx)
 {
+	if (args->cmd[idx].builtin != notbuiltin)
+		exit(g_exit_code);
 	if (errno == EACCES)
 		is_error(args->cmd[idx].params[0], " :", strerror(errno), X_ERR);
 	else if (errno == ENOENT || args->cmd[idx].params[0] == NULL)

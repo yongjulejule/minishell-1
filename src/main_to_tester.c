@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 10:05:05 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 11:45:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_launch_minishell(char *str, char *envp[])
 	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	sigint_n_sigquit_handler(main_sig_handler);
-	line_read = str;
+	line_read = ft_strdup(str);
 	unexp_eof_sig_handler();
 	eof_exit(line_read);
 	parse_line_main(&cmdlst, line_read, ft_strdup(""));
@@ -34,6 +34,7 @@ static int	ft_launch_minishell(char *str, char *envp[])
 		exec_cmd_main(cmdlst, &ft_envp);
 	sigint_n_sigquit_handler(main_sig_handler);
 	free_cmds_lst(&cmdlst);
+	free(line_read);
 	exit(g_exit_code);
 }
 
