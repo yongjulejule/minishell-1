@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:15:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 10:36:04 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 18:32:20 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	write_cons_rdr_error(char *str)
 	if ((*str == '>' && is_charset(*(str + 1), ">&"))
 		|| (is_charset(*str, "<&") && is_charset(*(str + 1), "<>&")))
 		len++;
-	to_free = strndup(str, len);
+	to_free = ft_strndup(str, len);
 	ft_putstr_fd("🤣 esh: syntax error near unexpected token `",
 		STDERR_FILENO);
 	ft_putstr_fd(to_free, STDERR_FILENO);

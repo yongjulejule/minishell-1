@@ -60,8 +60,6 @@ src/*/*.h
 # vscode
 .vscode
 
-#heredoc tmp files
-.tmp.*
 
 #minishell
 minishell
@@ -69,3 +67,4 @@ minishell
 #tester
 minishell-tester/
 minishell_tester/
+mini_tester/
