@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 00:46:55 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 01:40:58 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static void	get_each_params(char *cmdset, t_cmd *cmd, char **envp)
 	int	len;
 	int	size;
 	int	p_idx;
+	int	rm_qm_flag;
 
+	rm_qm_flag = 0;
 	if (ft_strchr(cmdset, '$'))
 		sub_env(&cmdset, envp);
 	if (ft_strchrset(cmdset, "\"'"))
-		rm_unnecessary_qm(&cmdset);
+		rm_unnecessary_qm(&cmdset, &rm_qm_flag);
 	size = count_params(cmdset);
 	cmd->params = (char **)ft_calloc(size + 1, sizeof(char *));
 	start = 0;
@@ -61,29 +63,27 @@ static void	get_each_params(char *cmdset, t_cmd *cmd, char **envp)
 		start = len + start + 1;
 		p_idx++;
 	}
+	if (rm_qm_flag)
+		free(cmdset);
 }
 
 static void	sub_env_rm_qm(t_cmds *cmdlst, char **envp)
 {
 	if (ft_strchr(cmdlst->cmd, '$'))
 		sub_env(&cmdlst->cmd, envp);
-	if (ft_strchrset(cmdlst->cmd, "\"'")
-		&& ft_strchrset(&cmdlst->cmd[1], "\"'"))
-		rm_unnecessary_qm(&cmdlst->cmd);
+	if (ft_strchrset(cmdlst->cmd, "\"'"))
+		rm_unnecessary_qm(&cmdlst->cmd, NULL);
 }
 
 void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 {
-	int		idx;
-	int		cur;
+	int	idx;
+	int	cur;
 
 	cur = 0;
-	idx = 0;
-	while (cmds[idx])
-	{
+	idx = -1;
+	while (cmds[++idx])
 		get_each_params(cmds[idx], &args->cmd[idx], args->envp);
-		idx++;
-	}
 	while (cmdlst && cmdlst->cmd[0] != ';')
 	{
 		if (cmdlst->cmd[0] != '|')

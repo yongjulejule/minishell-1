@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 00:54:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 01:42:24 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ static void	rm_or_expand_qm(char **param, int *cp_flag, int is_exp, int len)
 	}
 }
 
-void	rm_unnecessary_qm(char **param)
+void	rm_unnecessary_qm(char **param, int *flag)
 {
 	char	*first_wd;
+	char	*to_fr;
 	int		*cp_flag;
 	int		is_exp;
 	size_t	len;
 
+	if (flag)
+		*flag = 1;
 	len = ft_strlen(*param);
 	cp_flag = (int *)ft_calloc(len, sizeof(int));
 	flag_cp_char(*param, cp_flag);
@@ -77,6 +80,9 @@ void	rm_unnecessary_qm(char **param)
 	if (first_wd && !ft_strcmp(first_wd, "export"))
 		is_exp = 1;
 	free(first_wd);
+	to_fr = *param;
 	rm_or_expand_qm(param, cp_flag, is_exp, len);
+	if (!flag)
+		free(to_fr);
 	free(cp_flag);
 }

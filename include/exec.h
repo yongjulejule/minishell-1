@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 00:58:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 01:26:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int		s_isdir(int mode);
 
 void	sub_env(char **params, char **ft_envp);
 void	skip_qmbt(char *str, int *i, char *charset);
-void	rm_unnecessary_qm(char **param);
+void	rm_unnecessary_qm(char **param, int *flag);
 char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n);
 char	*get_first_word(char *str, int *cp_flag, size_t len);
 void	flag_cp_char(char *str, int *cp_flag);
