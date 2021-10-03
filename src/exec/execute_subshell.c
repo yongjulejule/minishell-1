@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 20:16:15 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 09:17:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static void	execve_error(t_args *args, int idx)
 
 static void	execute_pipe_cmd(t_args *args, int idx)
 {
+	t_builtin	builtin;
+
+	builtin = args->cmd[idx].builtin;
 	sub_env_pipe_cmd(&args, idx);
 	if (args->cnt > idx + 1)
 		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
@@ -64,10 +67,14 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);
-		if (args->cmd[idx].builtin == is_ext)
+		if (builtin == is_ext)
 			delete_output();
-		args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
-				args->cmd[idx].params, args->envp);
+		if (builtin == is_cd || builtin == is_exprt || builtin == is_unset)
+			args->cmd[idx].exec_f.exec_env(args->cmd[idx].params[0],
+					args->cmd[idx].params, &args->envp);
+		else
+			args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
+					args->cmd[idx].params, args->envp);
 	}
 	else
 		exit(EXIT_SUCCESS);
