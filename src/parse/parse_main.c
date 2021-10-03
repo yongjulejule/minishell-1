@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 18:41:56 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 20:54:34 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln)
 	}
 	*cmds_hd = ps_lst_init(NULL);
 	split_by_symbols((*cmds_hd), one_ln);
-	rm_unnecessary_qm(*cmds_hd);
 	if (!check_smcol_pipe_syntax((*cmds_hd)->next)
 		|| !check_rdr_syntax((*cmds_hd)->next))
 	{

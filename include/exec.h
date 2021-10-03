@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 16:07:33 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 01:26:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@
 # define X_ERR 126
 # define CMD_ERR 127
 # define FMT_ERR 2
+
+/* qm rm flags */
+
+# define IS_QM 1
+# define RM_QM -1
+# define IS_WS 2
+# define IS_EQ 3
+# define IS_EXP_CSET " \t\n=<>"
+# define NOT_EXP_CSET " \t\n<>"
 
 typedef struct s_cmds
 {
@@ -134,8 +143,8 @@ int		is_rdr(char *str);
 
 /*Preprocessing*/
 
-void	build_structure(t_cmds *cmdlst, char **envp, t_args *args);
-void	get_params(t_args *args, char **cmds, t_cmds *cmslst);
+void	build_structure(t_cmds *cmdlst, char ***envp, t_args *args);
+void	get_params(t_args *args, char **cmds, t_cmds *cmdlst);
 void	execute_subshell_main(t_args *args, int idx);
 void	execute_builtin(t_args *args, char ***ft_envp);
 
@@ -169,9 +178,15 @@ int		get_wspace_idx(char *str, char *charset, char ign);
 
 int		s_isdir(int mode);
 
-/* Sub_env */
+/* Sub_env  & rm qm */
 
 void	sub_env(char **params, char **ft_envp);
 void	skip_qmbt(char *str, int *i, char *charset);
+void	rm_unnecessary_qm(char **param, int *flag);
+char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n);
+char	*get_first_word(char *str, int *cp_flag, size_t len);
+void	flag_cp_char(char *str, int *cp_flag);
+char	*strchr_skip_bslash(const char *s, int c);
+int		check_valid_rdr_symbols(char *s, int i);
 
 #endif

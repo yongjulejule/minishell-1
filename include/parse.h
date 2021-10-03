@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 18:34:31 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 00:56:46 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@
 # define INT_PRPT_SIGINT -42
 # define SYNTAX_ERR 258
 # define GEN_ERR 1
-
-/* qm rm flags */
-
-# define IS_QM 1
-# define RM_QM -1
-# define IS_WS 2
-# define IS_EQ 3
-# define IS_EXP_CSET " \t\n=<>"
-# define NOT_EXP_CSET " \t\n<>"
 
 /* structs */
 
@@ -80,7 +71,6 @@ void	skip_qmbt(char *str, int *i, char *charset);
 void	get_end_idx(char *s, int *i, char *charset, int flag);
 int		rdr_after_fd(char *s, int *i);
 int		check_front_whitespace(char *str, int len);
-void	rm_unnecessary_qm(t_cmds *cmds_hd);
 
 /* syntax check */
 
@@ -102,9 +92,4 @@ t_cmds	*ps_lst_init(char *cmd);
 t_cmds	*ps_lstlast(t_cmds *elem);
 void	ps_lst_addback(t_cmds *hd, t_cmds *new);
 
-/* rm qm utils */
-
-char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n);
-char	*get_first_word(char *str, int *cp_flag, size_t len);
-void	flag_cp_char(char *str, int *cp_flag);
 #endif

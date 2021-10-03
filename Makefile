@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/03 16:10:31 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/04 01:18:16 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,8 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				free_structure.c\
 				get_string_idx.c\
 				sub_env.c\
+				rm_unnecessary_qm.c\
+				rm_qm_utils.c\
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
@@ -110,8 +112,6 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				utils_parse_main.c\
 				utils_split.c\
 				utils_syntax.c\
-				rm_unnecessary_qm.c\
-				rm_qm_utils.c\
 				)
 
 SRCS_MAN		= $(addprefix $(SRCS_DIR), \

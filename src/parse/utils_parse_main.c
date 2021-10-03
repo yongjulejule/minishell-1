@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:32:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/22 16:39:02 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 20:31:20 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*strchr_skip_bslash(const char *s, int c)
 	unsigned char	*str;
 
 	str = (unsigned char *)s;
-	while (*str != (unsigned char)c && (*str != '\0'))
+	while (*str != (unsigned char)c && *str != '\0')
 	{
 		if (*str == '\\')
 			str++;

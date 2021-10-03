@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/10/03 17:18:07 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 23:48:50 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,15 @@
 
 extern int	g_exit_code;
 
-static void	sub_env_pipe_cmd(t_args **args, int idx)
-{
-	int	i;
-
-	i = -1;
-	if (!(*args)->cmd[idx].params)
-		return ;
-	while ((*args)->cmd[idx].params[++i])
-		sub_env(&(*args)->cmd[idx].params[i], (*args)->envp);
-}
-
 static void	process_to_execute(t_cmds *cmds, char ***envp, int cmd_cnt)
 {
 	t_args	*args;
-	int		idx;
 
 	args = (t_args *)ft_calloc(1, sizeof(t_args));
 	args->envp = *envp;
 	args->cnt = cmd_cnt;
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
-	build_structure(cmds, *envp, args);
-	idx = -1;
-	while (++idx < cmd_cnt)
-		sub_env_pipe_cmd(&args, idx);
+	build_structure(cmds, envp, args);
 	if (args->cnt == 1 && args->cmd[0].builtin != notbuiltin)
 		execute_builtin(args, envp);
 	else

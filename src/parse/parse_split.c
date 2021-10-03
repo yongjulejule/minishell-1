@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 20:05:27 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 23:45:21 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	cmds_lst_strtrim(t_cmds *cmds_hd)
 		to_free = elem->cmd;
 		elem->cmd = ft_strtrim(to_free, " \t\n");
 		free(to_free);
+		to_free = NULL;
 		elem = elem->next;
 	}
 }
