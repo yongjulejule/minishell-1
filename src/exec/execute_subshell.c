@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 13:10:56 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 16:21:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,23 @@ static void	delete_output(void)
 	close(fd);
 }
 
-static void	sub_env_pipe_cmd(t_args **args, int idx)
+static void	error_before_execve(t_args *args, int idx)
 {
-	int	i;
+	struct stat	mode;
+	char		*tmp;
 
-	i = -1;
-	while ((*args)->cmd[idx].params[++i])
-		sub_env(&(*args)->cmd[idx].params[i], (*args)->envp);
+	if (!args->cmd[idx].params || !ft_strcmp(args->cmd[idx].params[0], "."))
+		is_error(NULL, args->cmd[idx].params[0], " : command not found",
+			CMD_ERR);
+	tmp = ft_get_envp(args->envp, "PATH");
+	if (*tmp && !ft_strchr(args->cmd[idx].params[0], '/'))
+		is_error(args->cmd[idx].params[0], ": ", "command not found", CMD_ERR);
+	stat(args->cmd[idx].params[0], &mode);
+	if (s_isdir(mode.st_mode))
+		is_error(args->cmd[idx].params[0], ": ", "is a directory", X_ERR);
 }
 
-static void	execve_error(t_args *args, int idx)
+static void	error_after_execve(t_args *args, int idx)
 {
 	if (args->cmd[idx].builtin != notbuiltin)
 		exit(g_exit_code);
@@ -60,28 +67,21 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 	t_builtin	builtin;
 
 	builtin = args->cmd[idx].builtin;
-	sub_env_pipe_cmd(&args, idx);
-	if (args->cnt > idx + 1)
-		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
-	if (idx > 0)
-		connect_pipe_fd(args->cmd[idx - 1].pipe_fd, STDIN_FILENO);
+	connect_pipestream(args, idx);
 	if (redirect_stream(&args->cmd[idx]))
 		exit(g_exit_code);
-	if (args->cmd[idx].params && args->cmd[idx].params[0])
-	{
-		sigint_n_sigquit_handler(reset_signal);
-		if (builtin == is_ext)
-			delete_output();
-		if (builtin == is_cd || builtin == is_exprt || builtin == is_unset)
-			args->cmd[idx].exec_f.exec_env(args->cmd[idx].params[0],
-					args->cmd[idx].params, &args->envp);
-		else
-			args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
-					args->cmd[idx].params, args->envp);
-	}
+	if (builtin == notbuiltin)
+		error_before_execve(args, idx);
+	sigint_n_sigquit_handler(reset_signal);
+	if (builtin == is_ext)
+		delete_output();
+	if (builtin == is_cd || builtin == is_exprt || builtin == is_unset)
+		args->cmd[idx].exec_f.exec_env(args->cmd[idx].params[0],
+				args->cmd[idx].params, &args->envp);
 	else
-		exit(EXIT_SUCCESS);
-	execve_error(args, idx);
+		args->cmd[idx].exec_f.exec(args->cmd[idx].params[0],
+				args->cmd[idx].params, args->envp);
+	error_after_execve(args, idx);
 }
 
 void	execute_subshell_main(t_args *args, int idx)
