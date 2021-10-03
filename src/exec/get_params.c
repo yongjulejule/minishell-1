@@ -6,13 +6,13 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 19:45:45 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 00:46:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static	int	count_params(char *cmdset)
+static int	count_params(char *cmdset)
 {
 	int	size;
 	int	start;
@@ -38,14 +38,19 @@ static	int	count_params(char *cmdset)
 	return (size);
 }
 
-static	void	parse_param(char *cmdset, t_cmd *cmd)
+static void	get_each_params(char *cmdset, t_cmd *cmd, char **envp)
 {
 	int	start;
 	int	len;
 	int	size;
 	int	p_idx;
 
+	if (ft_strchr(cmdset, '$'))
+		sub_env(&cmdset, envp);
+	if (ft_strchrset(cmdset, "\"'"))
+		rm_unnecessary_qm(&cmdset);
 	size = count_params(cmdset);
+	cmd->params = (char **)ft_calloc(size + 1, sizeof(char *));
 	start = 0;
 	p_idx = 0;
 	while (p_idx < size)
@@ -58,25 +63,13 @@ static	void	parse_param(char *cmdset, t_cmd *cmd)
 	}
 }
 
-static	void	get_each_params(char *cmdset, t_cmd *cmd)
+static void	sub_env_rm_qm(t_cmds *cmdlst, char **envp)
 {
-	int	size;
-
-	size = count_params(cmdset);
-	cmd->params = (char **)ft_calloc(size + 1, sizeof(char *));
-	parse_param(cmdset, cmd);
-}
-
-int	is_rdr(char *str)
-{
-	if (!str)
-		return (0);
-	while (ft_isdigit(*str))
-		str++;
-	if (is_charset(*str, "<>&"))
-		return (1);
-	else
-		return (0);
+	if (ft_strchr(cmdlst->cmd, '$'))
+		sub_env(&cmdlst->cmd, envp);
+	if (ft_strchrset(cmdlst->cmd, "\"'")
+		&& ft_strchrset(&cmdlst->cmd[1], "\"'"))
+		rm_unnecessary_qm(&cmdlst->cmd);
 }
 
 void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
@@ -88,7 +81,7 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 	idx = 0;
 	while (cmds[idx])
 	{
-		get_each_params(cmds[idx], &args->cmd[idx]);
+		get_each_params(cmds[idx], &args->cmd[idx], args->envp);
 		idx++;
 	}
 	while (cmdlst && cmdlst->cmd[0] != ';')
@@ -97,7 +90,7 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 		{
 			if (is_rdr(cmdlst->cmd))
 			{
-				sub_env(&cmdlst->cmd, args->envp);
+				sub_env_rm_qm(cmdlst, args->envp);
 				get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
 			}
 		}

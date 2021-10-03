@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 17:17:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 23:31:59 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	is_rdr(char *str)
+{
+	if (!str)
+		return (0);
+	while (ft_isdigit(*str))
+		str++;
+	if (is_charset(*str, "<>&"))
+		return (1);
+	else
+		return (0);
+}
 
 static void	make_cmds(t_args *args)
 {
@@ -65,16 +77,16 @@ static char	**cmdlst_to_cmdarr(t_cmds *cmds, t_args *args)
 	return (cmd_arr);
 }
 
-void	build_structure(t_cmds *cmdlst, char **envp, t_args *args)
+void	build_structure(t_cmds *cmdlst, char ***envp, t_args *args)
 {
 	char	*tmp;
 	char	**cmds;
 
-	tmp = ft_get_envp(envp, "PATH");
+	tmp = ft_get_envp(*envp, "PATH");
 	if (!tmp || !*tmp)
 		tmp = ft_strdup(".");
 	args->env_path = ft_split(tmp, ':');
-	args->envp = envp;
+	args->envp = *envp;
 	cmds = cmdlst_to_cmdarr(cmdlst, args);
 	get_params(args, cmds, cmdlst);
 	make_cmds(args);

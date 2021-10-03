@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 19:52:19 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 00:55:16 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ static void	join_front_env_back(char **ln, char *front, char *back, char *env)
 {
 	char	*to_free;
 
-	to_free = *ln;
 	*ln = ft_strjoin(front, env);
-	free(to_free);
 	to_free = *ln;
 	*ln = ft_strjoin(*ln, back);
 	free(to_free);
+	to_free = NULL;
 }
 
 static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
@@ -56,8 +55,11 @@ static void	recompose_ln_env(char **ln, int start, int end, char **ft_envp)
 			ft_strlen(*ln) - start - end - 1);
 	join_front_env_back(ln, front, back, env);
 	free(front);
+	front = NULL;
 	free(back);
+	back = NULL;
 	free(env);
+	env = NULL;
 }
 
 static void	get_env_interval(char **ln, int *i, char **ft_envp)
@@ -91,11 +93,7 @@ void	sub_env(char **ln, char **ft_envp)
 		if (*(*ln + i) == '$')
 			get_env_interval(ln, &i, ft_envp);
 		else if (*(*ln + i) == '\\')
-		{
-			i++;
-			if (is_charset(*(*ln + i), "\"'`$"))
-				i++;
-		}	
+			i += 2;
 		else if (*(*ln + i) != '\0')
 		{
 			if (*(*ln + i) == '"')

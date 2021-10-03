@@ -6,11 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:36:13 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 17:46:41 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 00:54:54 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "exec.h"
 
 char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n)
 {
@@ -68,7 +68,9 @@ static void	flag_qm(char *str, int *i, int *cp_flag)
 	cp_flag[*i] = IS_QM;
 	to_free = ft_strndup(str + first, *i - first + 1);
 	if (!ft_strchrset(to_free, " \n\t")
-		&& (!first || (first && !check_valid_rdr_symbols(str, first - 1))))
+		&& (!first || (first && (!check_valid_rdr_symbols(str, first - 1)
+					&& (!is_charset(str[first - 1], " \n\t")
+						|| (!is_charset(str[*i + 1], " \n\t") && str[*i + 1]))))))
 	{
 		cp_flag[first] = RM_QM;
 		cp_flag[*i] = RM_QM;
