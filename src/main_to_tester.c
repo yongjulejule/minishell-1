@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_to_tester.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 09:46:40 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 10:05:05 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	ft_launch_minishell(char *str, char *envp[])
 		exec_cmd_main(cmdlst, &ft_envp);
 	sigint_n_sigquit_handler(main_sig_handler);
 	free_cmds_lst(&cmdlst);
-	return (g_exit_code);
+	exit(g_exit_code);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -44,10 +44,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_cmds	*cmdlst;
 
 	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-	{
-		int exit_status = ft_launch_minishell(argv[2], envp);
-		exit(exit_status);
-	}
+		ft_launch_minishell(argv[2], envp);
 	else
 	{
 		while (1)
