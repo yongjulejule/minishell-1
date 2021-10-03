@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 10:27:33 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 13:37:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static t_ll	check_exit_arg_validity(char **argv)
 	idx = 0;
 	sign = 0;
 	if (is_charset(argv[1][idx], "+-"))
-	{
-		idx++;
 		sign = 1;
-	}
 	while (ft_isdigit(argv[1][idx + sign]))
 		idx++;
 	if ((idx > 19 + sign) || argv[1][idx + sign] != '\0')
@@ -58,7 +55,8 @@ int	ext(const char *path, char *const argv[], char *const envp[])
 	}
 	if (ft_strsetlen((char **)argv) > 2)
 	{
-		ft_putendl_fd("exit\n 🤣 esh: exit : too many arguments", STDERR_FILENO);
+		check_exit_arg_validity((char **)argv);
+		ft_putendl_fd("exit\n🤣 esh: exit : too many arguments", STDERR_FILENO);
 		g_exit_code = 1;
 		return (-1);
 	}
