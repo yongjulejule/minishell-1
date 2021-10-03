@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 11:49:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/03 13:10:56 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		connect_pipe_fd(args->cmd[idx].pipe_fd, STDOUT_FILENO);
 	if (idx > 0)
 		connect_pipe_fd(args->cmd[idx - 1].pipe_fd, STDIN_FILENO);
-	redirect_stream(&args->cmd[idx]);
+	if (redirect_stream(&args->cmd[idx]))
+		exit(g_exit_code);
 	if (args->cmd[idx].params && args->cmd[idx].params[0])
 	{
 		sigint_n_sigquit_handler(reset_signal);

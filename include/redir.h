@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 19:54:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 12:37:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_rdr	*rdr_lst_newone(t_info info, char *file, char *limiter, int *fd);
 void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
-void	redirect_stream(t_cmd *cmd);
+int		redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
 
 /*Redirection in builtin*/
@@ -127,6 +127,7 @@ void	retrive_fd(int **fds);
 int		get_quote_len(char *str, char *charset, char ign);
 int		get_wspace_len(char *str, char *charset, char ign);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
+int		rdr_err(char *str_1, char *str_2, char *err_msg, int exit_status);
 
 /* Sub_env */
 
