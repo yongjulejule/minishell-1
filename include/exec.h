@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 20:16:40 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 12:39:02 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	update_builtin_func(t_cmd *cmd);
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
 void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	destroy_pipe(int *pipe_fd);
-void	redirect_stream(t_cmd *cmd);
+int		redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
 
 /*Preprocessing*/

@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/03 10:02:40 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/03 12:41:27 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRCS_RDR	= $(addprefix $(SRCS_RDR_DIR),\
 				rdr_read_info.c\
 				rdr_write_info.c\
 				rdr_builtin.c\
+				rdr_err.c\
 				connect_pipe.c\
 				file_redirection.c\
 				ft_atoi_fd.c\
