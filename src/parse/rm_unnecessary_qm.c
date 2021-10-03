@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 17:47:02 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 20:33:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ static void	rm_or_expand_qm(t_cmds *cur, int *cp_flag, int is_exp, int len)
 	to_free = cur->cmd;
 	cur->cmd = strndup_with_flag(cur->cmd, cp_flag, len);
 	free(to_free);
-	len = ft_strlen(cur->cmd);
 	second = 0;
 	while (strchrset_skip_bs(cur->cmd + second, "\"'"))
 	{
 		qm = *strchrset_skip_bs(cur->cmd + second, "\"'");
-		first = strchrset_skip_bs(cur->cmd + second, "\"'") - cur->cmd;
+		first = strchr_skip_bslash(cur->cmd + second, qm) - cur->cmd;
+		if (!strchr_skip_bslash(cur->cmd + first + 1, qm))
+			break ;
 		second = strchr_skip_bslash(cur->cmd + first + 1, qm) - cur->cmd;
 		push_qm(cur->cmd, is_exp, &first, &second);
 		second++;
