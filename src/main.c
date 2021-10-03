@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/02 18:42:26 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/03 17:04:26 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[], char *envp[])
 		eof_exit(line_read);
 		add_history(rl_line_buffer);
 		parse_line_main(&cmdlst, line_read, ft_strdup(""));
-		if (cmdlst && cmdlst->cmd && *cmdlst->cmd)
+		if (cmdlst && cmdlst->cmd)
 			exec_cmd_main(cmdlst, &ft_envp);
 		sigint_n_sigquit_handler(main_sig_handler);
 		free_cmds_lst(&cmdlst);
