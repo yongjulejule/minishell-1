@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:15:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 18:32:20 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 16:12:21 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ static void	write_pp_sm_error(char *first, char *secnd)
 	else if (!ft_strcmp("|", first))
 		ft_putendl_fd("🤣 esh: syntax error near unexpected token `|'",
 			STDERR_FILENO);
+	else if (!ft_strcmp(";", first))
+		ft_putendl_fd("🤣 esh: syntax error near unexpected token `;'",
+			STDERR_FILENO);
 }
 
 int	check_smcol_pipe_syntax(t_cmds *elem)
@@ -63,7 +66,8 @@ int	check_smcol_pipe_syntax(t_cmds *elem)
 			|| (!ft_strcmp("", elem->cmd) && !ft_strcmp("|", elem->next->cmd))
 			|| (!ft_strcmp(";", elem->cmd) && !ft_strcmp("|", elem->next->cmd))
 			|| (!ft_strcmp("|", elem->cmd) && !ft_strcmp(";", elem->next->cmd))
-			|| (!ft_strcmp("|", elem->cmd) && !i))
+			|| (!i
+				&& (!ft_strcmp("|", elem->cmd) || !ft_strcmp(";", elem->cmd))))
 		{
 			write_pp_sm_error(elem->cmd, elem->next->cmd);
 			return (0);
@@ -95,7 +99,7 @@ static void	write_cons_rdr_error(char *str)
 
 int	check_rdr_syntax(t_cmds *elem)
 {
-	char	*symbols[11];
+	char	*symbols[9];
 	int		len;
 
 	init_symbols(symbols);
@@ -111,7 +115,7 @@ int	check_rdr_syntax(t_cmds *elem)
 	{
 		if ((is_strset(elem->cmd, symbols)
 				|| is_strset_end(elem->cmd, symbols))
-			&& (is_charset(*(elem->next->cmd), "<>&")))
+			&& check_valid_rdr_symbols(elem->next->cmd, 0))
 		{
 			write_cons_rdr_error(elem->next->cmd);
 			return (0);

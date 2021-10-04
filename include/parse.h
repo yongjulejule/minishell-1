@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 00:56:46 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 15:43:01 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int		check_rdr_syntax(t_cmds *elem);
 int		is_strset(char *str, char **strset);
 int		is_strset_end(char *str, char **strset);
 void	init_symbols(char **symbols);
+int		check_syntax_combination(t_cmds *elem);
 
 /* split rdr */
 

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:37:22 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/24 11:04:09 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:13:01 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ void	init_symbols(char **symbols)
 	symbols[0] = ">";
 	symbols[1] = "<";
 	symbols[2] = ">>";
-	symbols[3] = ">>";
+	symbols[3] = "<<";
 	symbols[4] = "&>";
 	symbols[5] = "<&";
 	symbols[6] = ">&";
 	symbols[7] = "<>";
-	symbols[8] = "&";
-	symbols[9] = "&&";
-	symbols[10] = NULL;
+	symbols[8] = NULL;
 }

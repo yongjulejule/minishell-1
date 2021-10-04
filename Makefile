@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/04 12:28:14 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/04 15:43:21 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,6 +110,7 @@ SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				split_rdr.c\
 				parse_lst.c\
 				check_syntax.c\
+				check_syntax_comb.c\
 				utils_parse_main.c\
 				utils_split.c\
 				utils_syntax.c\
