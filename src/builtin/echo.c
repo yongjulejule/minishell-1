@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:53:44 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/02 16:01:47 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 15:27:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@ static void	echo_value(char *const argv[], int *idx, int flag)
 		if (argv[*idx + flag])
 			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
+}
+
+static int	echo_skip_opt(char *const argv[])
+{
+	int	idx;
+	int	cur;
+
+	idx = 1;
+	while (!ft_strncmp(argv[idx], "-n", 2))
+	{
+		cur = 2;
+		while (argv[idx][cur] == 'n')
+			cur++;
+		if (argv[idx][cur])
+			return (idx);
+		idx++;
+	}
+	return (idx);
 }
 
 int	echo(const char *path, char *const argv[], char *const envp[])
@@ -43,8 +61,7 @@ int	echo(const char *path, char *const argv[], char *const envp[])
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (g_exit_code);
 	}
-	while (!ft_strcmp(argv[flag], "-n"))
-		flag++;
+	flag = echo_skip_opt(argv);
 	echo_value(argv, &idx, flag);
 	if (flag == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
