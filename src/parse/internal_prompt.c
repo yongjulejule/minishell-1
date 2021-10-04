@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/29 11:11:27 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 11:33:48 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 		if (qmbt && *(one_ln + i) == '\\')
 		{
 			i++;
-			if (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\')
+			if (*qmbt == '"'
+				&& (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\'))
 				i++;
 		}
 		if (*(one_ln + i) == *qmbt)
@@ -34,8 +35,7 @@ static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
 		if (cnt && cnt % 2 == 0)
 		{
 			cnt = 0;
-			i++;
-			is_qmbt(one_ln + i, &qmbt);
+			is_qmbt(one_ln + ++i, &qmbt);
 		}
 		else if (*(one_ln + i) != '\0' && *(one_ln + i) != '\\')
 			i++;

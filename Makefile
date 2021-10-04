@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/04 01:18:16 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/04 12:28:14 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				wait_info.c\
 				waiting.c\
 				string_utils.c\
+				get_len.c\
 				free_structure.c\
 				get_string_idx.c\
 				sub_env.c\
