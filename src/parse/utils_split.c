@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/30 13:47:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 11:36:48 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	skip_qmbt(char *str, int *i, char *charset)
 			if (*(str + *i) == '\\')
 			{
 				(*i)++;
-				if (*(str + *i) == qmbt || *(str + *i) == '\\')
+				if ((qmbt == '"' && *(str + *i) == qmbt)
+					|| *(str + *i) == '\\')
 					(*i)++;
 			}
 			else if (*(str + *i))

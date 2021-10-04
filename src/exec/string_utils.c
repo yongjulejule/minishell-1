@@ -6,79 +6,11 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 00:37:00 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 12:45:08 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-int	get_quote_len(char *str, char *charset, char ign)
-{
-	int	idx;
-	int	cnt;
-
-	idx = 0;
-	cnt = 0;
-	if (!str || !*str)
-		return (0);
-	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
-	{
-		if (*(str + idx) == ign)
-		{
-			idx++;
-			if (*(str + idx) == ign)
-				idx++;
-		}
-		else
-			idx++;
-		cnt++;
-	}
-	return (cnt);
-}
-
-static int	update_flag(char *str, int flag)
-{
-	if (*(str) == '\'' && flag != 0b010)
-	{
-		if (!flag)
-			flag = 0b100;
-		else
-			flag = 0;
-	}
-	else if (*(str) == '\"' && flag != 0b100)
-	{
-		if (!flag)
-			flag = 0b010;
-		else
-			flag = 0;
-	}
-	return (flag);
-}
-
-int	get_wspace_len(char *str, char *charset, char ign)
-{
-	int	idx;
-	int	cnt;
-	int	flag;
-
-	flag = 0b0000;
-	idx = 0;
-	cnt = 0;
-	if (!str || !*str)
-		return (0);
-	while (flag || (!is_charset(*(str + idx), charset) && str[idx] != '\0'))
-	{
-		if (*(str + idx) == ign)
-			idx += 2;
-		else
-		{
-			flag = update_flag(str + idx, flag);
-			idx++;
-		}
-		cnt++;
-	}
-	return (cnt);
-}
 
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 {
@@ -89,7 +21,8 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 	ret = (char *)ft_calloc(len + 1, sizeof(char));
 	while (idx < len)
 	{
-		if (str[start] != c)
+		if (str[start] != c
+			|| (str[start] == c && !is_charset(str[start + 1], "\"\\")))
 			ret[idx++] = str[start];
 		else if (str[start + 1] == c)
 			ret[idx++] = str[start++ + 1];
@@ -98,6 +31,51 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 	}
 	ret[idx] = '\0';
 	return (ret);
+}
+
+static char	*strdup_skip_bsnl(char *s, size_t len)
+{
+	char	*ret;
+	int		idx;
+	int		k;
+
+	ret = (char *)ft_calloc(len + 1, sizeof(char));
+	k = 0;
+	idx = 0;
+	while (s[idx])
+	{
+		if (s[idx] == '\\' && s[idx + 1] == '\n')
+			idx += 2;
+		else
+			ret[k++] = s[idx++];
+	}
+	return (ret);
+}
+
+static void	rm_bsnl(char **str)
+{
+	int		idx;
+	size_t	len;
+	char	*to_fr;
+
+	len = ft_strlen(*str);
+	idx = 0;
+	while (*(*str + idx))
+	{
+		if (*(*str + idx) == '\\')
+		{
+			idx++;
+			if (*(*str + idx) == '\n')
+				len -= 2;
+			idx++;
+		}
+		if (*(*str + idx) != '\0' && *(*str + idx) != '\\')
+			idx++;
+	}
+	to_fr = *str;
+	*str = strdup_skip_bsnl(*str, len);
+	free(to_fr);
+	to_fr = NULL;
 }
 
 int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
@@ -109,13 +87,14 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 		cmd->params[p_idx] = ft_strdup("");
 	else if (is_charset(cmdset[0], "'"))
 	{
-		len = get_quote_len(&cmdset[1], "'", '\\');
-		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
+		len = get_quote_len(&cmdset[1], "'", '\0');
+		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\0');
 	}
 	else if (is_charset(cmdset[0], "\""))
 	{
 		len = get_quote_len(&cmdset[1], "\"", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
+		rm_bsnl(&cmd->params[p_idx]);
 	}
 	else
 	{
