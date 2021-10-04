@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 18:06:28 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 15:42:46 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:42:37 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln)
 
 	if (!read_internal_prompt(&one_ln, ln_read, 0))
 	{
-		if (g_exit_code == -42)
+		if (g_exit_code == INT_PRPT_SIGINT)
 			g_exit_code = GEN_ERR;
 		free(one_ln);
 		*cmds_hd = NULL;
@@ -32,7 +32,7 @@ void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln)
 		|| !check_rdr_syntax((*cmds_hd)->next)
 		|| !check_syntax_combination((*cmds_hd)->next))
 	{
-		g_exit_code = 258;
+		g_exit_code = SYNTAX_ERR;
 		free_cmds_lst(cmds_hd);
 		return ;
 	}

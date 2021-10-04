@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 15:43:01 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:23:57 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int		read_internal_prompt(char **one_ln, char *ln_read, int read_cnt);
 /* utils_main */
 
 char	*strchr_skip_bslash(const char *s, int c);
-void	is_qmbt(char *one_ln, char **qmbt);
+void	is_qm(char *one_ln, char **qm);
 int		end_by_pipe(char *one_ln);
 int		end_by_esc(char **one_ln);
 
 /* split */
 
 void	split_by_symbols(t_cmds *cmds_hd, char *s);
-void	skip_qmbt(char *str, int *i, char *charset);
+void	skip_qm(char *str, int *i, char *charset);
 void	get_end_idx(char *s, int *i, char *charset, int flag);
 int		rdr_after_fd(char *s, int *i);
 int		check_front_whitespace(char *str, int len);

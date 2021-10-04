@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:32:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 15:37:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:25:19 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ char	*strchr_skip_bslash(const char *s, int c)
 	return ((char *)str);
 }
 
-void	is_qmbt(char *one_ln, char **qmbt)
+void	is_qm(char *one_ln, char **qm)
 {
-	*qmbt = strchr_skip_bslash(one_ln, '`');
-	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '\'')
-			&& *qmbt > strchr_skip_bslash(one_ln, '\'')))
-		*qmbt = strchr_skip_bslash(one_ln, '\'');
-	if (!(*qmbt) || (strchr_skip_bslash(one_ln, '"')
-			&& *qmbt > strchr_skip_bslash(one_ln, '"')))
-		*qmbt = strchr_skip_bslash(one_ln, '"');
+	*qm = NULL;
+	if (!(*qm) || (strchr_skip_bslash(one_ln, '\'')
+			&& *qm > strchr_skip_bslash(one_ln, '\'')))
+		*qm = strchr_skip_bslash(one_ln, '\'');
+	if (!(*qm) || (strchr_skip_bslash(one_ln, '"')
+			&& *qm > strchr_skip_bslash(one_ln, '"')))
+		*qm = strchr_skip_bslash(one_ln, '"');
 }
 
 static void	check_pipe_front(char *trim, int *val)
