@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 21:31:30 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 23:38:12 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 17:22:59 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	skip_after_rdr(char *s, int *i)
 {
 	while (is_charset(*(s + *i), " \t\n"))
 		(*i)++;
-	while (*(s + *i) && !is_charset(*(s + *i), "\"'`<>&;| \t\n"))
+	while (*(s + *i) && !is_charset(*(s + *i), "\"'<>&;| \t\n"))
 	{
 		if (*(s + *i) == '\\')
 		{
 			(*i)++;
-			if (is_charset(*(s + *i), "\\\"`'<>&;|"))
+			if (is_charset(*(s + *i), "\\\"'<>&;|"))
 				(*i)++;
 		}
 		else if (*(s + *i))
@@ -43,7 +43,7 @@ static void	skip_after_rdr(char *s, int *i)
 	}
 	while (*(s + *i) && is_charset(*(s + *i), "\"'"))
 	{
-		skip_qmbt(s, i, "\"'`");
+		skip_qm(s, i, "\"'");
 		(*i)++;
 	}
 	while (*(s + *i) && !is_charset(*(s + *i), "<>& \n\t"))
@@ -57,9 +57,6 @@ int	check_valid_rdr_symbols(char *s, int i)
 	if (ft_strlen(s + i) >= 2
 		&& *(s + i) == '&' && !is_charset(*(s + i + 1), "<>"))
 		return (0);
-	else if (ft_strlen(s + i) >= 2
-		&& *(s + i) == '&' && is_charset(*(s + i + 1), "<>"))
-		return (1);
 	else if (is_charset(*(s + i), "<>") || (ft_strlen(s + i) >= 2
 			&& *(s + i) == '&' && is_charset(*(s + i + 1), "<>")))
 		return (1);

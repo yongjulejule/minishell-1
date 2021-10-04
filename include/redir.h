@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 14:01:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 16:23:44 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,6 @@ int		rdr_err(char *str_1, char *str_2, char *err_msg, int exit_status);
 /* Sub_env */
 
 void	sub_env(char **params, char **ft_envp);
-void	skip_qmbt(char *str, int *i, char *charset);
+void	skip_qm(char *str, int *i, char *charset);
 
 #endif

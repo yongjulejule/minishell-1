@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 11:33:48 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:21:43 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 extern int	g_exit_code;
 
-static int	cnt_skip_qmbt(char *one_ln, char *qmbt)
+static int	cnt_skip_qm(char *one_ln, char *qm)
 {
 	size_t	i;
 	int		cnt;
 
 	cnt = 0;
 	i = 0;
-	while (qmbt && *(one_ln + i))
+	while (qm && *(one_ln + i))
 	{
-		if (qmbt && *(one_ln + i) == '\\')
+		if (qm && *(one_ln + i) == '\\')
 		{
 			i++;
-			if (*qmbt == '"'
-				&& (*(one_ln + i) == *qmbt || *(one_ln + i) == '\\'))
+			if (*qm == '"'
+				&& (*(one_ln + i) == *qm || *(one_ln + i) == '\\'))
 				i++;
 		}
-		if (*(one_ln + i) == *qmbt)
+		if (*(one_ln + i) == *qm)
 			cnt++;
 		if (cnt && cnt % 2 == 0)
 		{
 			cnt = 0;
-			is_qmbt(one_ln + ++i, &qmbt);
+			is_qm(one_ln + ++i, &qm);
 		}
 		else if (*(one_ln + i) != '\0' && *(one_ln + i) != '\\')
 			i++;
@@ -63,14 +63,14 @@ static void	internal_prompt_sig_handler(int sig)
 static int	check_line_end(char **one_ln, char *ln)
 {
 	char	*to_free;
-	char	*qmbt;
+	char	*qm;
 	int		cnt;
 
 	to_free = *one_ln;
 	*one_ln = ft_strjoin(*one_ln, ln);
 	free(to_free);
-	is_qmbt(*one_ln, &qmbt);
-	cnt = cnt_skip_qmbt(*one_ln, qmbt);
+	is_qm(*one_ln, &qm);
+	cnt = cnt_skip_qm(*one_ln, qm);
 	if (cnt % 2)
 	{
 		to_free = *one_ln;

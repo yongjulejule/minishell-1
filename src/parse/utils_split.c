@@ -6,26 +6,26 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:34:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 11:36:48 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 17:56:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-void	skip_qmbt(char *str, int *i, char *charset)
+void	skip_qm(char *str, int *i, char *charset)
 {
-	char	qmbt;
+	char	qm;
 
-	qmbt = *(str + *i);
-	if (is_charset(qmbt, charset))
+	qm = *(str + *i);
+	if (is_charset(qm, charset))
 	{
 		(*i)++;
-		while (*(str + *i) && *(str + *i) != qmbt)
+		while (*(str + *i) && *(str + *i) != qm)
 		{
 			if (*(str + *i) == '\\')
 			{
 				(*i)++;
-				if ((qmbt == '"' && *(str + *i) == qmbt)
+				if ((qm == '"' && *(str + *i) == qm)
 					|| *(str + *i) == '\\')
 					(*i)++;
 			}
@@ -37,23 +37,28 @@ void	skip_qmbt(char *str, int *i, char *charset)
 
 static void	get_end_not_bs(char *s, int *i)
 {
-	char	qmbt;
+	char	qm;
 
-	qmbt = *(s + (*i)++);
-	while (is_charset(qmbt, "\"'`")
-		&& *(s + *i) && *(s + *i) != qmbt)
+	qm = *(s + (*i)++);
+	while (is_charset(qm, "\"'")
+		&& *(s + *i) && *(s + *i) != qm)
 	{
 		if (*(s + *i) == '\\')
+		{
 			(*i)++;
-		(*i)++;
+			if (qm != '\'')
+				(*i)++;
+		}
+		else if (*(s + *i) != '\0')
+			(*i)++;
 	}
-	if (*(s + *i) && is_charset(qmbt, "\"'`"))
+	if (*(s + *i) && is_charset(qm, "\"'"))
 		(*i)++;
 }
 
 void	get_end_idx(char *s, int *i, char *charset, int flag)
 {
-	int		k;
+	int	k;
 
 	while (*(s + *i) && !is_charset(*(s + *i), charset))
 	{
@@ -65,7 +70,7 @@ void	get_end_idx(char *s, int *i, char *charset, int flag)
 		else
 		{
 			(*i)++;
-			if (is_charset(*(s + *i), "\\;|'\"`<>&"))
+			if (is_charset(*(s + *i), "\\;|'\"<>&"))
 				(*i)++;
 		}
 	}

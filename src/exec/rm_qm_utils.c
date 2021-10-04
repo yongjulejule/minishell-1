@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:36:13 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 11:36:14 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:24:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	flag_qm(char *str, int *i, int *cp_flag)
 	int		first;
 
 	first = *i;
-	skip_qmbt(str, i, "\"'");
+	skip_qm(str, i, "\"'");
 	cp_flag[first] = IS_QM;
 	cp_flag[*i] = IS_QM;
 	to_free = ft_strndup(str + first, *i - first + 1);
