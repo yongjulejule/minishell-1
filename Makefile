@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/04 15:43:21 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/04 17:39:17 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \
 				parse_main.c\
 				internal_prompt.c\
+				check_line_end.c\
 				parse_split.c\
 				split_rdr.c\
 				parse_lst.c\
