@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:14:57 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 12:47:12 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 13:22:48 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_quote_len(char *str, char *charset, char ign)
 		return (0);
 	while (!is_charset(*(str + idx), charset) && str[idx] != '\0')
 	{
-		if (ign != '\0' && is_charset(*(str + idx + 1), "\"\\"))
+		if (ign != '\0' && is_charset(*(str + idx + 1), "\"\\$"))
 			idx += 2;
 		else
 			idx++;

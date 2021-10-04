@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 12:45:08 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 13:23:06 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 	while (idx < len)
 	{
 		if (str[start] != c
-			|| (str[start] == c && !is_charset(str[start + 1], "\"\\")))
+			|| (str[start] == c && !is_charset(str[start + 1], "\"\\$")))
 			ret[idx++] = str[start];
 		else if (str[start + 1] == c)
 			ret[idx++] = str[start++ + 1];
