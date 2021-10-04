@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:20 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 14:43:46 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:45:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*prefix_dir_to_cmd(t_args *args, char *param, int nth_path)
 	char		*tmp_cmd;
 
 	if (ft_strchr(param, '/'))
-		return ft_strdup(param);
+		return (ft_strdup(param));
 	tmpstr = ft_strjoin(args->env_path[nth_path], "/");
 	tmp_cmd = ft_strjoin(tmpstr, param);
 	free(tmpstr);

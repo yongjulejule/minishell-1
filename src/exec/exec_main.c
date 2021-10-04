@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 16:22:10 by jun               #+#    #+#             */
-/*   Updated: 2021/10/04 14:34:47 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:45:19 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	process_to_execute(t_cmds *cmds, char ***envp, int cmd_cnt)
 	args->cnt = cmd_cnt;
 	args->cmd = (t_cmd *)ft_calloc(args->cnt + 1, sizeof(t_cmd));
 	build_structure(cmds, envp, args);
-//	printf("%s\n", args->cmd[0].params[0]);
 	if (args->cnt == 1 && args->cmd[0].builtin != notbuiltin)
 		execute_builtin(args, envp);
 	else
