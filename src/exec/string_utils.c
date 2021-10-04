@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 12:27:40 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 12:45:08 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c)
 	while (idx < len)
 	{
 		if (str[start] != c
-			|| (str[start] == c && is_charset(str[start + 1], " \n\t")))
+			|| (str[start] == c && !is_charset(str[start + 1], "\"\\")))
 			ret[idx++] = str[start];
 		else if (str[start + 1] == c)
 			ret[idx++] = str[start++ + 1];
@@ -52,7 +52,7 @@ static char	*strdup_skip_bsnl(char *s, size_t len)
 	return (ret);
 }
 
-static void	rm_bsnl_replace_bstab(char **str)
+static void	rm_bsnl(char **str)
 {
 	int		idx;
 	size_t	len;
@@ -65,9 +65,7 @@ static void	rm_bsnl_replace_bstab(char **str)
 		if (*(*str + idx) == '\\')
 		{
 			idx++;
-			if (*(*str + idx) == '\t')
-				*(*str + idx) = ' ';
-			else if (*(*str + idx) == '\n')
+			if (*(*str + idx) == '\n')
 				len -= 2;
 			idx++;
 		}
@@ -96,7 +94,7 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 	{
 		len = get_quote_len(&cmdset[1], "\"", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 1, len, '\\');
-		rm_bsnl_replace_bstab(&cmd->params[p_idx]);
+		rm_bsnl(&cmd->params[p_idx]);
 	}
 	else
 	{
