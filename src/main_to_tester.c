@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 11:45:44 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:26:44 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_launch_minishell(argv[2], envp);
 	else
 	{
+		ft_envp = esh_pre_process(argc, argv, envp);
 		while (1)
 		{
 			unexp_eof_sig_handler();
@@ -55,7 +56,6 @@ int	main(int argc, char *argv[], char *envp[])
 			line_read = readline("🐘 esh > ");
 			eof_exit(line_read);
 			add_history(rl_line_buffer);
-			line_read = argv[2];
 			parse_line_main(&cmdlst, line_read, ft_strdup(""));
 			if (cmdlst && cmdlst->cmd && *cmdlst->cmd)
 				exec_cmd_main(cmdlst, &ft_envp);
