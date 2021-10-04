@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 23:31:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 18:50:51 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_rdr(char *str)
 		return (0);
 	while (ft_isdigit(*str))
 		str++;
-	if (is_charset(*str, "<>&"))
+	if (is_charset(*str, "<>"))
 		return (1);
 	else
 		return (0);
