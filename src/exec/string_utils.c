@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 14:45:02 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/04 16:08:59 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 	{
 		len = get_wspace_len(&cmdset[0], "\t\n ", '\\');
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
+		len--;
 	}
 	if (!len)
 		len = 2;
-	return (len);
+	return (len + 1);
 }
