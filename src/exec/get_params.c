@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_params.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 16:09:53 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/05 14:41:16 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ static int	count_params(char *cmdset)
 	origin_size = ft_strlen(cmdset);
 	while (start < origin_size)
 	{
-		size++;
 		while (is_charset(cmdset[start], "\t\n "))
 			start++;
+		if (!cmdset[start])
+			break ;
+		size++;
 		if (is_charset(cmdset[start], "'"))
 			len = get_quote_idx(&cmdset[start + 1], "'", '\\') + start + 1;
 		else if (is_charset(cmdset[start], "\""))
@@ -38,41 +40,46 @@ static int	count_params(char *cmdset)
 	return (size);
 }
 
-static void	get_each_params(char *cmdset, t_cmd *cmd, char **envp)
+static void	sub_env_rm_qm_params(char **cmdset, t_args *args)
+{
+	if (ft_strchr(*cmdset, '$'))
+	{
+		sub_env(cmdset, args->envp);
+		if (ft_strlen(*cmdset) == 1 && **cmdset == ' ')
+			args->e_flag = 1;
+	}
+	if (ft_strchrset(*cmdset, "\"'"))
+		rm_unnecessary_qm(cmdset);
+}
+
+static void	get_each_params(char **cmdset, t_args *args, int idx)
 {
 	int	start;
 	int	len;
 	int	size;
 	int	p_idx;
-	int	rm_qm_flag;
 
-	rm_qm_flag = 0;
-	if (ft_strchr(cmdset, '$'))
-		sub_env(&cmdset, envp);
-	if (ft_strchrset(cmdset, "\"'"))
-		rm_unnecessary_qm(&cmdset, &rm_qm_flag);
-	size = count_params(cmdset);
-	cmd->params = (char **)ft_calloc(size + 1, sizeof(char *));
+	sub_env_rm_qm_params(&cmdset[idx], args);
+	size = count_params(cmdset[idx]);
+	args->cmd[idx].params = (char **)ft_calloc(size + 1, sizeof(char *));
 	start = 0;
 	p_idx = 0;
 	while (p_idx < size)
 	{
-		while (is_charset(cmdset[start], "\t\n "))
+		while (is_charset(cmdset[idx][start], "\t\n "))
 			start++;
-		len = make_string(&cmdset[start], cmd, p_idx);
+		len = make_string(&cmdset[idx][start], &args->cmd[idx], p_idx);
 		start = len + start + 1;
 		p_idx++;
 	}
-	if (rm_qm_flag)
-		free(cmdset);
 }
 
-static void	sub_env_rm_qm(t_cmds *cmdlst, char **envp)
+static void	sub_env_rm_qm_rdr(t_cmds *cmdlst, char **envp)
 {
 	if (ft_strchr(cmdlst->cmd, '$'))
 		sub_env(&cmdlst->cmd, envp);
 	if (ft_strchrset(cmdlst->cmd, "\"'"))
-		rm_unnecessary_qm(&cmdlst->cmd, NULL);
+		rm_unnecessary_qm(&cmdlst->cmd);
 }
 
 void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
@@ -83,14 +90,14 @@ void	get_params(t_args *args, char **cmds, t_cmds *cmdlst)
 	cur = 0;
 	idx = -1;
 	while (cmds[++idx])
-		get_each_params(cmds[idx], &args->cmd[idx], args->envp);
+		get_each_params(cmds, args, idx);
 	while (cmdlst && cmdlst->cmd[0] != ';')
 	{
 		if (cmdlst->cmd[0] != '|')
 		{
 			if (is_rdr(cmdlst->cmd))
 			{
-				sub_env_rm_qm(cmdlst, args->envp);
+				sub_env_rm_qm_rdr(cmdlst, args->envp);
 				get_rdr_info(cmdlst->cmd, &args->cmd[cur]);
 			}
 		}

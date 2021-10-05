@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 16:23:45 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 14:14:35 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_cmd
 typedef struct s_args
 {
 	int				cnt;
+	int				e_flag;
 	char			**env_path;
 	char			**envp;
 	t_cmd			*cmd;
@@ -182,7 +183,7 @@ int		s_isdir(int mode);
 
 void	sub_env(char **params, char **ft_envp);
 void	skip_qm(char *str, int *i, char *charset);
-void	rm_unnecessary_qm(char **param, int *flag);
+void	rm_unnecessary_qm(char **param);
 char	*strndup_with_flag(const char *s1, int *cp_flag, size_t n);
 char	*get_first_word(char *str, int *cp_flag, size_t len);
 void	flag_cp_char(char *str, int *cp_flag);

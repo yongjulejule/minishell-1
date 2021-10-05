@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   internal_prompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 16:21:43 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 15:56:37 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 extern int	g_exit_code;
 
-static int	cnt_skip_qm(char *one_ln, char *qm)
+static int	cnt_skip_qm(char *one_ln, char *qm, size_t i)
 {
-	size_t	i;
-	int		cnt;
+	int	cnt;
 
 	cnt = 0;
 	i = 0;
 	while (qm && *(one_ln + i))
 	{
-		if (qm && *(one_ln + i) == '\\')
+		if (cnt == 0 && *(one_ln + i) == '\\' && *(one_ln + i + 1) == '\'')
+			i += 2;
+		else if (qm && *(one_ln + i) == '\\')
 		{
 			i++;
-			if (*qm == '"'
-				&& (*(one_ln + i) == *qm || *(one_ln + i) == '\\'))
+			if ((*qm == '"' && *(one_ln + i) == *qm) || *(one_ln + i) == '\\')
 				i++;
 		}
 		if (*(one_ln + i) == *qm)
@@ -70,7 +70,7 @@ static int	check_line_end(char **one_ln, char *ln)
 	*one_ln = ft_strjoin(*one_ln, ln);
 	free(to_free);
 	is_qm(*one_ln, &qm);
-	cnt = cnt_skip_qm(*one_ln, qm);
+	cnt = cnt_skip_qm(*one_ln, qm, 0);
 	if (cnt % 2)
 	{
 		to_free = *one_ln;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 16:23:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 14:25:32 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static void	join_front_env_back(char **ln, char *front, char *back, char *env)
 {
 	char	*to_free;
 
+	to_free = *ln;
 	*ln = ft_strjoin(front, env);
+	free(to_free);
 	to_free = *ln;
 	*ln = ft_strjoin(*ln, back);
 	free(to_free);

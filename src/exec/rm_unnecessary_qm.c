@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_unnecessary_qm.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 15:12:27 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 14:14:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ static void	rm_or_expand_qm(char **param, int *cp_flag, int is_exp, int len)
 	char	qm;
 	int		first;
 	int		second;
+	char	*to_fr;
 
+	to_fr = *param;
 	*param = strndup_with_flag(*param, cp_flag, len);
+	free(to_fr);
 	second = 0;
 	while (*(*param + second) && strchrset_skip_bs(*param + second, "\"'"))
 	{
@@ -62,7 +65,7 @@ static void	rm_or_expand_qm(char **param, int *cp_flag, int is_exp, int len)
 	}
 }
 
-void	rm_unnecessary_qm(char **param, int *flag)
+void	rm_unnecessary_qm(char **param)
 {
 	char	*first_wd;
 	char	*to_fr;
@@ -70,8 +73,6 @@ void	rm_unnecessary_qm(char **param, int *flag)
 	int		is_exp;
 	size_t	len;
 
-	if (flag)
-		*flag = 1;
 	len = ft_strlen(*param);
 	cp_flag = (int *)ft_calloc(len, sizeof(int));
 	flag_cp_char(*param, cp_flag);
@@ -82,7 +83,5 @@ void	rm_unnecessary_qm(char **param, int *flag)
 	free(first_wd);
 	to_fr = *param;
 	rm_or_expand_qm(param, cp_flag, is_exp, len);
-	if (!flag)
-		free(to_fr);
 	free(cp_flag);
 }
