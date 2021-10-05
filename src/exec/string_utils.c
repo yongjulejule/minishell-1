@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 16:37:23 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 15:08:28 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static void	rm_bsnl(char **str)
 			idx++;
 			if (*(*str + idx) == '\n')
 				len -= 2;
-			idx++;
+			if (*(*str + idx) != '\0')
+				idx++;
 		}
 		if (*(*str + idx) != '\0' && *(*str + idx) != '\\')
 			idx++;

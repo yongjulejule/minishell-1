@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_command.c                                    :+:      :+:    :+:   */
+/*   parse_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:30:42 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 18:50:51 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/05 13:51:25 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	build_structure(t_cmds *cmdlst, char ***envp, t_args *args)
 	args->envp = *envp;
 	cmds = cmdlst_to_cmdarr(cmdlst, args);
 	get_params(args, cmds, cmdlst);
-	make_cmds(args);
+	if (args->e_flag == 0)
+		make_cmds(args);
 	free_double_ptr((void ***)&cmds);
 }
