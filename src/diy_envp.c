@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   diy_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 20:30:17 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 15:10:05 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/05 13:12:58 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_get_envp(char **ft_envp, char *var)
 		if (ft_strchr(ft_envp[i], '='))
 		{
 			eq_idx = ft_strchr(ft_envp[i], '=') - ft_envp[i];
-			if (!ft_strncmp(ft_envp[i], var, eq_idx))
+			if (!ft_strncmp(ft_envp[i], var, ft_strlen(var)))
 				return (ft_envp[i] + eq_idx + 1);
 		}
 		else if (!ft_strcmp(ft_envp[i], var))
