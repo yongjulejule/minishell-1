@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 17:20:06 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:35:34 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	error_before_execve(t_args *args, int idx)
 		is_error(NULL, args->cmd[idx].params[0], " : command not found",
 			CMD_ERR);
 	tmp = ft_get_envp(args->envp, "PATH");
-	if (*tmp && !ft_strchr(args->cmd[idx].params[0], '/'))
+	if (tmp && *tmp && !ft_strchr(args->cmd[idx].params[0], '/'))
 		is_error(args->cmd[idx].params[0], ": ", "command not found", CMD_ERR);
 	stat(args->cmd[idx].params[0], &mode);
 	if (s_isdir(mode.st_mode))
