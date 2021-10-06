@@ -6,14 +6,14 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:48 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 11:42:07 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:46:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/* SECTION - include .h files */
+/* Include Libraries */
 
 # define READLINE_LIBRARY 1
 # include <sys/errno.h>
@@ -26,7 +26,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* user define */
+/* User Defines */
 
 # define BACKUP_FD 255
 # define ESH_ASCII "                                                  _.,:\
@@ -65,23 +65,15 @@ __  _  _  ____  __    __   \n\
 (____)\\____/(____)(__)  \\_)(_/\\_/\\_/\\_)\
 __) (__)   (____/\\_)(_/(____)\\____/\\____/\n\n"
 
-/* function declarations */
+/* FUNCTIONS */
 
-/* utils_main */
-
-char	**esh_pre_process(int argc, char *argv[], char *envp[]);
-void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln);
-int		exec_cmd_main(t_cmds *cmds, char ***envp);
-void	unexp_eof_sig_handler(void);
-void	eof_exit(char *line_read);
-
-/* main_signal */
+/* Signal */
 
 void	main_sig_handler(int signal);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 void	unexp_eof_sigint_handler(int sig);
 
-/* diy envp */
+/* Environment Variables */
 
 char	**dup_envp(char *envp[], int set_len);
 char	*ft_get_envp(char **ft_envp, char *var);
@@ -89,5 +81,13 @@ int		exprt(const char *path, char *const argv[], char ***const envp);
 int		unset(const char *path, char *const argv[], char ***const envp);
 void	reset_env(char ***envp);
 void	sh_next_level(char ***envp);
+
+/* Utils */
+
+char	**esh_pre_process(int argc, char *argv[], char *envp[]);
+void	parse_line_main(t_cmds **cmds_hd, char *ln_read, char *one_ln);
+int		exec_cmd_main(t_cmds *cmds, char ***envp);
+void	unexp_eof_sig_handler(void);
+void	eof_exit(char *line_read);
 
 #endif
