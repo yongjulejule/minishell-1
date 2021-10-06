@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 17:07:57 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 14:26:45 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	rdr_read(t_rdr *rdr)
 
 	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		return (rdr_err(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE));
+				": bad file descriptor", CUSTOM_ERR));
 	if (rdr->info == rd_heredoc)
 	{
 		make_tmp_heredoc(rdr);
@@ -55,7 +55,7 @@ static int	rdr_read(t_rdr *rdr)
 	else
 		fd = open(rdr->file, O_RDONLY);
 	if (fd < 0)
-		return (rdr_err(strerror(errno), ": ", rdr->file, EXIT_FAILURE));
+		return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 	if (dup2(fd, rdr->fd[0]) == -1)
 		return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
 	close(fd);
@@ -68,7 +68,7 @@ static int	rdr_write(t_rdr *rdr)
 
 	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		return (rdr_err(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE));
+				": bad file descriptor", CUSTOM_ERR));
 	if (rdr->info == wr_to_file)
 		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (rdr->info == wr_append)
@@ -77,14 +77,14 @@ static int	rdr_write(t_rdr *rdr)
 	{
 		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (fd < 0)
-			return (rdr_err(strerror(errno), ": ", rdr->file, EXIT_FAILURE));
+			return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 		if (dup2(fd, rdr->fd[0]) == -1)
 			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
 		if (dup2(fd, rdr->fd[1]) == -1)
 			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
 	}
 	if (fd < 0)
-		return (rdr_err(strerror(errno), ": ", rdr->file, EXIT_FAILURE));
+		return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 	if (dup2(fd, rdr->fd[0]) == -1)
 		return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
 	close(fd);
@@ -97,10 +97,10 @@ static int	rdr_rdwr(t_rdr *rdr)
 
 	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		return (rdr_err(ft_itoa(rdr->fd[0]), NULL,
-				": bad file descriptor", EXIT_FAILURE));
+				": bad file descriptor", CUSTOM_ERR));
 	fd = open(rdr->file, O_RDWR | O_CREAT, 0644);
 	if (fd < 0)
-		return (rdr_err(strerror(errno), ": ", rdr->file, EXIT_FAILURE));
+		return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 	if (dup2(fd, rdr->fd[0]) == -1)
 		return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
 	if (fd != rdr->fd[0])
@@ -130,7 +130,7 @@ int	redirect_stream(t_cmd *cmd)
 						EXIT_FAILURE);
 			if (dup2(cmd->rdr->fd[1], cmd->rdr->fd[0]) == -1)
 				flag = rdr_err(ft_itoa(cmd->rdr->fd[1]), NULL,
-						": bad file descriptor", EXIT_FAILURE);
+						": bad file descriptor", CUSTOM_ERR);
 		}
 		cmd->rdr = cmd->rdr->next;
 	}
