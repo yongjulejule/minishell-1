@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 21:25:49 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 12:54:14 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	append_env_var(char ***envp, char *arg, int *n_idx)
 	int	k;
 
 	k = 0;
-	while (arg[k] && (arg[k] == '_' || ft_isalpha(arg[k])))
+	while (arg[k] && (arg[k] == '_' || ft_isalnum(arg[k])))
 		k++;
 	if (k && (!ft_strchr(arg, '=')
 			|| (ft_strchr(arg, '=') && arg[k] == '=')))

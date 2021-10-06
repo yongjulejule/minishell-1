@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/01 21:27:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 13:00:53 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 extern int	g_exit_code;
 
-static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val)
+static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val, int i)
 {
-	int	i;
-
 	while (av_lst)
 	{
-		i = -1;
-		while (av_lst->arg[++i])
+		if (av_lst->arg[0] != '_' && !ft_isalpha(av_lst->arg[0]))
 		{
-			if (av_lst->arg[i] != '_' && !ft_isalpha(av_lst->arg[i]))
+			exp_unset_invalid_arg_msg('u', av_lst->arg);
+			av_lst->flag = 0;
+		}
+		else
+		{
+			i = 0;
+			while (av_lst->arg[++i])
 			{
-				exp_unset_invalid_arg_msg('u', av_lst->arg);
-				av_lst->flag = 0;
-				break ;
+				if (av_lst->arg[i] != '_' && !ft_isalnum(av_lst->arg[i]))
+				{
+					exp_unset_invalid_arg_msg('u', av_lst->arg);
+					av_lst->flag = 0;
+					break ;
+				}
 			}
 		}
 		if (av_lst->arg[i] == '\0')
@@ -55,12 +61,11 @@ static void	find_matching_env(t_exp_arg *ev_lst, t_exp_arg *av_lst)
 			if (!ft_strcmp(cur_arg->arg, to_fr))
 			{
 				ev->flag = 0;
-				free(to_fr);
 				break ;
 			}
-			free(to_fr);
 			cur_arg = cur_arg->next;
 		}
+		free(to_fr);
 		ev = ev->next;
 	}
 }
@@ -120,7 +125,7 @@ int	unset(const char *path, char *const argv[], char ***const envp)
 	if (ft_strsetlen((char **)argv) > 1)
 	{
 		av_lst = argv_to_lst((char **)argv, 0);
-		check_unset_argv(av_lst->next, &cnt_val);
+		check_unset_argv(av_lst->next, &cnt_val, 0);
 		if (cnt_val)
 			unset_env_var(envp, av_lst);
 	}

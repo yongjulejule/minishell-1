@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 11:48:51 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 12:11:47 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static void	get_env_interval(char **ln, int *i, char **ft_envp)
 		k++;
 	if (k > 1)
 		recompose_ln_env(ln, *i, k - 1, ft_envp);
-	if (*(*ln + *i) != '$' || (k == 1 && *(*ln + *i) == '$'))
+	if (*(*ln + *i) != '\0'
+		&& (*(*ln + *i) != '$' || (k == 1 && *(*ln + *i) == '$')))
 		(*i)++;
 }
 
