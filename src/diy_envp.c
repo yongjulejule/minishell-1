@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 20:30:17 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 11:53:06 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 14:37:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	sh_next_level(char ***envp)
 	char	*next_level;
 
 	lvl = ft_get_envp(*envp, "SHLVL");
-	next_level = ft_itoa(ft_atoi(lvl) + 1);
+	if (!lvl)
+		next_level = ft_strdup("1");
+	else
+		next_level = ft_itoa(ft_atoi(lvl) + 1);
 	argv[0] = "export";
 	argv[1] = ft_strjoin("SHLVL=", next_level);
 	argv[2] = NULL;
@@ -43,6 +46,8 @@ void	reset_env(char ***envp)
 	argv[0] = "export";
 	exprt("export", argv, envp);
 	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 	tmp = ft_strjoin("INPUTRC=", cwd);
 	free(cwd);
 	argv[1] = ft_strjoin(tmp, "/.inputrc");
