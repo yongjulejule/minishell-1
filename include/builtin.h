@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:44:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 12:44:46 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void		append_env_var(char ***envp, char *arg, int *n_idx);
 t_exp_arg	*argv_to_lst(char **argv, int i);
 void		exp_unset_invalid_arg_msg(char c, char *str);
 char		*ft_get_envp(char **ft_envp, char *var);
+void		check_var_overlap(t_exp_arg *av_lst);
+void		check_exp_argv(t_exp_arg *av_lst, int *cnt_valid);
 
 /* Exp lst */
 

@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/06 11:58:36 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/06 12:44:59 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS_BLTIN		= $(addprefix $(SRCS_BLTIN_DIR), \
 				env.c\
 				exit.c\
 				export.c\
+				export_utils.c\
 				unset.c\
 				handle_error.c\
 				pwd.c\

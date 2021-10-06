@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/01 21:25:20 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 13:00:10 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,80 +14,57 @@
 
 extern int	g_exit_code;
 
-static void	check_var_overlap(t_exp_arg *av_lst)
+static int	get_cmp_len(char *arg, char *var, size_t *len)
 {
-	t_exp_arg	*cur;
-	t_exp_arg	*av_next;
-	char		*pos;
+	char	*pos_a;
+	char	*pos_v;
+	size_t	eq_idx_a;
+	size_t	eq_idx_v;
 
-	cur = av_lst->next;
-	while (cur)
-	{
-		av_next = cur->next;
-		while (av_next)
-		{
-			pos = ft_strchr(av_next->arg, '=');
-			if (!pos
-				&& !ft_strncmp(av_next->arg, cur->arg, ft_strlen(av_next->arg)))
-				av_next->flag = 0;
-			else if (pos
-				&& !ft_strncmp(av_next->arg, cur->arg, pos - av_next->arg))
-				cur->flag = 0;
-			av_next = av_next->next;
-		}
-		cur = cur->next;
-	}
+	pos_a = ft_strchr(arg, '=');
+	pos_v = ft_strchr(var, '=');
+	if (pos_a)
+		eq_idx_a = pos_a - arg;
+	else
+		eq_idx_a = ft_strlen(arg);
+	if (pos_v)
+		eq_idx_v = pos_v - var;
+	else
+		eq_idx_v = ft_strlen(var);
+	*len = eq_idx_v;
+	if (eq_idx_a > eq_idx_v)
+		*len = eq_idx_a;
+	if (pos_a)
+		return (1);
+	return (0);
 }
 
-static void	check_exp_argv(t_exp_arg *av_lst, int *cnt_valid)
+static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *i)
 {
 	t_exp_arg	*cur;
-	int			k;
+	int			pos;
+	size_t		len;
 
-	cur = av_lst->next;
-	while (cur)
-	{
-		k = 0;
-		while (cur->flag && cur->arg[k]
-			&& (cur->arg[k] == '_' || ft_isalpha(cur->arg[k])))
-			k++;
-		if (!k || (cur->arg[k] && cur->arg[k] != '='))
-		{
-			exp_unset_invalid_arg_msg('e', cur->arg);
-			cur->flag = 0;
-		}
-		else
-			(*cnt_valid)++;
-		cur = cur->next;
-	}
-}
-
-static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *idx)
-{
-	t_exp_arg	*cur;
-	char		*pos;
-
-	while (to_fr[++(*idx)])
+	len = 0;
+	while (to_fr[++(*i)])
 	{
 		cur = avs->next;
 		while (cur)
 		{
-			pos = ft_strchr(cur->arg, '=');
-			if (cur->flag && !pos
-				&& !ft_strncmp(cur->arg, to_fr[*idx], ft_strlen(cur->arg)))
+			pos = get_cmp_len(cur->arg, to_fr[*i], &len);
+			if (cur->flag && !pos && !ft_strncmp(cur->arg, to_fr[*i], len))
 				cur->flag = 0;
-			else if (cur->flag && pos
-				&& !ft_strncmp(cur->arg, to_fr[*idx], pos - cur->arg))
+			else if (cur->flag && pos && !ft_strncmp(cur->arg, to_fr[*i], len))
 				break ;
 			cur = cur->next;
 		}
 		if (cur && cur->flag)
 		{
-			*(*ev + *idx) = strdup_skip_qm(cur->arg, 0, 0);
+			*(*ev + *i) = strdup_skip_qm(cur->arg, 0, 0);
 			cur->flag = 0;
 		}
 		else
-			*(*ev + *idx) = ft_strdup(to_fr[*idx]);
+			*(*ev + *i) = ft_strdup(to_fr[*i]);
 	}
 }
 
