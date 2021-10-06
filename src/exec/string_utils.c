@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/05 15:08:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 11:29:44 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,5 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx)
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
 		len--;
 	}
-	if (!len)
-		len = 2;
 	return (len + 1);
 }
