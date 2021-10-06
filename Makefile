@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/06 11:53:45 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/06 11:58:36 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,20 +128,10 @@ SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 				)
 
 OBJS_MAN		= ${SRCS_MAN:%.c=%.o}
-
 OBJS_BONUS		= ${SRCS_BONUS:%.c=%.o}
+OBJ_FILES		= $(OBJS_MAN)
 
-ifdef WITH_BONUS
-	OBJ_FILES = $(OBJS_BONUS)
-else
-	OBJ_FILES = $(OBJS_MAN)
-endif
-
-ifdef WITH_BONUS
-	INC_DIR = $(INC_DIR_BONUS)
-else
-	INC_DIR = $(INC_DIR_MAN)
-endif
+INC_DIR			= $(INC_DIR_MAN)
 
 ######################### Color #########################
 GREEN="\033[32m"
