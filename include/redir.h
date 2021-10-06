@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:30:17 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 14:21:04 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define PIPE_RD 0
 # define PIPE_WR 1
 # define BACKUP_FD 255
+# define CUSTOM_ERR 42
 
 typedef struct s_cmds
 {
