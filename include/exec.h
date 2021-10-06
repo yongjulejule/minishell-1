@@ -6,20 +6,18 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:08:18 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:28:58 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-/*Include Libraries*/
+/* Include Libraries */
 
 # include <sys/errno.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
 # include <unistd.h>
@@ -29,7 +27,7 @@
 # include "builtin.h"
 # include <readline/readline.h>
 
-/*User Defines*/
+/* User Defines */
 
 # define X_ERR 126
 # define CMD_ERR 127
@@ -109,9 +107,9 @@ typedef struct s_args
 	t_cmd			*cmd;
 }	t_args;
 
-/*FUNCTIONS*/
+/* FUNCTIONS */
 
-/*Signal handler in pipe*/
+/* Signal handler in pipe */
 
 void	signal_handle_wo_rl_prompt(int signal);
 void	signal_heredoc(int sig);
@@ -120,16 +118,16 @@ void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
 void	no_newline_for_sigquit(int sig);
 
-/*Check Validity*/
+/* Check Validity */
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param);
 
-/*Check Builtin*/
+/* Check Builtin */
 
 int		check_builtin(t_cmd *cmd, char *cmds);
 void	update_builtin_func(t_cmd *cmd);
 
-/*Redirecting*/
+/* Redirecting */
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
 void	connect_pipestream(t_args *args, int idx);
@@ -137,14 +135,14 @@ void	destroy_pipe(int *pipe_fd);
 int		redirect_stream(t_cmd *cmd);
 int		is_rdr(char *str);
 
-/*Preprocessing*/
+/* Preprocessing */
 
 void	build_structure(t_cmds *cmdlst, char ***envp, t_args *args);
 void	get_params(t_args *args, char **cmds, t_cmds *cmdlst);
 void	execute_subshell_main(t_args *args, int idx);
 void	execute_builtin(t_args *args, char ***ft_envp);
 
-/*Handle exit code*/
+/* Handle exit code */
 
 int		wstatus(int status);
 int		wifexited(int status);
@@ -154,24 +152,12 @@ int		wtermsig(int status);
 void	wait_process(t_args *args);
 int		get_exit_status(int status);
 
-/*Redirection in builtin*/
+/* Redirection in builtin */
 
 int		**backup_fd(t_rdr *rdr);
 void	retrive_fd(int **fds);
 
-/*Utils*/
-
-int		get_quote_len(char *str, char *charset, char ign);
-int		get_wspace_len(char *str, char *charset, char ign);
-int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
-char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
-void	free_arg_structure(t_args *args);
-void	free_double_ptr(void ***ptr);
-int		get_quote_idx(char *str, char *charset, char ign);
-int		get_wspace_idx(char *str, char *charset, char ign);
-char	*ft_get_envp(char **ft_envp, char *var);
-
-/*File Stat*/
+/* File Stat */
 
 int		s_isdir(int mode);
 
@@ -185,5 +171,17 @@ char	*get_first_word(char *str, int *cp_flag, size_t len);
 void	flag_cp_char(char *str, int *cp_flag);
 char	*strchr_skip_bslash(const char *s, int c);
 int		check_valid_rdr_symbols(char *s, int i);
+
+/* Utils */
+
+int		get_quote_len(char *str, char *charset, char ign);
+int		get_wspace_len(char *str, char *charset, char ign);
+int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
+char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
+void	free_arg_structure(t_args *args);
+void	free_double_ptr(void ***ptr);
+int		get_quote_idx(char *str, char *charset, char ign);
+int		get_wspace_idx(char *str, char *charset, char ign);
+char	*ft_get_envp(char **ft_envp, char *var);
 
 #endif

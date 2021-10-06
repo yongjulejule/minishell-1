@@ -6,27 +6,26 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:13:10 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:30:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIR_H
 # define REDIR_H
 
-/*Include Libraries*/
+/* Include Libraries */
 
 # include <sys/errno.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <string.h>
-# include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
 # include "libft.h"
 # include "builtin.h"
 # include <readline/readline.h>
 
-/*User Defines*/
+/* User Defines */
 
 # define PIPE_RD 0
 # define PIPE_WR 1
@@ -97,14 +96,14 @@ typedef struct s_args
 	t_cmd			*cmd;
 }	t_args;
 
-/*FUNCTIONS*/
+/* FUNCTIONS */
 
-/*Signal handler in redir*/
+/* Signal handler in redir */
 
 void	signal_heredoc(int sig);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 
-/*Redirecting*/
+/* Redirecting */
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
 void	rdr_write_info(char *rdr, char *line, t_cmd *cmd);
@@ -118,16 +117,16 @@ void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
 
-/*Utils*/
+/* Sub_env */
+
+void	sub_env(char **params, char **ft_envp);
+void	skip_qm(char *str, int *i, char *charset);
+
+/* Utils */
 
 int		get_quote_len(char *str, char *charset, char ign);
 int		get_wspace_len(char *str, char *charset, char ign);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 int		rdr_err(char *str_1, char *str_2, char *err_msg, int exit_status);
-
-/* Sub_env */
-
-void	sub_env(char **params, char **ft_envp);
-void	skip_qm(char *str, int *i, char *charset);
 
 #endif

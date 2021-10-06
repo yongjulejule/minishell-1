@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/05 16:35:34 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 11:18:42 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	error_after_execve(t_args *args, int idx)
 				"command not found", CMD_ERR);
 	}
 	else if (errno == ENOEXEC)
-		is_error(NULL, NULL, strerror(errno), 2);
+		is_error(NULL, NULL, strerror(errno), FMT_ERR);
 	else
 		is_error(args->cmd[idx].params[0], " :", strerror(errno), EXIT_FAILURE);
 }
