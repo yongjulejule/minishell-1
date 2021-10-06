@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   diy_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 20:30:17 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/05 13:12:58 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 11:53:06 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ void	reset_env(char ***envp)
 
 char	*ft_get_envp(char **ft_envp, char *var)
 {
-	int	set_len;
-	int	eq_idx;
-	int	i;
+	int		set_len;
+	int		i;
+	size_t	eq_idx;
+	size_t	len;	
 
 	set_len = ft_strsetlen(ft_envp);
 	i = -1;
@@ -64,7 +65,10 @@ char	*ft_get_envp(char **ft_envp, char *var)
 		if (ft_strchr(ft_envp[i], '='))
 		{
 			eq_idx = ft_strchr(ft_envp[i], '=') - ft_envp[i];
-			if (!ft_strncmp(ft_envp[i], var, ft_strlen(var)))
+			len = eq_idx;
+			if (ft_strlen(var) > eq_idx)
+				len = ft_strlen(var);
+			if (!ft_strncmp(ft_envp[i], var, len))
 				return (ft_envp[i] + eq_idx + 1);
 		}
 		else if (!ft_strcmp(ft_envp[i], var))
