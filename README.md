@@ -30,7 +30,6 @@
 
   - /root
     - /includes
-      - 세부 디렉토리
     - /src
       - parse
       - exec
@@ -42,8 +41,10 @@
   - [ghan](https://github.com/42ghan)
     - signal handling
     - basic terminal structure
+	- builtin command
   - [yongjule](github.com/yongjulejule)
     - execute command
+	- redirections
 
 ---
 

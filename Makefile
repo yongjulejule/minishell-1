@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/04 17:39:17 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/06 11:58:36 by yongjule         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ endif
 NAME			= minishell 
 
 SRCS_DIR		= ./src/
-#SRCS_DIR_BONUS = ./srcs/bonus/
 SRCS_RDR_DIR	= ./src/redir/
 SRCS_EXEC_DIR	= ./src/exec/
 SRCS_PARSE_DIR	= ./src/parse/
@@ -49,7 +48,6 @@ LIBFT_FLAGS		= -L./$(LIBFT_DIR) -lft
 LIBFT_FILE		= $(LIBFT_DIR)libft.a
 
 INC_DIR_MAN		= ./include/
-#INC_DIR_BONUS = ./incs/bonus/
 
 ifdef TEST
 	MAIN = main_to_tester.c
@@ -130,20 +128,10 @@ SRCS_BONUS		= $(addprefix $(SRCS_DIR_BONUS), \
 				)
 
 OBJS_MAN		= ${SRCS_MAN:%.c=%.o}
-
 OBJS_BONUS		= ${SRCS_BONUS:%.c=%.o}
+OBJ_FILES		= $(OBJS_MAN)
 
-ifdef WITH_BONUS
-	OBJ_FILES = $(OBJS_BONUS)
-else
-	OBJ_FILES = $(OBJS_MAN)
-endif
-
-ifdef WITH_BONUS
-	INC_DIR = $(INC_DIR_BONUS)
-else
-	INC_DIR = $(INC_DIR_MAN)
-endif
+INC_DIR			= $(INC_DIR_MAN)
 
 ######################### Color #########################
 GREEN="\033[32m"
@@ -174,10 +162,6 @@ $(NAME)			: 	$(LIBFT_FILE) $(OBJ_FILES)
 					@$(CC) $(CFLAGS) $(OBJ_FILES) $(RDLN_LFLAGS) $(RDLN_INC) $(LIBFT_FLAGS) -I$(INC_DIR) -o $@ 
 					@printf $(CUT)$(DOWN)$(CUT)
 					@echo $(CUT)$(UP)$(BOLD)$(L_PUPLE) 🚀 Elephant🐘 Shell Compiled 🥳$(RESET)
-
-.PHONY			:	bonus
-bonus			:
-					@make WITH_BONUS=1 $(NAME)
 
 %.o				: 	%.c
 					@$(CC) $(CFLAGS) $(RDLN_INC) -I$(INC_DIR) -c $< -o $@
@@ -210,9 +194,6 @@ ffclean			:	fclean
 
 .PHONY			:	re
 re				:	fclean all
-
-.PHONY			:	re_bonus
-re_bonus		:	fclean bonus
 
 .PHONY			:	debug
 debug			: 
