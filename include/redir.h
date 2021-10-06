@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 16:23:44 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 11:13:10 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 
 # define PIPE_RD 0
 # define PIPE_WR 1
-# define X_ERR 126
-# define CMD_ERR 127
-# define E_ACCESS 13
-# define E_NOCMD 2
 # define BACKUP_FD 255
 
 typedef struct s_cmds
@@ -76,12 +72,18 @@ typedef struct s_rdr
 	struct s_rdr	*next;
 }	t_rdr;
 
+typedef union u_exec_f
+{
+	int		(*exec)(const char *, char *const [], char *const []);
+	int		(*exec_env)(const char *, char *const [], char ***const);
+}	t_exec_f_u;
+
 typedef struct s_cmd
 {
 	pid_t			pid;
 	int				pipe_fd[2];
 	t_builtin		builtin;
-	int				(*exec)(const char *, char *const [], char *const []);
+	t_exec_f_u		exec_f;
 	char			**params;
 	t_rdr			*rdr;
 }	t_cmd;
@@ -89,6 +91,7 @@ typedef struct s_cmd
 typedef struct s_args
 {
 	int				cnt;
+	int				e_flag;
 	char			**env_path;
 	char			**envp;
 	t_cmd			*cmd;
@@ -114,13 +117,6 @@ t_rdr	*rdr_lst_newone(t_info info, char *file, char *limiter, int *fd);
 void	rdr_lst_add_back(t_rdr **rdr, t_rdr *newnode);
 char	*get_filename(const char *line);
 int		ft_atoi_fd(const char *str);
-int		redirect_stream(t_cmd *cmd);
-int		is_rdr(char *str);
-
-/*Redirection in builtin*/
-
-int		**backup_fd(t_rdr *rdr);
-void	retrive_fd(int **fds);
 
 /*Utils*/
 

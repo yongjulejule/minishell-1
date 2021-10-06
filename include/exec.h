@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/05 14:14:35 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 11:08:18 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 
 /*User Defines*/
 
-# define PIPE_RD 0
-# define PIPE_WR 1
 # define X_ERR 126
 # define CMD_ERR 127
 # define FMT_ERR 2
@@ -120,9 +118,7 @@ void	signal_heredoc(int sig);
 void	sigint_n_sigquit_handler(void (*sigfunction));
 void	reset_signal(int sig);
 void	multi_shell_erase_newline(int sig);
-void	ignore_signal(int sig);
 void	no_newline_for_sigquit(int sig);
-char	*ft_get_envp(char **ft_envp, char *var);
 
 /*Check Validity*/
 
@@ -136,7 +132,6 @@ void	update_builtin_func(t_cmd *cmd);
 /*Redirecting*/
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd);
-void	connect_pipe_fd(int *pipe_fd, int pipe_status);
 void	connect_pipestream(t_args *args, int idx);
 void	destroy_pipe(int *pipe_fd);
 int		redirect_stream(t_cmd *cmd);
@@ -174,6 +169,7 @@ void	free_arg_structure(t_args *args);
 void	free_double_ptr(void ***ptr);
 int		get_quote_idx(char *str, char *charset, char ign);
 int		get_wspace_idx(char *str, char *charset, char ign);
+char	*ft_get_envp(char **ft_envp, char *var);
 
 /*File Stat*/
 
