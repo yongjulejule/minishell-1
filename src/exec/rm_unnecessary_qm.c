@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_unnecessary_qm.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/05 14:14:11 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/06 18:34:38 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ static void	push_qm(char **str, int is_exp, int *first, int *second)
 	}
 }
 
+static int	skip_inner_qm(char *first, char *second)
+{
+	char	*to_fr;
+	int		ret;
+
+	ret = 0;
+	to_fr = ft_strndup(first, second - first);
+	if (ft_strchrset(to_fr, " \n\t"))
+		ret = 1;
+	free(to_fr);
+	return (ret);
+}
+
 static void	rm_or_expand_qm(char **param, int *cp_flag, int is_exp, int len)
 {
 	char	qm;
@@ -60,7 +73,8 @@ static void	rm_or_expand_qm(char **param, int *cp_flag, int is_exp, int len)
 		second = strchr_skip_bslash(*param + first + 1, qm) - *param;
 		if (*(*param + second) == '\0')
 			break ;
-		push_qm(param, is_exp, &first, &second);
+		if (skip_inner_qm(*param + first + 1, *param + second))
+			push_qm(param, is_exp, &first, &second);
 		second++;
 	}
 }
