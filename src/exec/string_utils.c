@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/07 16:49:59 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/07 17:01:15 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ static void	check_qm_validity(char *str, int *cnt, char qm, int *s_idx)
 		if (*(str + i) != '\0' && !(qm == '"' && *(str + i) == '\\'))
 			i++;
 	}
-	if (*(str + i + 1) == '\0' || is_charset(*(str + i + 1), "\" \n\t"))
+	if (*(str + i + 1) == '\0' || is_charset(*(str + i + 1), "'\" \n\t"))
 		return ;
-	while (*(str + i) && !is_charset(*(str + i), " \n\t"))
+	i += 1;
+	while (*(str + i) && !is_charset(*(str + i), "'\" \n\t"))
 	{
 		if (*(str + i) == '\\')
 			i += 2;
@@ -106,7 +107,7 @@ static void	check_qm_validity(char *str, int *cnt, char qm, int *s_idx)
 			i++;
 		(*cnt)++;
 	}
-	(*cnt)++;
+	(*cnt) += 2;
 	*s_idx = 0;
 }
 
@@ -126,7 +127,7 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx, int len)
 	else if (is_charset(cmdset[0], "\""))
 	{
 		len = get_quote_len(&cmdset[1], "\"", '\\');
-		check_qm_validity(&cmdset[1], &len, '\'', &s_idx);
+		check_qm_validity(&cmdset[1], &len, '"', &s_idx);
 		cmd->params[p_idx] = ft_substr_wo_chr(cmdset, s_idx, len, '\\');
 		rm_bsnl(&cmd->params[p_idx]);
 	}
