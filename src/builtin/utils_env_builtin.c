@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 12:54:14 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/07 22:16:11 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,51 @@
 
 extern int	g_exit_code;
 
+static void	skip_qm_plus_cpy(char **ret, char *s, char qm)
+{
+	int	idx;
+	int	n_idx;
+	int	eq_flag;
+
+	eq_flag = 0;
+	n_idx = 0;
+	idx = -1;
+	while (*(s + ++idx))
+	{
+		if (*(s + idx) == '=')
+			eq_flag = 1;
+		if (*(s + idx) != qm && !(*(s + idx) == '+' && !eq_flag))
+			*(*ret + n_idx++) = *(s + idx);
+	}
+}
+
 char	*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip)
 {
-	char	*tmp;
+	char	*ret;
 	char	qm;
-	size_t	n_idx;
+	int		eq_flag;
 
+	eq_flag = 0;
 	while (*(s + idx))
 	{
 		qm = *(s + idx++);
-		if (is_charset(qm, "\"'"))
+		if (qm == '=')
+			eq_flag = 1;
+		if (is_charset(qm, "\"'") || (!eq_flag && qm == '+'))
 		{
-			cnt_skip = 2;
+			if (!eq_flag && qm == '+')
+				cnt_skip++;
+			else
+				cnt_skip += 2;
 			break ;
 		}
 		else
 			qm = '\0';
 	}
-	tmp = (char *)ft_calloc(ft_strlen(s)
+	ret = (char *)ft_calloc(ft_strlen(s)
 			- cnt_skip + 1, sizeof(char));
-	idx = -1;
-	n_idx = 0;
-	while (*(s + ++idx))
-	{
-		if (*(s + idx) != qm)
-			*(tmp + n_idx++) = *(s + idx);
-	}
-	return (tmp);
-}
-
-void	append_env_var(char ***envp, char *arg, int *n_idx)
-{
-	int	k;
-
-	k = 0;
-	while (arg[k] && (arg[k] == '_' || ft_isalnum(arg[k])))
-		k++;
-	if (k && (!ft_strchr(arg, '=')
-			|| (ft_strchr(arg, '=') && arg[k] == '=')))
-		*(*envp + (*n_idx)++) = strdup_skip_qm(arg, 0, 0);
+	skip_qm_plus_cpy(&ret, s, qm);
+	return (ret);
 }
 
 t_exp_arg	*argv_to_lst(char **argv, int i)

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 13:00:10 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/07 22:08:03 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 extern int	g_exit_code;
 
-static int	get_cmp_len(char *arg, char *var, size_t *len)
+static int	get_cmp_len(char *arg, char *var, size_t *len, int *cat_flag)
 {
 	char	*pos_a;
 	char	*pos_v;
 	size_t	eq_idx_a;
 	size_t	eq_idx_v;
 
-	pos_a = ft_strchr(arg, '=');
+	pos_a = ft_strnstr(arg, "+=", ft_strlen(arg));
+	if (!pos_a)
+		pos_a = ft_strchr(arg, '=');
+	else
+		*cat_flag = 1;
 	pos_v = ft_strchr(var, '=');
 	if (pos_a)
 		eq_idx_a = pos_a - arg;
@@ -39,33 +43,51 @@ static int	get_cmp_len(char *arg, char *var, size_t *len)
 	return (0);
 }
 
-static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char **to_fr, int *i)
+static void	flag_argv(t_exp_arg **cur, char *var)
+{
+	size_t	len;
+	int		pos;
+	int		cat_flag;
+
+	cat_flag = 0;
+	len = 0;
+	while (*cur)
+	{
+		pos = get_cmp_len((*cur)->arg, var, &len, &cat_flag);
+		if (cat_flag)
+			(*cur)->flag = 2;
+		if ((*cur)->flag && !pos && !ft_strncmp((*cur)->arg, var, len))
+			(*cur)->flag = 0;
+		else if ((*cur)->flag && pos && !ft_strncmp((*cur)->arg, var, len))
+			break ;
+		*cur = (*cur)->next;
+	}
+}
+
+static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char *env, int i)
 {
 	t_exp_arg	*cur;
-	int			pos;
-	size_t		len;
+	char		*tf;
 
-	len = 0;
-	while (to_fr[++(*i)])
+	cur = avs->next;
+	flag_argv(&cur, env);
+	if (cur && cur->flag)
 	{
-		cur = avs->next;
-		while (cur)
+		if (cur->flag == 1)
+			*(*ev + i) = strdup_skip_qm(cur->arg, 0, 0);
+		else if (cur->flag == 2)
 		{
-			pos = get_cmp_len(cur->arg, to_fr[*i], &len);
-			if (cur->flag && !pos && !ft_strncmp(cur->arg, to_fr[*i], len))
-				cur->flag = 0;
-			else if (cur->flag && pos && !ft_strncmp(cur->arg, to_fr[*i], len))
-				break ;
-			cur = cur->next;
+			tf = strdup_skip_qm(cur->arg, 0, 0);
+			if (ft_strchr(env, '='))
+				*(*ev + i) = ft_strjoin(env, ft_strchr(tf, '=') + 1);
+			else
+				*(*ev + i) = ft_strjoin(env, ft_strchr(tf, '='));
+			free(tf);
 		}
-		if (cur && cur->flag)
-		{
-			*(*ev + *i) = strdup_skip_qm(cur->arg, 0, 0);
-			cur->flag = 0;
-		}
-		else
-			*(*ev + *i) = ft_strdup(to_fr[*i]);
+		cur->flag = 0;
 	}
+	else
+		*(*ev + i) = ft_strdup(env);
 }
 
 static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
@@ -77,12 +99,13 @@ static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
 	to_fr = *ev;
 	*ev = (char **)ft_calloc(new_len + 1, sizeof(char *));
 	idx = -1;
-	skip_or_sub_env(ev, avs, to_fr, &idx);
+	while (to_fr[++idx])
+		skip_or_sub_env(ev, avs, to_fr[idx], idx);
 	cur = avs->next;
 	while (cur)
 	{
 		if (cur->flag)
-			append_env_var(ev, cur->arg, &idx);
+			*(*ev + idx++) = strdup_skip_qm(cur->arg, 0, 0);
 		cur = cur->next;
 	}
 	free_double_ptr((void ***)&to_fr);
