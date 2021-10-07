@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:31:12 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/07 16:49:34 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	get_each_params(char **cmdset, t_args *args, int idx)
 	{
 		while (is_charset(cmdset[idx][start], "\t\n "))
 			start++;
-		len = make_string(&cmdset[idx][start], &args->cmd[idx], p_idx);
+		len = make_string(&cmdset[idx][start], &args->cmd[idx], p_idx, 2);
 		start = len + start + 1;
 		p_idx++;
 	}

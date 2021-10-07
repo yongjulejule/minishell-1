@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:28:58 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/07 16:50:45 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int		check_valid_rdr_symbols(char *s, int i);
 
 int		get_quote_len(char *str, char *charset, char ign);
 int		get_wspace_len(char *str, char *charset, char ign);
-int		make_string(char *cmdset, t_cmd *cmd, int p_idx);
+int		make_string(char *cmdset, t_cmd *cmd, int p_idx, int len);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 void	free_arg_structure(t_args *args);
 void	free_double_ptr(void ***ptr);
