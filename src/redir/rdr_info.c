@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/04 14:41:08 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/08 22:28:19 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,8 @@ char	*get_filename(const char *line)
 	if (!line || !*line)
 		return (ft_strdup(""));
 	tmp = ft_strtrim(line, " \n\t");
-	if (!ft_strcmp(tmp, "''") || !ft_strcmp(tmp, "\"\""))
-		file = ft_strdup("");
-	else if (tmp[0] == '\'')
-		file = ft_substr_wo_chr(tmp, 1,
-				get_quote_len(&tmp[1], "'", '\0'), '\0');
-	else if (tmp[0] == '"')
-		file = ft_substr_wo_chr(tmp, 1,
-				get_quote_len(&tmp[1], "\"", '\\'), '\\');
-	else
-		file = ft_substr_wo_chr(tmp, 0,
-				get_wspace_len(&tmp[0], " \n\f", '\\'), '\\');
+	file = ft_substr_wo_chr(tmp, 0,
+			get_wspace_len(&tmp[0], " \n\f", '\\'), '\\');
 	free(tmp);
 	tmp = NULL;
 	return (file);

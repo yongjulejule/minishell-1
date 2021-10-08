@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:11:55 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 13:03:33 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/08 23:24:51 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		read_internal_prompt(char **one_ln, char *ln_read, int read_cnt);
 
 /* utils_main */
 
-char	*strchr_skip_bslash(const char *s, int c);
+char	*strchr_skip_bslash(char *s, int c);
 void	is_qm(char *one_ln, char **qm);
 int		end_by_pipe(char *one_ln);
 int		end_by_esc(char **one_ln);
