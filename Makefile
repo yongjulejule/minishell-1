@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/07 12:47:22 by yongjule         ###   ########.fr        #
+#    Updated: 2021/10/09 01:18:55 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,12 +94,11 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				wait_info.c\
 				waiting.c\
 				string_utils.c\
-				get_len.c\
 				free_structure.c\
-				get_string_idx.c\
 				sub_env.c\
 				rm_unnecessary_qm.c\
-				rm_qm_utils.c\
+				rm_qm_flag.c\
+				rm_qm_flag_alloc.c\
 				)
 
 SRCS_PARSE		= $(addprefix $(SRCS_PARSE_DIR), \

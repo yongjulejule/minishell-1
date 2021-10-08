@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:01 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/07 16:49:34 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 01:17:18 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ static int	count_params(char *cmdset)
 		if (!cmdset[start])
 			break ;
 		size++;
-		if (is_charset(cmdset[start], "'"))
-			len = get_quote_idx(&cmdset[start + 1], "'", '\\') + start + 1;
-		else if (is_charset(cmdset[start], "\""))
-			len = get_quote_idx(&cmdset[start + 1], "\"", '\\') + start + 1;
-		else
-			len = get_wspace_idx(&cmdset[start], "\t\n ", '\\') + start;
+		len = get_wspace_idx(&cmdset[start], "\t\n ", '\\') + start;
 		start = len + 1;
 	}
 	return (size);
@@ -68,7 +63,7 @@ static void	get_each_params(char **cmdset, t_args *args, int idx)
 	{
 		while (is_charset(cmdset[idx][start], "\t\n "))
 			start++;
-		len = make_string(&cmdset[idx][start], &args->cmd[idx], p_idx, 2);
+		len = make_string(&cmdset[idx][start], &args->cmd[idx], p_idx, 1);
 		start = len + start + 1;
 		p_idx++;
 	}
