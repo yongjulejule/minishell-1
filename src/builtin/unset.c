@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 13:00:53 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/08 15:34:27 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val, int i)
 					break ;
 				}
 			}
+			if (av_lst->arg[i] == '\0')
+				(*cnt_val)++;
 		}
-		if (av_lst->arg[i] == '\0')
-			(*cnt_val)++;
 		av_lst = av_lst->next;
 	}
 }
