@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:21:02 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/08 15:34:27 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 22:02:39 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val, int i)
 		if (av_lst->arg[0] != '_' && !ft_isalpha(av_lst->arg[0]))
 		{
 			exp_unset_invalid_arg_msg('u', av_lst->arg);
-			av_lst->flag = 0;
+			av_lst->flag = IS_INVAL;
 		}
 		else
 		{
@@ -31,7 +31,7 @@ static void	check_unset_argv(t_exp_arg *av_lst, int *cnt_val, int i)
 				if (av_lst->arg[i] != '_' && !ft_isalnum(av_lst->arg[i]))
 				{
 					exp_unset_invalid_arg_msg('u', av_lst->arg);
-					av_lst->flag = 0;
+					av_lst->flag = IS_INVAL;
 					break ;
 				}
 			}
@@ -60,7 +60,7 @@ static void	find_matching_env(t_exp_arg *ev_lst, t_exp_arg *av_lst)
 		{
 			if (!ft_strcmp(cur_arg->arg, to_fr))
 			{
-				ev->flag = 0;
+				ev->flag = IS_INVAL;
 				break ;
 			}
 			cur_arg = cur_arg->next;

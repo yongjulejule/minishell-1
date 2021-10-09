@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/03 10:09:39 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/09 22:31:29 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	eof_exit(char *line_read)
 	if (!line_read)
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
+		ft_putendl_fd(EXIT_ASCII, STDERR_FILENO);
 		exit(EXIT_SUCCESS);
 	}
 }
