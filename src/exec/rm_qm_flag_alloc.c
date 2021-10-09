@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 00:45:24 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/09 02:37:50 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 12:46:54 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ void	flag_qm(char *s, int *i, int *cp_flag, size_t *add_cnt)
 	skip_qm(s, i, "\"'");
 	cp_flag[fst] = RM_CHAR;
 	cp_flag[*i] = RM_CHAR;
-	brace_skip_rm_ws(s, cp_flag, qm);
 	*add_cnt += flag_add_cnt(s, cp_flag, fst + 1, *i);
 }
