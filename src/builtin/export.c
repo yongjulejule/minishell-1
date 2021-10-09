@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/07 22:08:03 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 13:38:32 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char *env, int i)
 	if (cur && cur->flag)
 	{
 		if (cur->flag == 1)
-			*(*ev + i) = strdup_skip_qm(cur->arg, 0, 0);
+			*(*ev + i) = strdup_skip_plus(cur->arg, 0, 0);
 		else if (cur->flag == 2)
 		{
-			tf = strdup_skip_qm(cur->arg, 0, 0);
+			tf = strdup_skip_plus(cur->arg, 0, 0);
 			if (ft_strchr(env, '='))
 				*(*ev + i) = ft_strjoin(env, ft_strchr(tf, '=') + 1);
 			else
@@ -105,7 +105,7 @@ static void	add_env(char ***ev, t_exp_arg *avs, int new_len)
 	while (cur)
 	{
 		if (cur->flag)
-			*(*ev + idx++) = strdup_skip_qm(cur->arg, 0, 0);
+			*(*ev + idx++) = strdup_skip_plus(cur->arg, 0, 0);
 		cur = cur->next;
 	}
 	free_double_ptr((void ***)&to_fr);

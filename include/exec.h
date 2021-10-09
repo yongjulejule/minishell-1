@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 02:38:35 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 17:36:28 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 /* qm rm flags */
 
-# define BRACE_SKIP 3
 # define RM_CHAR -1
 # define ADD_BS 2
 # define SWAP_CSET " \t\n<>"
@@ -169,12 +168,11 @@ char	*strchr_skip_bslash(char *s, int c);
 int		check_valid_rdr_symbols(char *s, int i);
 void	flag_qm(char *s, int *i, int *cp_flag, size_t *add_cnt);
 size_t	flag_add_cnt(char *s, int *cp_flag, int fst, int len);
-void	brace_skip_rm_ws(char *s, int *cp_flag, char qm);
+void	env_parse_quote(char **env);
 
 /* Utils */
 
-int		get_quote_len(char *str, char *charset, char ign);
-int		get_wspace_len(char *str, char *charset, char ign);
+int		get_wspace_len(char *str, char *charset, char ign, int cnt);
 int		make_string(char *cmdset, t_cmd *cmd, int p_idx, int len);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 void	free_arg_structure(t_args *args);
