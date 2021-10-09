@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 22:47:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/09/27 02:06:38 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 22:00:06 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_exp_arg	*exp_lst_init(char *arg)
 
 	elem = (t_exp_arg *)ft_calloc(1, sizeof(t_exp_arg));
 	elem->arg = arg;
-	elem->flag = 1;
+	elem->flag = IS_VAL;
 	elem->next = NULL;
 	return (elem);
 }

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 13:38:18 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 22:15:30 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <string.h>
 
 /* User Define */
+
+/* Export Flags */
+
+# define IS_INVAL 0
+# define IS_VAL 1
+# define PLUS_EQ 2
 
 typedef struct s_exp_arg
 {
@@ -54,8 +60,8 @@ void		append_env_var(char ***envp, char *arg, int *n_idx);
 t_exp_arg	*argv_to_lst(char **argv, int i);
 void		exp_unset_invalid_arg_msg(char c, char *str);
 char		*ft_get_envp(char **ft_envp, char *var);
-void		check_var_overlap(t_exp_arg *av_lst);
-void		check_exp_argv(t_exp_arg *av_lst, int *cnt_valid);
+void		check_var_overlap(t_exp_arg *av_lst, int *cnt_valid);
+void		check_exp_argv(t_exp_arg *av_lst);
 
 /* Exp lst */
 

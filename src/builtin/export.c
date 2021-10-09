@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 13:38:32 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 22:22:14 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	get_cmp_len(char *arg, char *var, size_t *len, int *cat_flag)
 	size_t	eq_idx_v;
 
 	pos_a = ft_strnstr(arg, "+=", ft_strlen(arg));
-	if (!pos_a)
+	if (pos_a && pos_a < ft_strchr(arg, '='))
+		*cat_flag = PLUS_EQ;
+	else if (!pos_a)
 		pos_a = ft_strchr(arg, '=');
-	else
-		*cat_flag = 1;
 	pos_v = ft_strchr(var, '=');
 	if (pos_a)
 		eq_idx_a = pos_a - arg;
@@ -54,10 +54,10 @@ static void	flag_argv(t_exp_arg **cur, char *var)
 	while (*cur)
 	{
 		pos = get_cmp_len((*cur)->arg, var, &len, &cat_flag);
-		if (cat_flag)
-			(*cur)->flag = 2;
+		if (cat_flag && (*cur)->flag)
+			(*cur)->flag = PLUS_EQ;
 		if ((*cur)->flag && !pos && !ft_strncmp((*cur)->arg, var, len))
-			(*cur)->flag = 0;
+			(*cur)->flag = IS_INVAL;
 		else if ((*cur)->flag && pos && !ft_strncmp((*cur)->arg, var, len))
 			break ;
 		*cur = (*cur)->next;
@@ -73,9 +73,9 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char *env, int i)
 	flag_argv(&cur, env);
 	if (cur && cur->flag)
 	{
-		if (cur->flag == 1)
+		if (cur->flag == IS_VAL)
 			*(*ev + i) = strdup_skip_plus(cur->arg, 0, 0);
-		else if (cur->flag == 2)
+		else if (cur->flag == PLUS_EQ)
 		{
 			tf = strdup_skip_plus(cur->arg, 0, 0);
 			if (ft_strchr(env, '='))
@@ -84,7 +84,7 @@ static void	skip_or_sub_env(char ***ev, t_exp_arg *avs, char *env, int i)
 				*(*ev + i) = ft_strjoin(env, ft_strchr(tf, '='));
 			free(tf);
 		}
-		cur->flag = 0;
+		cur->flag = IS_INVAL;
 	}
 	else
 		*(*ev + i) = ft_strdup(env);
@@ -131,8 +131,8 @@ int	exprt(const char *path, char *const argv[], char ***const envp)
 	else
 	{
 		av_lst = argv_to_lst((char **)argv, 0);
-		check_exp_argv(av_lst, &cnt_val);
-		check_var_overlap(av_lst);
+		check_exp_argv(av_lst);
+		check_var_overlap(av_lst, &cnt_val);
 		if (cnt_val)
 			add_env((char ***)envp, av_lst, o_len + cnt_val);
 		free_argv_lst(&av_lst);
