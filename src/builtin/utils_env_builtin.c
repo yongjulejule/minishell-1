@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:29:16 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/07 22:16:11 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 13:39:05 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_code;
 
-static void	skip_qm_plus_cpy(char **ret, char *s, char qm)
+static void	skip_plus_cpy(char **ret, char *s)
 {
 	int	idx;
 	int	n_idx;
@@ -27,37 +27,34 @@ static void	skip_qm_plus_cpy(char **ret, char *s, char qm)
 	{
 		if (*(s + idx) == '=')
 			eq_flag = 1;
-		if (*(s + idx) != qm && !(*(s + idx) == '+' && !eq_flag))
+		if (!(*(s + idx) == '+' && !eq_flag))
 			*(*ret + n_idx++) = *(s + idx);
 	}
 }
 
-char	*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip)
+char	*strdup_skip_plus(char *s, size_t idx, size_t cnt_skip)
 {
 	char	*ret;
-	char	qm;
+	char	cur;
 	int		eq_flag;
 
 	eq_flag = 0;
 	while (*(s + idx))
 	{
-		qm = *(s + idx++);
-		if (qm == '=')
+		cur = *(s + idx++);
+		if (cur == '=')
 			eq_flag = 1;
-		if (is_charset(qm, "\"'") || (!eq_flag && qm == '+'))
+		if (!eq_flag && cur == '+')
 		{
-			if (!eq_flag && qm == '+')
-				cnt_skip++;
-			else
-				cnt_skip += 2;
+			cnt_skip++;
 			break ;
 		}
 		else
-			qm = '\0';
+			cur = '\0';
 	}
 	ret = (char *)ft_calloc(ft_strlen(s)
 			- cnt_skip + 1, sizeof(char));
-	skip_qm_plus_cpy(&ret, s, qm);
+	skip_plus_cpy(&ret, s);
 	return (ret);
 }
 

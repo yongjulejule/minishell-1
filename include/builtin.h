@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:31:34 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/07 22:09:34 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 13:38:18 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			env(const char *path, char *const argv[], char *const envp[]);
 
 char		**dup_envp(char *envp[], int set_len);
 void		free_double_ptr(void ***ptr);
-char		*strdup_skip_qm(char *s, size_t idx, size_t cnt_skip);
+char		*strdup_skip_plus(char *s, size_t idx, size_t cnt_skip);
 void		append_env_var(char ***envp, char *arg, int *n_idx);
 t_exp_arg	*argv_to_lst(char **argv, int i);
 void		exp_unset_invalid_arg_msg(char c, char *str);

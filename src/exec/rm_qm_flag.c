@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 12:36:13 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/09 12:56:57 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 16:48:22 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static size_t	add_cnt_sq(char *s, int *cp_flag, int fst, int len)
 		{
 			add++;
 			cp_flag[fst] = ADD_BS;
-			fst += 2;
+			fst++;
 		}
 		else if (s[fst])
 			add += inner_quote_add_bs(s, cp_flag, fst++, '"');
@@ -88,7 +88,7 @@ size_t	flag_add_cnt(char *s, int *cp_flag, int fst, int len)
 	add = 0;
 	while (++k < len)
 	{
-		if (cp_flag[k] != RM_CHAR && is_charset(s[k], " \n\t"))
+		if (is_charset(s[k], " \n\t"))
 		{
 			add++;
 			cp_flag[k] = ADD_BS;

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 15:16:05 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/06 12:11:47 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/09 17:37:41 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static void	env_or_exit_stat(char **env, char *ln, int end, char **ft_envp)
 	{
 		*env = ft_get_envp(ft_envp, to_free);
 		if (*env)
+		{
 			*env = ft_strdup(*env);
+			env_parse_quote(env);
+		}
 	}
 	free(to_free);
 }
@@ -79,7 +82,7 @@ static void	get_env_interval(char **ln, int *i, char **ft_envp)
 		k++;
 	if (k > 1)
 		recompose_ln_env(ln, *i, k - 1, ft_envp);
-	if (*(*ln + *i) != '\0'
+	if (*(*ln + *i) != '\0' && !is_charset(*(*ln + *i), "\\")
 		&& (*(*ln + *i) != '$' || (k == 1 && *(*ln + *i) == '$')))
 		(*i)++;
 }

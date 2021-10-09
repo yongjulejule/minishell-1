@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:19:57 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 14:21:04 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/09 17:35:55 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,7 @@ void	skip_qm(char *str, int *i, char *charset);
 
 /* Utils */
 
-int		get_quote_len(char *str, char *charset, char ign);
-int		get_wspace_len(char *str, char *charset, char ign);
+int		get_wspace_len(char *str, char *charset, char ign, int cnt);
 char	*ft_substr_wo_chr(char *str, unsigned int start, size_t len, char c);
 int		rdr_err(char *str_1, char *str_2, char *err_msg, int exit_status);
 
