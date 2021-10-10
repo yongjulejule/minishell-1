@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 17:37:32 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 14:27:13 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ int	get_wspace_len(char *str, char *charset, char ign, int cnt)
 			if (is_charset(*(str + idx + 1), " \n\t"))
 			{
 				cnt++;
-				flag = 1;
+				flag += 1;
 			}
 			idx += 2;
 		}
-		else if (*(str + idx) && *(str + idx) != '\\')
+		else if (*(str + idx) && *(str + idx) != ign)
 			idx++;
 		cnt++;
 	}
-	if (flag == 1)
-		cnt--;
+	if (flag)
+		cnt -= flag;
 	return (cnt);
 }
 
@@ -82,5 +82,5 @@ int	make_string(char *cmdset, t_cmd *cmd, int p_idx, int len)
 {
 	len = get_wspace_len(&cmdset[0], "\t\n ", '\\', 0);
 	cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
-	return (len);
+	return (get_wspace_idx(&cmdset[0], "\t\n ", '\\'));
 }
