@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 14:26:45 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/10 20:54:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	redirect_stream(t_cmd *cmd)
 			if (cmd->rdr->fd[1] == -1)
 				flag = rdr_err(cmd->rdr->file, ": ", "ambiguous redirection",
 						EXIT_FAILURE);
-			if (dup2(cmd->rdr->fd[1], cmd->rdr->fd[0]) == -1)
+			else if (dup2(cmd->rdr->fd[1], cmd->rdr->fd[0]) == -1)
 				flag = rdr_err(ft_itoa(cmd->rdr->fd[1]), NULL,
 						": bad file descriptor", CUSTOM_ERR);
 		}
