@@ -6,75 +6,58 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/09 13:02:35 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 22:18:53 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	push_qm(char **str, int *first, int *second)
+static int	is_valid_ws(char *str, int idx)
 {
-	int	len;
+	char	*trimmed;
+	char	*to_free;
 
-	len = (int)ft_strlen(*str);
-	while (*first >= 1)
+	to_free = ft_strndup(str, idx + 1);
+	if (is_charset(str[idx], " \n\t"))
 	{
-		if (*first > 2 && *(*str + *first - 1) == '&'
-			&& is_charset(*(*str + *first - 2), "<>"))
-			break ;
-		if (!is_charset(*(*str + *first - 1), SWAP_CSET))
-			swap_char((*str + *first), (*str + *first - 1));
-		else
-			break ;
-		(*first)--;
+		trimmed = ft_strtrim(to_free, " \n\t");
+		if (!end_by_esc(&trimmed))
+		{
+			free(trimmed);
+			free(to_free);
+			return (0);
+		}
+		free(trimmed);
+		free(to_free);
 	}
-	while (*second + 1 < len)
+	else
 	{
-		if (!is_charset(*(*str + *second + 1), SWAP_CSET))
-			swap_char((*str + *second), (*str + *second + 1));
-		else
-			break ;
-		(*second)++;
+		free(to_free);
+		return (0);
 	}
+	return (1);
 }
 
-static int	skip_inner_qm(char *first, char *second)
+static int	consecutive_empty_qm(char *str, int i)
 {
-	char	*to_fr;
-	int		ret;
+	char	prev;
+	int		k;
 
-	ret = 0;
-	to_fr = ft_strndup(first, second - first);
-	if (ft_strchrset(to_fr, " \n\t"))
-		ret = 1;
-	free(to_fr);
-	return (ret);
-}
-
-static void	rm_or_expand_qm(char **param, int *cp_flag, size_t len, size_t add)
-{
-	char	qm;
-	int		first;
-	int		second;
-	char	*to_fr;
-
-	to_fr = *param;
-	*param = strndup_with_flag(*param, cp_flag, len, add);
-	free(to_fr);
-	second = 0;
-	while (*(*param + second) && strchrset_skip_bs(*param + second, "\"'"))
+	prev = i - 1;
+	k = i - 2;
+	while (k >= 1
+		&& (!ft_strncmp(str + k, "\"\"", 2) || !ft_strncmp(str + k, "''", 2)))
 	{
-		qm = *strchrset_skip_bs(*param + second, "\"'");
-		first = strchr_skip_bslash(*param + second, qm) - *param;
-		if (!strchr_skip_bslash(*param + first + 1, qm))
-			break ;
-		second = strchr_skip_bslash(*param + first + 1, qm) - *param;
-		if (*(*param + second) == '\0')
-			break ;
-		if (skip_inner_qm(*param + first + 1, *param + second))
-			push_qm(param, &first, &second);
-		second++;
+		prev = k - 1;
+		k -= 2;
 	}
+	if (!ft_strncmp(str + i, "\"\"", 2) || !ft_strncmp(str + i, "''", 2))
+		i += 2;
+	if ((is_valid_ws(str, prev) && !str[i])
+		|| ((prev == -1 || is_valid_ws(str, prev))
+			&& is_valid_ws(str, i)))
+		return (1);
+	return (0);
 }
 
 static size_t	flag_cp_char(char *str, int *cp_flag)
@@ -90,8 +73,13 @@ static size_t	flag_cp_char(char *str, int *cp_flag)
 			i += 2;
 		else if (is_charset(str[i], "\"'"))
 		{
-			flag_qm(str, &i, cp_flag, &add_cnt);
-			i++;
+			if (consecutive_empty_qm(str, i))
+				i += 2;
+			if (is_charset(str[i], "\"'"))
+			{
+				flag_qm(str, &i, cp_flag, &add_cnt);
+				i++;
+			}
 		}
 		else if (str[i])
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:06 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/10 14:27:13 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/10 21:32:53 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ int	get_wspace_len(char *str, char *charset, char ign, int cnt)
 
 int	make_string(char *cmdset, t_cmd *cmd, int p_idx, int len)
 {
+	if (!ft_strncmp(cmdset, "\"\"", 2) || !ft_strncmp(cmdset, "''", 2))
+	{
+		cmd->params[p_idx] = ft_strdup("");
+		return (len);
+	}
 	len = get_wspace_len(&cmdset[0], "\t\n ", '\\', 0);
 	cmd->params[p_idx] = ft_substr_wo_chr(cmdset, 0, len, '\\');
 	return (get_wspace_idx(&cmdset[0], "\t\n ", '\\'));
