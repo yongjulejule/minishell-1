@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 17:36:28 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 20:55:30 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int		s_isdir(int mode);
 void	sub_env(char **params, char **ft_envp);
 void	skip_qm(char *str, int *i, char *charset);
 void	rm_unnecessary_qm(char **param);
+void	rm_or_expand_qm(char **param, int *cp_flag, size_t len, size_t add);
 char	*strndup_with_flag(char *s1, int *flag, size_t n, size_t add);
 char	*strchr_skip_bslash(char *s, int c);
 int		check_valid_rdr_symbols(char *s, int i);

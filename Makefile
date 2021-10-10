@@ -6,7 +6,7 @@
 #    By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 15:00:27 by yongjule          #+#    #+#              #
-#    Updated: 2021/10/09 16:31:23 by ghan             ###   ########.fr        #
+#    Updated: 2021/10/10 20:56:06 by ghan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ SRCS_EXEC		= $(addprefix $(SRCS_EXEC_DIR), \
 				sub_env.c\
 				sub_env_alloc.c\
 				rm_unnecessary_qm.c\
+				rm_or_expand_qm.c\
 				rm_qm_flag.c\
 				rm_qm_flag_alloc.c\
 				)
