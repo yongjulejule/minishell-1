@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:18:42 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/10 21:23:34 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ static void	error_before_execve(t_args *args, int idx)
 
 static void	error_after_execve(t_args *args, int idx)
 {
+	char	*tmp;
+
 	if (args->cmd[idx].builtin != notbuiltin)
 		exit(g_exit_code);
 	if (errno == EACCES)
 		is_error(args->cmd[idx].params[0], " :", strerror(errno), X_ERR);
 	else if (errno == ENOENT || args->cmd[idx].params[0] == NULL)
 	{
-		if (!ft_get_envp(args->envp, "PATH"))
+		tmp = ft_get_envp(args->envp, "PATH");
+		if (!tmp || !*tmp)
 			is_error(args->cmd[idx].params[0], " :", strerror(errno), CMD_ERR);
 		else
 			is_error(args->cmd[idx].params[0], " :",
