@@ -6,30 +6,56 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 12:10:29 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/10 21:33:02 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 22:18:53 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+static int	is_valid_ws(char *str, int idx)
+{
+	char	*trimmed;
+	char	*to_free;
+
+	to_free = ft_strndup(str, idx + 1);
+	if (is_charset(str[idx], " \n\t"))
+	{
+		trimmed = ft_strtrim(to_free, " \n\t");
+		if (!end_by_esc(&trimmed))
+		{
+			free(trimmed);
+			free(to_free);
+			return (0);
+		}
+		free(trimmed);
+		free(to_free);
+	}
+	else
+	{
+		free(to_free);
+		return (0);
+	}
+	return (1);
+}
 
 static int	consecutive_empty_qm(char *str, int i)
 {
 	char	prev;
 	int		k;
 
-	prev = str[i - 1];
+	prev = i - 1;
 	k = i - 2;
 	while (k >= 1
 		&& (!ft_strncmp(str + k, "\"\"", 2) || !ft_strncmp(str + k, "''", 2)))
 	{
-		prev = str[k - 1];
+		prev = k - 1;
 		k -= 2;
 	}
 	if (!ft_strncmp(str + i, "\"\"", 2) || !ft_strncmp(str + i, "''", 2))
 		i += 2;
-	if ((is_charset(prev, " \n\t") && !str[i])
-		|| ((prev == -1 || (is_charset(prev, " \n\t")))
-			&& is_charset(str[i], " \n\t")))
+	if ((is_valid_ws(str, prev) && !str[i])
+		|| ((prev == -1 || is_valid_ws(str, prev))
+			&& is_valid_ws(str, i)))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/10 20:55:30 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 21:58:40 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int		check_valid_rdr_symbols(char *s, int i);
 void	flag_qm(char *s, int *i, int *cp_flag, size_t *add_cnt);
 size_t	flag_add_cnt(char *s, int *cp_flag, int fst, int len);
 void	env_parse_quote(char **env);
+int		end_by_esc(char **one_ln);
 
 /* Utils */
 

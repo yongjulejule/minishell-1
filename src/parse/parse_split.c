@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 01:54:44 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/04 17:57:02 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/10 22:28:18 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 static void	cmds_lst_strtrim(t_cmds *cmds_hd)
 {
 	char	*to_free;
+	char	*trimmed;
+	char	last_ws[3];
 	t_cmds	*elem;
 
 	elem = cmds_hd->next;
 	while (elem)
 	{
 		to_free = elem->cmd;
-		elem->cmd = ft_strtrim(to_free, " \t\n");
+		trimmed = ft_strtrim(to_free, " \t\n");
+		if (!end_by_esc(&trimmed))
+		{
+			last_ws[0] = '\\';
+			last_ws[1] = to_free[ft_strlen(trimmed) + 1];
+			last_ws[2] = '\0';
+			elem->cmd = ft_strjoin(trimmed, last_ws);
+			free(trimmed);
+		}
+		else
+			elem->cmd = trimmed;
 		free(to_free);
 		to_free = NULL;
 		elem = elem->next;
