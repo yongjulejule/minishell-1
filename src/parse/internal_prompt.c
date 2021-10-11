@@ -6,7 +6,7 @@
 /*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 23:48:18 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/05 15:56:37 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/11 14:51:17 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ unexpected end of file\n", STDERR_FILENO);
 			g_exit_code = UNEXP_EOF_FLAG;
 			break ;
 		}
-		add_history(rl_line_buffer);
+		else if (*ln_read)
+			add_history(rl_line_buffer);
 		read_cnt++;
 	}
 	if (read_cnt || (g_exit_code == -42 && !read_cnt))
