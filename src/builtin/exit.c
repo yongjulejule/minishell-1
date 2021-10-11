@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 13:37:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 09:37:17 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static t_ll	check_exit_arg_validity(char **argv)
 	if ((idx > 19 + sign) || argv[1][idx + sign] != '\0')
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
-		is_error(argv[1], ": ", "numeric argument required", 255);
+		is_error(argv[1], ": ", "numeric argument required", EXIT_ERR);
 	}
 	status = ft_atol(argv[1]);
 	if (ft_strlen(argv[1]) == (19 + sign) && (status == 0 || status == -1))
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);
-		is_error(argv[1], ": ", "numeric argument required", 255);
+		is_error(argv[1], ": ", "numeric argument required", EXIT_ERR);
 	}
 	return (status);
 }
@@ -57,7 +57,7 @@ int	ext(const char *path, char *const argv[], char *const envp[])
 	{
 		check_exit_arg_validity((char **)argv);
 		ft_putendl_fd("exit\n🤣 esh: exit : too many arguments", STDERR_FILENO);
-		g_exit_code = 1;
+		g_exit_code = EXIT_FAILURE;
 		return (-1);
 	}
 	exit(check_exit_arg_validity((char **)argv) & (0xff));

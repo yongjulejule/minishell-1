@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 16:37:33 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/09 22:31:29 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/11 09:24:57 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ receive arguments", EXIT_FAILURE);
 	if (dup2(STDIN_FILENO, BACKUP_FD) == -1)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
 	ft_putendl_fd(ESH_ASCII, STDERR_FILENO);
+	rl_outstream = stderr;
 	sigint_n_sigquit_handler(main_sig_handler);
 	return (ret);
 }
