@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: ghan <ghan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 12:08:34 by ghan              #+#    #+#             */
-/*   Updated: 2021/10/11 09:27:55 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:53:56 by ghan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char *argv[], char *envp[])
 		unexp_eof_sig_handler();
 		line_read = readline("🐘 esh > ");
 		eof_exit(line_read);
-		add_history(rl_line_buffer);
+		if (*line_read)
+			add_history(rl_line_buffer);
 		parse_line_main(&cmdlst, line_read, ft_strdup(""));
 		if (cmdlst && cmdlst->cmd && *cmdlst->cmd)
 			exec_cmd_main(cmdlst, &ft_envp);
