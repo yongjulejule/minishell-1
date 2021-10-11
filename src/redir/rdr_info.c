@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdr_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:23:05 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 21:43:16 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/11 19:42:37 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	rdr_w_output_file(char *line, t_cmd *cmd)
 	char	*file;
 
 	fd[0] = STDOUT_FILENO;
-	fd[1] = STDERR_FILENO;
+	fd[1] = -1;
 	file = get_filename(&line[2]);
-	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(wr_output_to_file,
-			file, NULL, fd));
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(wr_to_file, file, NULL, fd));
+	fd[0] = STDERR_FILENO;
+	file = get_filename(&line[2]);
+	rdr_lst_add_back(&cmd->rdr, rdr_lst_newone(wr_to_file, file, NULL, fd));
 }
 
 void	get_rdr_info(char *rdrs, t_cmd *cmd)

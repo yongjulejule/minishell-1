@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/11 17:19:33 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 20:13:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,8 @@ static int	rdr_write(t_rdr *rdr)
 				": bad file descriptor", CUSTOM_ERR));
 	if (rdr->info == wr_to_file)
 		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	else if (rdr->info == wr_append)
-		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-	{
-		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (fd < 0)
-			return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
-		if (dup2(fd, rdr->fd[0]) == -1)
-			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
-		if (dup2(fd, rdr->fd[1]) == -1)
-			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
-	}
+		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 		return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 	if (dup2(fd, rdr->fd[0]) == -1)
@@ -122,9 +112,9 @@ int	redirect_stream(t_cmd *cmd)
 	cur = cmd->rdr;
 	while (!flag && cur)
 	{
-		if (cur->info < 2)
+		if (cur->info == rd_from_file || cur->info == rd_heredoc)
 			flag = rdr_read(cur);
-		else if (cur->info < 5)
+		else if (cur->info == wr_to_file || cur->info == wr_append)
 			flag = rdr_write(cur);
 		else if (cur->info == rdwr || cur->info == close_fd)
 			flag = rdr_rdwr_or_close(cur);
