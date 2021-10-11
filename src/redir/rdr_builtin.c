@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdr_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:35:47 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 13:09:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:45:43 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	**backup_fd(t_rdr *rdr)
 	while (idx < size)
 	{
 		fd[idx] = (int *)ft_calloc(2, sizeof(int));
-		fd[idx][0] = rdr->fd[0];
+		if (rdr->info == wr_output_to_file)
+			fd[idx][0] = -2;
+		else
+			fd[idx][0] = rdr->fd[0];
 		rdr = rdr->next;
 		idx++;
 	}
@@ -93,7 +96,8 @@ int	**backup_fd(t_rdr *rdr)
 	return (fd);
 }
 
-void	retrive_fd(int **fd)
+/* FIXME : when redir &> */
+void	retrieve_fd(int **fd)
 {
 	int	idx;
 
@@ -101,7 +105,9 @@ void	retrive_fd(int **fd)
 	while (fd[idx])
 	{
 		if (fd[idx][1] == -1)
+		{
 			close(fd[idx][0]);
+		}
 		else
 		{
 			if (dup2(fd[idx][1], fd[idx][0]) == -1)
@@ -110,4 +116,5 @@ void	retrive_fd(int **fd)
 		}
 		idx++;
 	}
+	free_double_ptr((void ***)&fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/10 21:58:40 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/11 17:24:48 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		get_exit_status(int status);
 /* Redirection in builtin */
 
 int		**backup_fd(t_rdr *rdr);
-void	retrive_fd(int **fds);
+void	retrieve_fd(int **fds);
 
 /* File Stat */
 
