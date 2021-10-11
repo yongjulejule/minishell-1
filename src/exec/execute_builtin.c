@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:17:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/06 11:14:38 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/11 17:26:40 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	execute_builtin(t_args *args, char ***ft_envp)
 		rdr_fds = backup_fd(args->cmd->rdr);
 		if (rdr_fds)
 			if (redirect_stream(&args->cmd[0]))
-				return (retrive_fd(rdr_fds));
+				return (retrieve_fd(rdr_fds));
 	}
 	if (args->cmd->builtin == is_exprt || args->cmd->builtin == is_unset
 		|| args->cmd->builtin == is_cd)
@@ -32,5 +32,5 @@ void	execute_builtin(t_args *args, char ***ft_envp)
 		args->cmd->exec_f.exec(args->cmd->params[0]
 				, args->cmd->params, args->envp);
 	if (rdr_fds)
-		retrive_fd(rdr_fds);
+		retrieve_fd(rdr_fds);
 }

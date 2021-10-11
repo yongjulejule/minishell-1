@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdr_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongjule <yongjule@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:35:47 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/03 13:09:14 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 20:12:47 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	**backup_fd(t_rdr *rdr)
 	return (fd);
 }
 
-void	retrive_fd(int **fd)
+void	retrieve_fd(int **fd)
 {
 	int	idx;
 
@@ -110,4 +110,5 @@ void	retrive_fd(int **fd)
 		}
 		idx++;
 	}
+	free_double_ptr((void ***)&fd);
 }

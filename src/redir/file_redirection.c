@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:33:29 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/10 20:54:37 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/11 20:13:21 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,8 @@ static int	rdr_write(t_rdr *rdr)
 				": bad file descriptor", CUSTOM_ERR));
 	if (rdr->info == wr_to_file)
 		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	else if (rdr->info == wr_append)
-		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-	{
-		fd = open(rdr->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (fd < 0)
-			return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
-		if (dup2(fd, rdr->fd[0]) == -1)
-			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
-		if (dup2(fd, rdr->fd[1]) == -1)
-			return (rdr_err(NULL, NULL, strerror(errno), EXIT_FAILURE));
-	}
+		fd = open(rdr->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 		return (rdr_err(rdr->file, ": ", strerror(errno), EXIT_FAILURE));
 	if (dup2(fd, rdr->fd[0]) == -1)
@@ -91,10 +81,15 @@ static int	rdr_write(t_rdr *rdr)
 	return (EXIT_SUCCESS);
 }
 
-static int	rdr_rdwr(t_rdr *rdr)
+static int	rdr_rdwr_or_close(t_rdr *rdr)
 {
 	int	fd;
 
+	if (rdr->info == close_fd)
+	{
+		close(rdr->fd[0]);
+		return (EXIT_SUCCESS);
+	}
 	if (rdr->fd[0] > 254 || rdr->fd[0] < 0)
 		return (rdr_err(ft_itoa(rdr->fd[0]), NULL,
 				": bad file descriptor", CUSTOM_ERR));
@@ -110,29 +105,29 @@ static int	rdr_rdwr(t_rdr *rdr)
 
 int	redirect_stream(t_cmd *cmd)
 {
-	int	flag;
+	int		flag;
+	t_rdr	*cur;
 
 	flag = EXIT_SUCCESS;
-	while (!flag && cmd->rdr)
+	cur = cmd->rdr;
+	while (!flag && cur)
 	{
-		if (cmd->rdr->info < 2)
-			flag = rdr_read(cmd->rdr);
-		else if (cmd->rdr->info < 5)
-			flag = rdr_write(cmd->rdr);
-		else if (cmd->rdr->info == close_fd)
-			close(cmd->rdr->fd[0]);
-		else if (cmd->rdr->info == rdwr)
-			flag = rdr_rdwr(cmd->rdr);
-		else if (cmd->rdr->info == dup_fd)
+		if (cur->info == rd_from_file || cur->info == rd_heredoc)
+			flag = rdr_read(cur);
+		else if (cur->info == wr_to_file || cur->info == wr_append)
+			flag = rdr_write(cur);
+		else if (cur->info == rdwr || cur->info == close_fd)
+			flag = rdr_rdwr_or_close(cur);
+		else if (cur->info == dup_fd)
 		{
-			if (cmd->rdr->fd[1] == -1)
-				flag = rdr_err(cmd->rdr->file, ": ", "ambiguous redirection",
+			if (cur->fd[1] == -1)
+				flag = rdr_err(cur->file, ": ", "ambiguous redirection",
 						EXIT_FAILURE);
-			else if (dup2(cmd->rdr->fd[1], cmd->rdr->fd[0]) == -1)
-				flag = rdr_err(ft_itoa(cmd->rdr->fd[1]), NULL,
+			else if (dup2(cur->fd[1], cur->fd[0]) == -1)
+				flag = rdr_err(ft_itoa(cur->fd[1]), NULL,
 						": bad file descriptor", CUSTOM_ERR);
 		}
-		cmd->rdr = cmd->rdr->next;
+		cur = cur->next;
 	}
 	return (flag);
 }
