@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:32:50 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/10 21:23:34 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:52:52 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 extern int	g_exit_code;
 
-static void	delete_output(void)
+static void	delete_output(char **cmd_exit)
 {
 	int	fd;
 
+	check_exit_arg_validity(cmd_exit);
+	if (ft_strsetlen(cmd_exit) > 2)
+		ft_putendl_fd("🤣 esh: exit : too many arguments", STDERR_FILENO);
 	fd = open("/dev/null", O_WRONLY);
 	if (fd < 0)
 		is_error(NULL, NULL, strerror(errno), EXIT_FAILURE);
@@ -79,7 +82,7 @@ static void	execute_pipe_cmd(t_args *args, int idx)
 		error_before_execve(args, idx);
 	sigint_n_sigquit_handler(reset_signal);
 	if (builtin == is_ext)
-		delete_output();
+		delete_output(args->cmd[idx].params);
 	if (builtin == is_cd || builtin == is_exprt || builtin == is_unset)
 		args->cmd[idx].exec_f.exec_env(args->cmd[idx].params[0],
 				args->cmd[idx].params, &args->envp);
