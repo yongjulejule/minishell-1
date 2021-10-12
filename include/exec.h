@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:30:15 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/11 17:24:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:13:41 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	no_newline_for_sigquit(int sig);
 /* Check Validity */
 
 void	check_cmd_validity(t_args *args, t_cmd *cmd, char *param);
+t_ll	check_exit_arg_validity(char **argv);
 
 /* Check Builtin */
 
