@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/12 10:53:48 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:58:09 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ext(const char *path, char *const argv[], char *const envp[])
 	if (ft_strsetlen((char **)argv) > 2)
 	{
 		check_exit_arg_validity((char **)argv);
-		ft_putendl_fd("exit\n🤣 esh: exit : too many arguments", STDERR_FILENO);
+		ft_putendl_fd("🤣 esh: exit : too many arguments", STDERR_FILENO);
 		g_exit_code = EXIT_FAILURE;
 		return (-1);
 	}
