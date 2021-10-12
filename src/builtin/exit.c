@@ -6,7 +6,7 @@
 /*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 12:01:16 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/11 09:37:17 by yongjule         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:00:41 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ static t_ll	check_exit_arg_validity(char **argv)
 		idx++;
 	if ((idx > 19 + sign) || argv[1][idx + sign] != '\0')
 	{
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		is_error(argv[1], ": ", "numeric argument required", EXIT_ERR);
+		ft_putendl_fd("exit", STDERR_FILENO);
+		is_error("exit: ", argv[1], ": numeric argument required", EXIT_ERR);
 	}
 	status = ft_atol(argv[1]);
 	if (ft_strlen(argv[1]) == (19 + sign) && (status == 0 || status == -1))
 	{
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		is_error(argv[1], ": ", "numeric argument required", EXIT_ERR);
+		ft_putendl_fd("exit", STDERR_FILENO);
+		is_error("exit: ", argv[1], ": numeric argument required", EXIT_ERR);
 	}
+	ft_putendl_fd("exit", STDERR_FILENO);
 	return (status);
 }
 
