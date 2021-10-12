@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghan <ghan@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yongjule <yongjule@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 10:36:58 by yongjule          #+#    #+#             */
-/*   Updated: 2021/10/09 22:22:14 by ghan             ###   ########.fr       */
+/*   Updated: 2021/10/12 15:29:52 by yongjule         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static void	flag_argv(t_exp_arg **cur, char *var)
 	int		pos;
 	int		cat_flag;
 
-	cat_flag = 0;
 	len = 0;
 	while (*cur)
 	{
+		cat_flag = 0;
 		pos = get_cmp_len((*cur)->arg, var, &len, &cat_flag);
 		if (cat_flag && (*cur)->flag)
 			(*cur)->flag = PLUS_EQ;

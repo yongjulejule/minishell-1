@@ -83,11 +83,18 @@ void	build_structure(t_cmds *cmdlst, char ***envp, t_args *args)
 {
 	char	*tmp;
 	char	**cmds;
+	int		flag;
 
+	flag = 0;
 	tmp = ft_get_envp(*envp, "PATH");
 	if (!tmp || !*tmp)
+	{
 		tmp = ft_strdup(".");
+		flag = 1;
+	}
 	args->env_path = ft_split(tmp, ':');
+	if (flag)
+		free(tmp);
 	args->envp = *envp;
 	cmds = cmdlst_to_cmdarr(cmdlst, args);
 	get_params(args, cmds, cmdlst);
